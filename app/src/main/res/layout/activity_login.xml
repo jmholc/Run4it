@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adm.pantallas.Login"
+    android:background="@drawable/sol">
+
+    <EditText
+        android:id="@+id/etUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etContrasenia"
+        android:layout_alignStart="@+id/etContrasenia"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/colorAccent"
+        android:ems="10"
+        android:hint="@string/LogUsuario"
+        android:inputType="textPersonName"
+        android:textColorHint="#9E9E9E"
+        android:textSize="22dp" />
+
+    <EditText
+        android:id="@+id/etContrasenia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnCodigo"
+        android:layout_alignEnd="@+id/tvCrearUsuario"
+        android:layout_marginBottom="47dp"
+        android:backgroundTint="@color/colorAccent"
+        android:ems="10"
+        android:hint="@string/LogContrasena"
+        android:inputType="textPersonName"
+        android:textColorHint="#9E9E9E"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/tvCrearUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="aRegistrarse"
+        android:text="@string/LogIraRegistrar"
+        android:textSize="19dp"
+        android:textColor="#9E9E9E"
+        android:layout_marginBottom="29dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnCodigo"
+        android:layout_width="185dp"
+        android:layout_height="62dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Ingresar"
+        android:textSize="20dp"
+        android:onClick="iniciarSesion"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_Verificar"
+        android:textColor="#212121"
+        android:background="@drawable/button"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_above="@+id/tvCrearUsuario"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etUsuario"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@drawable/logof" />
+
+
+</RelativeLayout>

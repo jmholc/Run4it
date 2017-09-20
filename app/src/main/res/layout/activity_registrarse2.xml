@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adm.pantallas.Registrarse2"
+    android:background="@drawable/fondoreg3">
+
+    <TextView
+        android:id="@+id/tvInfoAdicional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/Reg2_informacion_adicional"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:textColor="#9E9E9E"
+        android:textSize="27dp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvInfoAdicional"
+        android:layout_marginTop="21dp"
+        android:textSize="19dp">
+
+        <RadioButton
+            android:id="@+id/rbtFemenino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="@string/Reg2_femenino"
+            android:textSize="19dp"
+            android:textColor="#9E9E9E"
+            android:buttonTint="@color/rbuttonColor"/>
+
+        <RadioButton
+            android:id="@+id/rbtMasculino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Reg2_masculino"
+            android:textSize="19dp"
+            android:textColor="#9E9E9E"
+            android:buttonTint="@color/rbuttonColor"/>
+
+        <RadioButton
+            android:id="@+id/rbtOtro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Reg2_otro"
+            android:textColor="#9E9E9E"
+            android:textSize="19dp"
+            android:buttonTint="@color/rbuttonColor"/>
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/etFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvNivelDeAtleta"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/radioGroup"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="31dp"
+        android:backgroundTint="@color/colorAccent"
+        android:ems="10"
+        android:hint="@string/Reg2_nacimiento"
+        android:inputType="date"
+        android:textColorHint="#9E9E9E"
+        android:textSize="19dp" />
+
+    <EditText
+        android:id="@+id/etPeso"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etFecha"
+        android:layout_below="@+id/etFecha"
+        android:layout_marginTop="31dp"
+        android:backgroundTint="@color/colorAccent"
+        android:ems="10"
+        android:hint="@string/Reg2_peso"
+        android:inputType="number"
+        android:textColorHint="#9E9E9E"
+        android:textSize="19dp" />
+
+    <EditText
+        android:id="@+id/etAltura"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etPeso"
+        android:layout_alignBottom="@+id/etPeso"
+        android:layout_toEndOf="@+id/etPeso"
+        android:backgroundTint="@color/colorAccent"
+        android:ems="10"
+        android:hint="@string/Reg2_altura"
+        android:inputType="number"
+        android:textColorHint="#9E9E9E"
+        android:textSize="19dp" />
+
+    <SeekBar
+        android:id="@+id/sbNiveldeAtleta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="2"
+        android:progress="1"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/tvNivelDeAtleta"
+        android:layout_alignStart="@+id/etPeso"
+        android:layout_alignEnd="@+id/etAltura" />
+
+    <Button
+        android:layout_width="185dp"
+        android:layout_height="62dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="20dp"
+        android:textColorHint="#9E9E9E"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_Verificar"
+        android:textColor="#212121"
+        android:background="@drawable/button"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:id="@+id/btnAceptar"
+        android:layout_marginBottom="25dp"
+        android:onClick="aMenuPrincipal"
+        android:text="@string/Reg2_boton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvNivelDeAtleta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="19dp"
+        android:text="@string/NivelAtleta"
+        android:textColor="#9E9E9E"
+        android:layout_below="@+id/etPeso"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bueno"
+        android:textColor="#9E9E9E"
+        android:layout_below="@+id/sbNiveldeAtleta"
+        android:layout_toEndOf="@+id/btnAceptar"
+        android:layout_marginStart="18dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Malo"
+        android:textColor="#9E9E9E"
+        android:layout_below="@+id/sbNiveldeAtleta"
+        android:layout_toStartOf="@+id/tvInfoAdicional" />
+
+</RelativeLayout>

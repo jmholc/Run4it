@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">RUN4IT</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="intro1a">Bienvenido</string>
+    <string name="intro1b">Hora de levantarse y salir a correr. ¡No mas excusas!</string>
+
+    <string name="intro2a">Historias</string>
+    <string name="intro2b">Elige una de las miles de historias y realiza las actividades que te proponga</string>
+
+    <string name="intro3a">Audio 3D</string>
+    <string name="intro3b">No solo escucharas las historias, sino que las vivirás</string>
+
+    <string name="intro4a">Aire libre</string>
+    <string name="intro4b">Disfruta y sal a correr por las calles de Buenos Aires</string>
+
+    <string name="intro5a">A correr!</string>
+    <string name="intro5b">Ahora podrás salir a correr de una forma más divertida e innmersiva nunca antes vista</string>
+
+    <string name="RegApellido">Apellido</string>
+    <string name="RegNombre">Nombre</string>
+    <string name="RegMail">Mail</string>
+    <string name="RegUser">Usuario</string>
+    <string name="RegContrasena">Contrasena</string>
+    <string name="RegRepetir_contrasena">Repetir Contrasena</string>
+    <string name="RegCrear_usuario">Crear Usuario</string>
+    <string name="NivelAtleta">¿Qué tipo de atleta te consideras?</string>
+
+    <string name="LogContrasena">Contraseña</string>
+    <string name="LogUsuario">Usuario</string>
+    <string name="LogLogin">Login</string>
+    <string name="LogIraRegistrar">¿No tienes un Usuario? Registrate</string>
+
+    <string name="VerificarMail_et">Codigo:</string>
+    <string name="VerificarMail_txt">Ingrese su código que le hemos enviado a su correo electrónico</string>
+
+
+    <string name="IntroSiguiente">SIGUIENTE</string>
+    <string name="IntroSkip">SKIP</string>
+
+
+    <string name="ConfiguracionTitulo">Configuración</string>
+
+
+    <string name="AmigosTitulo">Amigos</string>
+
+
+    <string name="EstadisticasTitulo">Estadísticas Semanales</string>
+
+
+    <string name="PerfilTitulo">Perfil</string>
+
+
+    <string name="configuracion_pantallaTitulo">Configuracion Pantalla</string>
+
+
+    <string name="Reg2_boton">Aceptar</string>
+    <string name="Reg2_altura">Altura cm</string>
+    <string name="Reg2_nacimiento">Fecha de nacimiento</string>
+    <string name="Reg2_femenino">Femenino</string>
+    <string name="Reg2_informacion_adicional">Informacion Adicional</string>
+    <string name="Reg2_masculino">Masculino</string>
+    <string name="Reg2_otro">Otro</string>
+    <string name="Reg2_peso">Peso KG</string>
+    <string name="Principal_imagen_del_dia">La Imagen del dia</string>
+
+    <string name="Salida_Tiempo">¿Cuanto tiempo deseas correr?</string>
+    <string name="Salida_boton">Nueva Salida a correr</string>
+    <string name="Salida_Distancia">¿Qué distancia quieres correr?</string>
+    <string name="Registrarse1_VolveraLogin">Volver a inicio de sesión</string>
+
+
+</resources>
