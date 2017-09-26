@@ -215,6 +215,9 @@ public class BackgroundTask extends AsyncTask{
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("usuario",info[1]);
             editor.putString("contrasena",info[2]);
+            //editor.putString("nombre",info[3]);
+            //editor.putString("apellido",info[4]);
+
             editor.apply();
 
             Intent intent=new Intent(ctx,Principal.class);
