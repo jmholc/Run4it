@@ -208,9 +208,7 @@ public class Historias extends AppCompatActivity {
                                 stream.flush();
                                 stream.close();
                                 response.body().close();
-                                /*Decompress decompress = new Decompress(Environment.getExternalStorageDirectory() + "/Run4It/" + selected_file.substring(0, selected_file.length() - 4)+"/"+selected_file ,
-                                        Environment.getExternalStorageDirectory() + "/Run4It/" + selected_file.substring(0, selected_file.length() - 4));
-                                decompress.unzip();*/
+
                                 unpackZip(Environment.getExternalStorageDirectory() + "/Run4It/" + selected_file.substring(0, selected_file.length() - 4)+"/",selected_file);
                                 File file = new File(Environment.getExternalStorageDirectory() + "/Run4It/" + selected_file.substring(0, selected_file.length() - 4)+"/"+selected_file);
                                 boolean deleted = file.delete();
