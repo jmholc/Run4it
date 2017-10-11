@@ -15,17 +15,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
-import static com.example.adm.pantallas.R.raw.prueba;
+import static com.example.adm.pantallas.R.raw.duracion;
 
 public class salida extends AppCompatActivity {
     MediaPlayer reproductor;
     MediaPlayer bgmusic;
     int maxVolume=100;
-    int volume = 0;
-    int cont = 1;
+    int volume = 50;
+    int cont = 10;
     int runTime = 30;
+    int durationSeg;
+    HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
+    HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
+    HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +39,43 @@ public class salida extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salida);
         Context ctx = getBaseContext();
-        InputStream is = ctx.getResources().openRawResource(prueba);
+        InputStream is = ctx.getResources().openRawResource(duracion);
         //String filename2 = "android.resource://" + getBaseContext().getPackageName() + "/raw/prueba.txt";
         Scanner sc = new Scanner(is);
         String linea = sc.next();
-        Toast.makeText(getApplicationContext(), linea, Toast.LENGTH_LONG).show();
-        sc.close();
-        reproductor = MediaPlayer.create(this, R.raw.audio1);
+
+
+        reproductor = MediaPlayer.create(this, R.raw.a_10);
         bgmusic = MediaPlayer.create(this, R.raw.bgmusic);
         float log1 = (float) (Math.log(maxVolume - volume) / Math.log(maxVolume));
         bgmusic.setVolume(1 - log1, 1 - log1);
         bgmusic.start();
+        bgmusic.isLooping();
 
         //reproductor.setLooping(true);
-
+        durationSeg = sc.nextInt();
+        Toast.makeText(getApplicationContext(), durationSeg, Toast.LENGTH_LONG).show();
+        String level;
+        int a = 10,b = 10,c = 10;
+        while (sc.hasNext()){
+            level = sc.next();
+            switch (level.charAt(0)){
+                case 'a':
+                    durationA.put(a,sc.nextInt());
+                    a++;
+                    break;
+                case 'b':
+                    durationB.put(b,sc.nextInt());
+                    b++;
+                    break;
+                case 'c':
+                    durationC.put(c,sc.nextInt());
+                    c++;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         reproductor.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer reproductor) {
@@ -57,7 +86,7 @@ public class salida extends AppCompatActivity {
                 reproductor.reset();
 
                 try {
-                    String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/audio" + cont;
+                    String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/a_" + cont;
                     reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                     reproductor.prepare();
                 } catch (IOException e) {
