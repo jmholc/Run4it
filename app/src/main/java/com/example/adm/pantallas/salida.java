@@ -54,22 +54,30 @@ public class salida extends AppCompatActivity {
 
         //reproductor.setLooping(true);
         durationSeg = sc.nextInt();
-        Toast.makeText(getApplicationContext(), durationSeg, Toast.LENGTH_LONG).show();
-        String level;
-        int a = 10,b = 10,c = 10;
+
+//        Toast.makeText(getApplicationContext(), durationSeg, Toast.LENGTH_LONG).show();
+
+        String level="";
+        int durA=0, durB=0, durC=0, aDurTotal=0, bDurTotal=0, cDurTotal=0, c = 10, b = 10, a = 10;
         while (sc.hasNext()){
             level = sc.next();
             switch (level.charAt(0)){
                 case 'a':
-                    durationA.put(a,sc.nextInt());
+                    durA = sc.nextInt();
+                    aDurTotal+=durA;
+                    durationA.put(a,durA);
                     a++;
                     break;
                 case 'b':
-                    durationB.put(b,sc.nextInt());
+                    durB=sc.nextInt();
+                    bDurTotal+=durB;
+                    durationB.put(b,durB);
                     b++;
                     break;
                 case 'c':
-                    durationC.put(c,sc.nextInt());
+                    durC=sc.nextInt();
+                    cDurTotal+=durC;
+                    durationC.put(c,durC);
                     c++;
                     break;
                 default:
@@ -77,6 +85,8 @@ public class salida extends AppCompatActivity {
             }
         }
 
+        sc.close();
+        Toast.makeText(getApplicationContext(),String.valueOf(aDurTotal), Toast.LENGTH_LONG).show();
         reproductor.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer reproductor) {
 
