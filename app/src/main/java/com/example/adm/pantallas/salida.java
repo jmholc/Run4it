@@ -2,6 +2,7 @@ package com.example.adm.pantallas;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
@@ -19,11 +20,12 @@ public class salida extends AppCompatActivity {
     MediaPlayer reproductor;
     MediaPlayer bgmusic;
     int maxVolume=100;
-    int volume = 50;
-    int nextAudio = 10;
+    int volume = 5;
+    int nextAudio = 10, alertType = 10;
     int nextAudioB = 10;
-    int runTime = 30;
-    int bTot;
+    int runTime = 100;
+    int bTot, spareTime, a;
+    boolean alert=false;
     String nextAudioLevel="a_";
     int durationSeg;
     HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
@@ -43,39 +45,70 @@ public class salida extends AppCompatActivity {
         bgmusic.start();
         bgmusic.setLooping(true);
         obtenerDuracion();
+        reproducirAudio();
+    }
+    protected void reproducirAudio(){
         reproductor.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer reproductor) {
-
-                Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio +1-10), Toast.LENGTH_LONG).show();
-                reproductor.stop();
-                reproductor.reset();
-
-                try {
-                    if (bTot>0 && nextAudioLevel=="a_")
-                    {
-                        nextAudioLevel="b_";
-                        String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel+ nextAudioB;
-                        reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
-                        reproductor.prepare();
-                        nextAudioB++;
-                        bTot--;
-                    }else {
-                        nextAudioLevel="a_";
-                        String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
-                        reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
-                        reproductor.prepare();
-                        nextAudio++;
+                volume = 5;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        elegirAudio();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "algo extraño", Toast.LENGTH_LONG).show();
-                }
-
-                reproductor.start();
-
+                }, spareTime/(bTot-10+a+1-10)*1000);   //5 seconds
+                volume=50;
             }
         });
+    }
+    protected void elegirAudio(){
+        reproductor.stop();
+        reproductor.reset();
+        if (alert=false){
+        if (runTime>0) {
+            try {
 
+                if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
+                    nextAudioLevel = "b_";
+                    String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudioB;
+                    reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
+                    reproductor.prepare();
+                    runTime -= durationB.get(nextAudioB);
+                    nextAudioB++;
+                    bTot--;
+                } else {
+                    nextAudioLevel = "a_";
+                    String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
+                    reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
+                    reproductor.prepare();
+                    runTime -= durationA.get(nextAudio);
+                    nextAudio++;
+                }
+                Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio-10), Toast.LENGTH_LONG).show();
+                reproductor.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "NO MORE AUDIOS SIR, "+spareTime, Toast.LENGTH_LONG).show();
+                reproductor.stop();
+                reproductor.release();
+            }
+        }else{
+            Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            try {
+                alert=false;
+                String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/c_" + alertType;
+                reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
+                reproductor.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    public void Alert(View v){
+        alert=true;
     }
     public void SaludarOnClick(View v) {
         /*
@@ -94,11 +127,12 @@ public class salida extends AppCompatActivity {
         String linea = sc.next();
         durationSeg = sc.nextInt();
         String level="";
-        int durA=0, durB=0, durC=0, aDurTotal=0, bDurTotal=0, cDurTotal=0, c = 10, b = 10, a = 10, durRest=0;
+        int durA=0, durB=0, durC=0, aDurTotal=0, bDurTotal=0, cDurTotal=0, c = 10, b = 10, durRest=0;
+        a = 10;
         while (sc.hasNext()){
             level = sc.next();
             switch (level.charAt(0)){
-                case 'a':
+                case 'a':                           //29 seg
                     durA = sc.nextInt();
                     aDurTotal+=durA;
                     durationA.put(a,durA);
@@ -124,13 +158,19 @@ public class salida extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(),String.valueOf(aDurTotal), Toast.LENGTH_LONG).show();
 
         durRest=runTime-aDurTotal;
+        bTot=10;
 
-
-            for (bTot = 10; durRest>0; bTot++){
-                durRest-=durationB.get(bTot);
+            for (int i = 10; durRest>0; i++){
+                if (durationB.containsKey(i)) {
+                    durRest -= durationB.get(i);
+                    bTot++;
+                }else{
+                    spareTime++;
+                    durRest--;
+                }
             }
 
-        bTot-=1;
+       // bTot-=1;
         Toast.makeText(getApplicationContext(),"Entran los "+(bTot-10)+" primeros audios de la categoria B :)", Toast.LENGTH_LONG).show();
     }
 }
