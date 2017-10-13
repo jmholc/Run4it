@@ -20,7 +20,6 @@ public class salida extends AppCompatActivity {
     MediaPlayer reproductor;
     MediaPlayer bgmusic;
     int maxVolume=100;
-    int volume = 5;
     int nextAudio = 10, alertType = 10;
     int nextAudioB = 10;
     int runTime = 100;
@@ -40,31 +39,34 @@ public class salida extends AppCompatActivity {
         Context ctx = getBaseContext();
         reproductor = MediaPlayer.create(this, R.raw.a_10);
         bgmusic = MediaPlayer.create(this, R.raw.bgmusic);
-        float log1 = (float) (Math.log(maxVolume - volume) / Math.log(maxVolume));
-        bgmusic.setVolume(1 - log1, 1 - log1);
+        regVolumen(5);
         bgmusic.start();
         bgmusic.setLooping(true);
         obtenerDuracion();
         reproducirAudio();
     }
+    protected void regVolumen(int vol){
+        float log1 = (float) (Math.log(maxVolume - vol) / Math.log(maxVolume));
+        bgmusic.setVolume(1 - log1, 1 - log1);
+    }
     protected void reproducirAudio(){
         reproductor.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer reproductor) {
-                volume = 5;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
+                        regVolumen(5);
                         elegirAudio();
                     }
                 }, spareTime/(bTot-10+a+1-10)*1000);   //5 seconds
-                volume=50;
+                regVolumen(50);
             }
         });
     }
     protected void elegirAudio(){
         reproductor.stop();
         reproductor.reset();
-        if (alert=false){
+        if (alert==false){
         if (runTime>0) {
             try {
 
@@ -92,15 +94,16 @@ public class salida extends AppCompatActivity {
                 reproductor.stop();
                 reproductor.release();
             }
-        }else{
-            Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
-            }
+             }else{
+                Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
+                }
         }else{
             try {
                 alert=false;
                 String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/c_" + alertType;
                 reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                 reproductor.prepare();
+                reproductor.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
