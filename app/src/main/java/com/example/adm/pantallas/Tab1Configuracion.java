@@ -124,7 +124,7 @@ public class Tab1Configuracion extends Fragment {
         productList.add(new Tab1Product(R.drawable.ic_story, "Historias", "Descarga nuevas historias"));
         productList.add(new Tab1Product(R.drawable.ic_configuration, "Configuracion", "Configura la aplicacion para satisfacer tus gustos"));
         productList.add(new Tab1Product(R.drawable.ic_headphones, "Estadisticas", "Conoce toda tu información de tus salidas a correr"));
-        productList.add(new Tab1Product(R.drawable.ic_friends, "Amigos", "Añade amigos y mira los existentes"));
+        productList.add(new Tab1Product(R.drawable.ic_friends, "Añadir Amigos", "Añade amigos nuevos para ver sus estadísticas y correr carreras"));
         productList.add(new Tab1Product(R.drawable.ic_user, "Perfil", "Actualiza tus datos del perfil"));
         productList.add(new Tab1Product(R.drawable.ic_configuration_screen, "Pantalla", "This is description 5"));
 
@@ -143,13 +143,13 @@ public class Tab1Configuracion extends Fragment {
             //Do any thing when user click to item
             Log.d("PRINCIPAL" , productList.get(position).getTitle() + " - " + productList.get(position).getDescription());
             Toast.makeText(getContext(), "HOLA"/*productList.get(position).getTitle() + " - " + productList.get(position).getDescription()*/,Toast.LENGTH_SHORT);
-            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, Amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class };
+            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, anadir_amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class };
             int i=0;
             if(productList.get(position).getTitle().equals("Configuracion"))
                 i=1;
             if(productList.get(position).getTitle().equals("Estadisticas"))
                 i=2;
-            if(productList.get(position).getTitle().equals("Amigos"))
+            if(productList.get(position).getTitle().contains("Amigos"))
                 i=3;
             if(productList.get(position).getTitle().equals("Perfil"))
                 i=4;

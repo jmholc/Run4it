@@ -107,8 +107,10 @@ public class BackgroundTask extends AsyncTask{
                 e.printStackTrace();
             }
         }
-        else if (method.equals("register2"))
-        {
+        else if (method.equals("buscarusuario")){
+
+        }
+        else if (method.equals("register2")){
 
         }
         try {

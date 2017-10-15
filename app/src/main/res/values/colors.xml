@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#dc5d11</color>
 
-    <color name="Intro1">#2196F3</color>
+    <color name="Intro1">#2196f3</color>
     <color name="Intro2">#F44336</color>
     <color name="Intro3">#9C27B0</color>
     <color name="Intro4">#4CAF50</color>
@@ -18,7 +18,7 @@
     <color name="dot_dark_Intro5">#FF6F00</color>
     <color name="dot_dark_Intro6">#FF6F01</color>
 
-    <color name="dot_light_Intro1">#81D4FA</color>
+    <color name="dot_light_Intro1">#81d4fa</color>
     <color name="dot_light_Intro2">#FF8A80</color>
     <color name="dot_light_Intro3">#CE93D8</color>
     <color name="dot_light_Intro4">#A5D6A7</color>
