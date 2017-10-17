@@ -1,14 +1,16 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
-
+import android.nfc.Tag;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class salida extends AppCompatActivity {
     boolean alert=false;
     String nextAudioLevel="a_";
     int durationSeg;
+    private static final int FILE_SELECT_CODE = 0;
     HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
@@ -86,7 +89,7 @@ public class salida extends AppCompatActivity {
                     runTime -= durationA.get(nextAudio);
                     nextAudio++;
                 }
-                Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio-10), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio-10+1), Toast.LENGTH_LONG).show();
                 reproductor.start();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -112,7 +115,11 @@ public class salida extends AppCompatActivity {
     }
     public void Alert(View v){
         alert=true;
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(intent.createChooser(intent, "Selecciona un audio"), FILE_SELECT_CODE);
     }
+
     public void SaludarOnClick(View v) {
         /*
         EditText Cajatexto = (EditText) findViewById(R.id.ET_Nombre);
