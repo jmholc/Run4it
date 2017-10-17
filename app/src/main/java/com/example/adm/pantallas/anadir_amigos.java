@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -205,7 +206,7 @@ class AdaptadorUsuarios extends ArrayAdapter {
         if(row==null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.activity_anadir_amigos_listview,parent,false);
+            row = layoutInflater.inflate(R.layout.activity_anadir_amigos_listview, parent, false);
             contactHolder = new ContactHolder();
             contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
             contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
@@ -220,11 +221,21 @@ class AdaptadorUsuarios extends ArrayAdapter {
         contactHolder.txUsername.setText(usuariosBuscados.getUsername());
         contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
         contactHolder.txEstado.setText(usuariosBuscados.getEstado());
+/*        contactHolder.btnEnviarSolicitud.setTag(usuariosBuscados.getUsername());
+
+        contactHolder.btnEnviarSolicitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+            }
+        });*/
         return row;
     }
 
+
     static class ContactHolder{
         TextView txUsername, txNombreApellido, txEstado;
+        Button btnEnviarSolicitud;
     }
 }
 
