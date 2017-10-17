@@ -7,6 +7,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class anadir_amigos extends AppCompatActivity {
 
     String json_string;
+    String usuarioabuscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,6 @@ public class anadir_amigos extends AppCompatActivity {
 
     public void buscarUsuario(View v) {
 
-        String usuarioabuscar;
         EditText editText = (EditText) findViewById(R.id.etBuscarUsuarios);
         usuarioabuscar = editText.getText().toString();
 
@@ -118,31 +119,51 @@ public class anadir_amigos extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object o) {
-            JSONObject jsonObject;
-            JSONArray jsonArray;
+
 
             String username, nombreapellido, estado;
 
-            AdaptadorUsuarios adaptadorUsuarios;
-            ListView listView;
 
             /*TextView textView=(TextView)findViewById(R.id.textView6);
             textView.setText((String)o);*/
             json_string = (String) o;
 
-            adaptadorUsuarios = new AdaptadorUsuarios(getApplicationContext(), R.layout.activity_anadir_amigos_listview);
+            //-----------------------------------------------------------------
+            //ACA TERMINARIA LO DE PEDIR EL JSON.
+            //ABAJO EMPIEZA LO DE PARSEARLO
+            //-----------------------------------------------------------------
+            JSONObject jsonObject;
+            JSONArray jsonArray;
+
+
+            AdaptadorUsuarios adaptadorUsuarios = new AdaptadorUsuarios(getApplicationContext(), R.layout.activity_anadir_amigos_listview);
+
+            ListView listView;
             listView = (ListView) findViewById(R.id.lvUsuarios);
             listView.setAdapter(adaptadorUsuarios);
+
             try {
+                TextView txtnoseencontro= (TextView) findViewById(R.id.txtNoSeEncontro);
+
+
                 jsonObject = new JSONObject(json_string);
 
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
-
+                Log.d("JSON", jsonArray.length() + "");
+                if (jsonArray.length()<1)
+                {
+                    txtnoseencontro.setText("No se encontró el usuario " + usuarioabuscar);
+                    txtnoseencontro.setVisibility(View.VISIBLE);
+                }
                 for (int count = 0; count < jsonArray.length(); count++) {
+                    txtnoseencontro.setVisibility(View.GONE);
+
                     JSONObject JO = jsonArray.getJSONObject(count);
                     username = JO.getString("Username");
                     nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
-                    estado = JO.getString("Estado");
+                    estado = JO.getString("Mensaje");
+                    if(JO.getString("Mensaje").equals(null))
+                        estado="";
                     UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado);
                     adaptadorUsuarios.add(usuariosBuscados);
                 }
