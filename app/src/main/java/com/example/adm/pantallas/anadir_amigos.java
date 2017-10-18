@@ -1,6 +1,7 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,7 +86,12 @@ public class anadir_amigos extends AppCompatActivity {
                 OutputStream outputStream = httpsURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                String data = URLEncoder.encode("usuarioabuscar", "UTF-8") + "=" + URLEncoder.encode(usuarioabuscar, "UTF-8");
+                SharedPreferences sharedPreferences =  getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+                String usuario= sharedPreferences.getString("usuario","");
+
+                String data =
+                        URLEncoder.encode("usuario","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
+                        URLEncoder.encode("usuarioabuscar", "UTF-8") + "=" + URLEncoder.encode(usuarioabuscar, "UTF-8");
 
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
@@ -167,6 +174,9 @@ public class anadir_amigos extends AppCompatActivity {
                         estado="";
                     UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado);
                     adaptadorUsuarios.add(usuariosBuscados);
+
+
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -176,9 +186,11 @@ public class anadir_amigos extends AppCompatActivity {
 }
 class AdaptadorUsuarios extends ArrayAdapter {
     List list = new ArrayList();
+    Context ctx;
 
     public AdaptadorUsuarios(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
+        ctx=context;
     }
 
     public void add(UsuariosBuscados object) {
@@ -202,7 +214,7 @@ class AdaptadorUsuarios extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View row;
         row=convertView;
-        ContactHolder contactHolder;
+        final ContactHolder contactHolder;
         if(row==null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -211,24 +223,24 @@ class AdaptadorUsuarios extends ArrayAdapter {
             contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
             contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
             contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
+            contactHolder.btnEnviarSolicitud= (Button) row.findViewById(R.id.btnEnviarSolicitud);
             row.setTag(contactHolder);
         }
         else {
             contactHolder = (ContactHolder) row.getTag();
         }
 
-        UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
+        final UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
         contactHolder.txUsername.setText(usuariosBuscados.getUsername());
         contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
         contactHolder.txEstado.setText(usuariosBuscados.getEstado());
-/*        contactHolder.btnEnviarSolicitud.setTag(usuariosBuscados.getUsername());
 
         contactHolder.btnEnviarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, usuariosBuscados.getUsername(), Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
         return row;
     }
 
