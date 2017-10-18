@@ -20,6 +20,7 @@ import android.nfc.Tag;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
@@ -723,5 +724,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
-
 }
