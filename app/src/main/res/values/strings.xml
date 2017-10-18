@@ -70,6 +70,7 @@
     <string name="Salida_Distancia">¿Qué distancia quieres correr?</string>
     <string name="Registrarse1_VolveraLogin">Volver a inicio de sesión</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps2">Map</string>
 
 
 </resources>

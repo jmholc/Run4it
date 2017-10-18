@@ -17,17 +17,31 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnComenzar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Comenzar"
+        android:text="Comenzar" />
+
+    <Button
+        android:id="@+id/btnAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Alert"
+        android:text="Alert" />
+
+    <Button
         android:id="@+id/btnParse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="time"
+        android:onClick="onClick_time"
         android:text="¿En cuanto llego?" />
 
     <Button
         android:id="@+id/btnLugares"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
+        android:onClick="onClick_places"
         android:text="Lugares..." />
 
     <TextView
