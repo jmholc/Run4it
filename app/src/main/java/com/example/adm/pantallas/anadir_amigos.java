@@ -35,6 +35,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ForkJoinPool;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -238,10 +239,17 @@ class AdaptadorUsuarios extends ArrayAdapter {
         contactHolder.btnEnviarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ejecutarBackgroundTask(usuariosBuscados.getUsername());
                 Toast.makeText(ctx, usuariosBuscados.getUsername(), Toast.LENGTH_SHORT).show();
             }
         });
         return row;
+    }
+    public void ejecutarBackgroundTask(String usuariosBuscados){
+        SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+        String usuario= sharedPreferences.getString("usuario","");
+        BackgroundTask backgroundTask= new BackgroundTask("enviarsolicitud",usuario,usuariosBuscados);
+        backgroundTask.execute();
     }
 
 

@@ -107,8 +107,17 @@ public class BackgroundTask extends AsyncTask{
                 e.printStackTrace();
             }
         }
-        else if (method.equals("buscarusuario")){
-
+        else if (method.equals("enviarsolicitud")){
+            String usuario=(String) params[1];
+            String usuarioaenviar= (String) params[2];
+            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
+            try {
+                data=
+                        URLEncoder.encode("usuario","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
+                                URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         else if (method.equals("register2")){
 
