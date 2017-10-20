@@ -9,6 +9,7 @@ import android.location.Location;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -84,6 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     int nextAudio = 10, alertType = 10;
     int nextAudioB = 10;
     int runTime = 100;
+    int vol=0;
     int bTot, spareTime, a;
     boolean alert=false;
     String nextAudioLevel="a_";
@@ -117,7 +119,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Context ctx = getBaseContext();
         reproductor = MediaPlayer.create(this, R.raw.a_10);
         bgmusic = MediaPlayer.create(this, R.raw.bgmusic);
-        regVolumen(5);
+        vol=50;
+        regVolumen(vol);
         bgmusic.start();
         bgmusic.setLooping(true);
         obtenerDuracion();
@@ -576,13 +579,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        regVolumen(5);
+                        fadeOut();
                         elegirAudio();
                     }
                 }, spareTime/(bTot-10+a+1-10)*1000);   //5 seconds
-                regVolumen(50);
+                fadeIn();
             }
         });
+    }
+    protected void fadeIn(){
+        new CountDownTimer(1000,10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (vol<50) regVolumen(vol++);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+    }
+    protected void fadeOut(){
+        new CountDownTimer(1000,10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                   if (vol>5) regVolumen(vol--);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
     }
     protected void elegirAudio(){
         reproductor.stop();
@@ -691,6 +722,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         EditText Cajatexto = (EditText) findViewById(R.id.ET_Nombre);
         String nombre = Cajatexto.getText().toString();
         Toast.makeText(this,"Hola "+ nombre, Toast.LENGTH_LONG).show();*/
+        fadeOut();
         reproductor.start();
         nextAudio++;
         float duration = reproductor.getDuration();
