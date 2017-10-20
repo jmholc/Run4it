@@ -110,10 +110,12 @@ public class BackgroundTask extends AsyncTask{
         else if (method.equals("enviarsolicitud")){
             String usuario=(String) params[1];
             String usuarioaenviar= (String) params[2];
+            String tipo=(String) params[3];
             urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
             try {
                 data=
                         URLEncoder.encode("usuario","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
+                                URLEncoder.encode("tipo","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
                                 URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

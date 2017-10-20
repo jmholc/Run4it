@@ -35,7 +35,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ForkJoinPool;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -57,6 +56,10 @@ public class anadir_amigos extends AppCompatActivity {
 
         if (usuarioabuscar.length() > 0)
             new BackgroundTaskJSON(usuarioabuscar).execute();
+    }
+    public void enviarSolicitud(String usuario, String usuarioaenviar){
+        BackgroundTask backgroundTask=new BackgroundTask(this);
+        backgroundTask.execute("enviarsolicitud",usuario,usuarioaenviar,"enviada");
     }
 
     class BackgroundTaskJSON extends AsyncTask {
@@ -182,6 +185,8 @@ public class anadir_amigos extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            super.onPostExecute(o);
+
         }
     }
 }
@@ -248,8 +253,9 @@ class AdaptadorUsuarios extends ArrayAdapter {
     public void ejecutarBackgroundTask(String usuariosBuscados){
         SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
         String usuario= sharedPreferences.getString("usuario","");
-        BackgroundTask backgroundTask= new BackgroundTask("enviarsolicitud",usuario,usuariosBuscados);
-        backgroundTask.execute();
+        anadir_amigos a=new anadir_amigos();
+        a.enviarSolicitud(usuario,usuariosBuscados);
+
     }
 
 
