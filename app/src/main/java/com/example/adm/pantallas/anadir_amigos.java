@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -175,6 +177,7 @@ public class anadir_amigos extends AppCompatActivity {
                     nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
                     estado = JO.getString("Mensaje");
                     if(JO.getString("Mensaje").equals(null))
+                    if(JO.getString("Mensaje").equals("null"))
                         estado="";
                     UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado);
                     adaptadorUsuarios.add(usuariosBuscados);
@@ -245,23 +248,102 @@ class AdaptadorUsuarios extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 ejecutarBackgroundTask(usuariosBuscados.getUsername());
-                Toast.makeText(ctx, usuariosBuscados.getUsername(), Toast.LENGTH_SHORT).show();
             }
         });
         return row;
     }
+
     public void ejecutarBackgroundTask(String usuariosBuscados){
         SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
         String usuario= sharedPreferences.getString("usuario","");
+<<<<<<< HEAD
         anadir_amigos a=new anadir_amigos();
         a.enviarSolicitud(usuario,usuariosBuscados);
 
+=======
+
+        BackgroundTaskSolitud backgroundTaskSolitud= new BackgroundTaskSolitud(ctx);
+        backgroundTaskSolitud.execute("enviarsolicitud",usuario,usuariosBuscados);
+>>>>>>> 3703927e0f560a03ce8b7055044c0e027539b81e
     }
 
 
     static class ContactHolder{
         TextView txUsername, txNombreApellido, txEstado;
         Button btnEnviarSolicitud;
+    }
+
+    class BackgroundTaskSolitud extends AsyncTask{
+        Context ctx;
+
+        BackgroundTaskSolitud(Context ctx){
+            this.ctx=ctx;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            String urldelphp = null;
+            String data="";
+            String respuesta="";
+
+
+            String usuario=(String) params[1];
+            String usuarioaenviar= (String) params[2];
+            String tipo = (String) params[0];
+            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
+            try {
+                data=
+                        URLEncoder.encode("usuario","UTF-8")       +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
+                        URLEncoder.encode("tipo","UTF-8")       +"="+URLEncoder.encode(tipo,"UTF-8")+"&"+
+                        URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                URL url=new URL(urldelphp);
+                HttpsURLConnection httpsURLConnection=(HttpsURLConnection)url.openConnection();
+                httpsURLConnection.setRequestMethod("POST");
+                httpsURLConnection.setDoOutput(true);
+
+                OutputStream OS=httpsURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+
+
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
+
+                InputStream inputStream = httpsURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String line = "";
+                while ((line = bufferedReader.readLine())!=null)
+                {
+                    respuesta+= line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpsURLConnection.disconnect();
+
+                return respuesta;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            Log.i("QWEQWE","Hizo esto...");
+            Toast.makeText(ctx, (String) o,Toast.LENGTH_SHORT).show();
+            super.onPostExecute(o);
+        }
     }
 }
 
