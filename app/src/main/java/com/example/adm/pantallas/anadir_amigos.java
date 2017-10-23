@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,10 +57,6 @@ public class anadir_amigos extends AppCompatActivity {
 
         if (usuarioabuscar.length() > 0)
             new BackgroundTaskJSON(usuarioabuscar).execute();
-    }
-    public void enviarSolicitud(String usuario, String usuarioaenviar){
-        BackgroundTask backgroundTask=new BackgroundTask(this);
-        backgroundTask.execute("enviarsolicitud",usuario,usuarioaenviar,"enviada");
     }
 
     class BackgroundTaskJSON extends AsyncTask {
@@ -135,7 +130,7 @@ public class anadir_amigos extends AppCompatActivity {
         protected void onPostExecute(Object o) {
 
 
-            String username, nombreapellido, estado;
+            String IDUsuario, username, nombreapellido, estado;
 
 
             /*TextView textView=(TextView)findViewById(R.id.textView6);
@@ -176,10 +171,11 @@ public class anadir_amigos extends AppCompatActivity {
                     username = JO.getString("Username");
                     nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
                     estado = JO.getString("Mensaje");
+                    IDUsuario = JO.getString("IDUsuario");
                     if(JO.getString("Mensaje").equals(null))
                     if(JO.getString("Mensaje").equals("null"))
                         estado="";
-                    UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado);
+                    UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
                     adaptadorUsuarios.add(usuariosBuscados);
 
 
@@ -233,6 +229,7 @@ class AdaptadorUsuarios extends ArrayAdapter {
             contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
             contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
             contactHolder.btnEnviarSolicitud= (Button) row.findViewById(R.id.btnEnviarSolicitud);
+
             row.setTag(contactHolder);
         }
         else {
@@ -243,11 +240,12 @@ class AdaptadorUsuarios extends ArrayAdapter {
         contactHolder.txUsername.setText(usuariosBuscados.getUsername());
         contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
         contactHolder.txEstado.setText(usuariosBuscados.getEstado());
+        contactHolder.idusuario=usuariosBuscados.getIdusuario();
 
         contactHolder.btnEnviarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ejecutarBackgroundTask(usuariosBuscados.getUsername());
+                ejecutarBackgroundTask(usuariosBuscados.getIdusuario());
             }
         });
         return row;
@@ -256,21 +254,16 @@ class AdaptadorUsuarios extends ArrayAdapter {
     public void ejecutarBackgroundTask(String usuariosBuscados){
         SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
         String usuario= sharedPreferences.getString("usuario","");
-<<<<<<< HEAD
-        anadir_amigos a=new anadir_amigos();
-        a.enviarSolicitud(usuario,usuariosBuscados);
-
-=======
 
         BackgroundTaskSolitud backgroundTaskSolitud= new BackgroundTaskSolitud(ctx);
         backgroundTaskSolitud.execute("enviarsolicitud",usuario,usuariosBuscados);
->>>>>>> 3703927e0f560a03ce8b7055044c0e027539b81e
     }
 
 
     static class ContactHolder{
         TextView txUsername, txNombreApellido, txEstado;
         Button btnEnviarSolicitud;
+        String idusuario;
     }
 
     class BackgroundTaskSolitud extends AsyncTask{

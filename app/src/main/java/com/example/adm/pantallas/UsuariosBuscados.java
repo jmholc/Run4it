@@ -2,13 +2,15 @@ package com.example.adm.pantallas;
 
 public class UsuariosBuscados{
 
-    String username, nombreapellido, estado;
+    String username, nombreapellido, estado, idusuario;
 
-    public UsuariosBuscados(String username, String nombreapellido, String estado) {
+    public UsuariosBuscados(String username, String nombreapellido, String estado, String idusuario) {
         this.username = username;
         this.nombreapellido = nombreapellido;
         this.estado = estado;
+        this.idusuario = idusuario;
     }
+
     public String getUsername() {
         return username;
     }
@@ -31,5 +33,13 @@ public class UsuariosBuscados{
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(String idusuario) {
+        this.idusuario = idusuario;
     }
 }
