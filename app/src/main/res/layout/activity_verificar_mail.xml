@@ -29,6 +29,7 @@
         android:ems="10"
         android:textSize="22dp"
         android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
         android:inputType="phone"
         android:digits="0123456789"
         android:hint="@string/VerificarMail_et"

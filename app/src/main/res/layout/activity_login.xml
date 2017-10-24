@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.adm.pantallas.Login"
-    android:background="@drawable/sol">
+    android:background="@drawable/fondo5">
 
     <EditText
         android:id="@+id/etUsuario"
@@ -19,6 +19,7 @@
         android:hint="@string/LogUsuario"
         android:inputType="textPersonName"
         android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
         android:textSize="22dp" />
 
     <EditText
@@ -30,10 +31,13 @@
         android:layout_marginBottom="47dp"
         android:backgroundTint="@color/colorAccent"
         android:ems="10"
+        android:password="true"
         android:hint="@string/LogContrasena"
         android:inputType="textPersonName"
         android:textColorHint="#9E9E9E"
-        android:textSize="22dp" />
+        android:textColor="#9E9E9E"
+        android:textSize="22dp"
+        android:fontFamily="sans-serif"/>
 
     <TextView
         android:id="@+id/tvCrearUsuario"
@@ -62,9 +66,9 @@
         android:textColor="#212121"
         android:background="@drawable/button"
         app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginBottom="80dp"
         android:layout_above="@+id/tvCrearUsuario"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp" />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/imageView3"
