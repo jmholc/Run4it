@@ -145,11 +145,11 @@ public class anadir_amigos extends AppCompatActivity {
             JSONArray jsonArray;
 
 
-            AdaptadorUsuarios adaptadorUsuarios = new AdaptadorUsuarios(getApplicationContext(), R.layout.activity_anadir_amigos_listview);
+            AdaptadorUsuarios2 adaptadorUsuarios2 = new AdaptadorUsuarios2(getApplicationContext(), R.layout.activity_anadir_amigos_listview);
 
             ListView listView;
             listView = (ListView) findViewById(R.id.lvUsuarios);
-            listView.setAdapter(adaptadorUsuarios);
+            listView.setAdapter(adaptadorUsuarios2);
 
             try {
                 TextView txtnoseencontro= (TextView) findViewById(R.id.txtNoSeEncontro);
@@ -176,7 +176,7 @@ public class anadir_amigos extends AppCompatActivity {
                     if(JO.getString("Mensaje").equals("null"))
                         estado="";
                     UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
-                    adaptadorUsuarios.add(usuariosBuscados);
+                    adaptadorUsuarios2.add(usuariosBuscados);
 
 
 
