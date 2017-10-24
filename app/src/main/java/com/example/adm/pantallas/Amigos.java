@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -133,6 +134,7 @@ public class Amigos extends AppCompatActivity {
             JSONArray jsonArray;
 
 
+
             AdaptadorUsuarios2 adaptadorUsuarios2 = new AdaptadorUsuarios2(getApplicationContext(), R.layout.activity_amigos_listview);
 
             ListView listView;
@@ -163,10 +165,15 @@ public class Amigos extends AppCompatActivity {
                         estado="";
                     UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
                     adaptadorUsuarios2.add(usuariosBuscados);
-
-
-
                 }
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(getApplicationContext(), "TOAST", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
