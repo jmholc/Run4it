@@ -33,8 +33,8 @@ public class salida extends AppCompatActivity {
     HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
-    @Override
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
