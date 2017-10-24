@@ -39,8 +39,8 @@
         <item>@color/dot_dark_Intro5</item>
     </array>
 
-    <color name="rbuttonColor">#dc5d11</color>
-    <color name="SwitchDark">#dc5d11</color>
+    <color name="rbuttonColor">#DC5D11</color>
+    <color name="SwitchDark">#DC5D11</color>
     <color name="SwitchLight">#FFAB40</color>
 
 
