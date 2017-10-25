@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class Amigos extends AppCompatActivity {
 
     String json_string;
+    AutoCompleteTextView autoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,8 @@ public class Amigos extends AppCompatActivity {
 
         SharedPreferences sharedPreferences =  getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
         String usuario= sharedPreferences.getString("usuario","");
+
+        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
 
         new BackgroundTaskJSONAmigos(usuario).execute();
     }
@@ -135,9 +139,9 @@ public class Amigos extends AppCompatActivity {
 
 
 
-            AdaptadorUsuarios2 adaptadorUsuarios2 = new AdaptadorUsuarios2(getApplicationContext(), R.layout.activity_amigos_listview);
+            final AdaptadorUsuarios2 adaptadorUsuarios2 = new AdaptadorUsuarios2(getApplicationContext(), R.layout.activity_amigos_listview);
 
-            ListView listView;
+            final ListView listView;
             listView = (ListView) findViewById(R.id.lvAmigos);
             listView.setAdapter(adaptadorUsuarios2);
 
@@ -148,29 +152,39 @@ public class Amigos extends AppCompatActivity {
 
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
                 Log.d("JSON", jsonArray.length() + "");
+                final String[] nombresAutocomplete=new String[jsonArray.length()];
                 if (jsonArray.length()<1)
                 {
                     txtnoseencontro.setText("Todavía no tienes amigos. Ve a la pantalla de Añadir Amigos.");
                     txtnoseencontro.setVisibility(View.VISIBLE);
                 }
-                for (int count = 0; count < jsonArray.length(); count++) {
-                    txtnoseencontro.setVisibility(View.GONE);
+                else {
+                    for (int count = 0; count < jsonArray.length(); count++) {
+                        txtnoseencontro.setVisibility(View.GONE);
 
-                    JSONObject JO = jsonArray.getJSONObject(count);
-                    username = JO.getString("Username");
-                    nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
-                    estado = JO.getString("Mensaje");
-                    IDUsuario = JO.getString("IDUsuario");
-                    if(JO.getString("Mensaje").equals("null"))
-                        estado="";
-                    UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
-                    adaptadorUsuarios2.add(usuariosBuscados);
+                        JSONObject JO = jsonArray.getJSONObject(count);
+                        username = JO.getString("Username");
+                        nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
+                        estado = JO.getString("Mensaje");
+                        IDUsuario = JO.getString("IDUsuario");
+                        if (JO.getString("Mensaje").equals("null"))
+                            estado = "";
+
+                        nombresAutocomplete[count]=username;// hola granch
+                        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,nombresAutocomplete);
+                        autoCompleteTextView.setAdapter(stringArrayAdapter);
+
+                        UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
+                        adaptadorUsuarios2.add(usuariosBuscados);
+                    }
                 }
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getApplicationContext(), "TOAST", Toast.LENGTH_SHORT).show();
+                        //TextView tv = (TextView) findViewById(R.id.txtUsername);
+
+                        Toast.makeText(getApplicationContext(), nombresAutocomplete[position], Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -180,6 +194,9 @@ public class Amigos extends AppCompatActivity {
             super.onPostExecute(o);
 
         }
+    }
+    public void listviewClickeado(View v){
+
     }
 }
 class AdaptadorUsuarios2 extends ArrayAdapter {
@@ -237,91 +254,9 @@ class AdaptadorUsuarios2 extends ArrayAdapter {
         return row;
     }
 
-    public void ejecutarBackgroundTask(String usuariosBuscados){
-        SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
-        String usuario= sharedPreferences.getString("usuario","");
-
-        BackgroundTaskSolitud backgroundTaskSolitud= new BackgroundTaskSolitud(ctx);
-        backgroundTaskSolitud.execute("enviarsolicitud",usuario,usuariosBuscados);
-    }
-
-
     static class ContactHolder{
         TextView txUsername, txNombreApellido, txEstado;
         String idusuario;
-    }
-
-    class BackgroundTaskSolitud extends AsyncTask{
-        Context ctx;
-
-        BackgroundTaskSolitud(Context ctx){
-            this.ctx=ctx;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            String urldelphp = null;
-            String data="";
-            String respuesta="";
-
-
-            String usuario=(String) params[1];
-            String usuarioaenviar= (String) params[2];
-            String tipo = (String) params[0];
-            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
-            try {
-                data=
-                        URLEncoder.encode("usuario","UTF-8")       +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
-                                URLEncoder.encode("tipo","UTF-8")       +"="+URLEncoder.encode(tipo,"UTF-8")+"&"+
-                                URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            try {
-                URL url=new URL(urldelphp);
-                HttpsURLConnection httpsURLConnection=(HttpsURLConnection)url.openConnection();
-                httpsURLConnection.setRequestMethod("POST");
-                httpsURLConnection.setDoOutput(true);
-
-                OutputStream OS=httpsURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
-
-
-                bufferedWriter.write(data);
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                OS.close();
-
-                InputStream inputStream = httpsURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                String line = "";
-                while ((line = bufferedReader.readLine())!=null)
-                {
-                    respuesta+= line;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpsURLConnection.disconnect();
-
-                return respuesta;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            Log.i("QWEQWE","Hizo esto...");
-            Toast.makeText(ctx, (String) o,Toast.LENGTH_SHORT).show();
-            super.onPostExecute(o);
-        }
     }
 }
 
