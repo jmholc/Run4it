@@ -99,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String JSON_URL;
     String json_string;
     String txt_json;
+    int tocado=0;
     JSONObject jsonObj;
     double latitude, longitude, altitude;
     private int PROXIMITY_RADIUS = 20;
@@ -113,6 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList routePol;
     List<List<LatLng>> route;
     LocationManager locMan;
+    LatLng r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -513,6 +515,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    private class timeR extends AsyncTask<Void, Void, String> {
+        protected void onPreExecute() {
+            JSON_URL = getUrl_time(r.latitude, r.longitude);
+        }
+
+        protected String doInBackground(Void... params) {
+            try {
+                StringBuilder JSON_DATA = new StringBuilder();
+                URL url = new URL(JSON_URL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = httpURLConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                while ((json_string = reader.readLine()) != null) {
+                    JSON_DATA.append(json_string).append("\n");
+                }
+                return JSON_DATA.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e.toString();
+            }
+        }
+
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        protected void onPostExecute(String result) {
+            txt_json = result;
+            json_string = result;
+
+        }
+    }
+
+
     private class places extends AsyncTask<Void, Void, String> {
 
         protected void onPreExecute() {
@@ -551,7 +587,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String getUrl_time(double latDest, double lonDest) {
         StringBuilder googlePlacesUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
         googlePlacesUrl2.append("origin=" + latitude + "," + longitude);
-        googlePlacesUrl2.append("&destination=" + latDest + ", " + lonDest);
+        googlePlacesUrl2.append("&destination=" + latDest + "," + lonDest);
         googlePlacesUrl2.append("&mode=walking");
         googlePlacesUrl2.append("&key=" + "AIzaSyBkIzubSeyKqjKRRbZ7RhtGb_UZA84VPU4");
         return (googlePlacesUrl2.toString());
@@ -758,5 +794,76 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .color(Color.RED));
             }
         }
+    }
+
+    public void prueba(View v){
+        if (tocado==0) {
+            tocado=1;
+            r=getRandomLocation(new LatLng(latitude, longitude), 2000);
+            Toast.makeText(getApplicationContext(), r.toString(), Toast.LENGTH_LONG).show();
+            MarkerOptions ran = new MarkerOptions();
+            ran.position(r);
+            ran.title("RANDOM");
+            ran.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+            mCurrLocationMarker = mMap.addMarker(ran);
+            autocompleteFragment.setText(r.toString());
+            new timeR().execute();
+        }
+        else {
+            tocado=0;
+            Toast.makeText(getApplicationContext(), parseJSON_Time() + " || " + parseJSON_Dist(), Toast.LENGTH_LONG).show();
+            parseJSON_dir();
+            for (int i = 0; i < route.size(); i++) {
+                for (int j = 0; j < route.get(i).size() - 1; j++) {
+
+                    Polyline line = mMap.addPolyline(new PolylineOptions()
+                            .add(route.get(i).get(j), route.get(i).get(j + 1))
+                            .width(8)
+                            .color(Color.BLACK));
+                }
+            }
+        }
+    }
+
+    public LatLng getRandomLocation(LatLng point, int radius) {
+
+        List<LatLng> randomPoints = new ArrayList<>();
+        List<Float> randomDistances = new ArrayList<>();
+        Location myLocation = new Location("");
+        myLocation.setLatitude(point.latitude);
+        myLocation.setLongitude(point.longitude);
+
+        //This is to generate 10 random points
+        for(int i = 0; i<10; i++) {
+            double x0 = point.latitude;
+            double y0 = point.longitude;
+
+            Random random = new Random();
+
+            // Convert radius from meters to degrees
+            double radiusInDegrees = radius / 111000f;
+
+            double u = random.nextDouble();
+            double v = random.nextDouble();
+            double w = radiusInDegrees * Math.sqrt(u);
+            double t = 2 * Math.PI * v;
+            double x = w * Math.cos(t);
+            double y = w * Math.sin(t);
+
+            // Adjust the x-coordinate for the shrinking of the east-west distances
+            double new_x = x / Math.cos(y0);
+
+            double foundLatitude = new_x + x0;
+            double foundLongitude = y + y0;
+            LatLng randomLatLng = new LatLng(foundLatitude, foundLongitude);
+            randomPoints.add(randomLatLng);
+            Location l1 = new Location("");
+            l1.setLatitude(randomLatLng.latitude);
+            l1.setLongitude(randomLatLng.longitude);
+            randomDistances.add(l1.distanceTo(myLocation));
+        }
+        //Get nearest point to the centre
+        int indexOfNearestPointToCentre = randomDistances.indexOf(Collections.min(randomDistances));
+        return randomPoints.get(indexOfNearestPointToCentre);
     }
 }

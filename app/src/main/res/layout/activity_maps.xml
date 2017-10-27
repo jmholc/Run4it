@@ -31,6 +31,13 @@
         android:text="Alert" />
 
     <Button
+        android:id="@+id/btnTesting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="prueba"
+        android:text="Random" />
+
+    <Button
         android:id="@+id/btnParse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
