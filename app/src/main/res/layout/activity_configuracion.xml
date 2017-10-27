@@ -7,12 +7,29 @@
     tools:context="com.example.adm.pantallas.Configuracion"
     android:background="#37474F">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ConfiguracionTitulo"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/toolbar4"
+            android:layout_alignParentStart="true"
+            android:text="@string/ConfiguracionTitulo"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="#263238"
+            android:textSize="32dp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.Toolbar>
+
 </RelativeLayout>

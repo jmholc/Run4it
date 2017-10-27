@@ -49,6 +49,8 @@
         app:layout_constraintHorizontal_bias="0.501"
         tools:ignore="HardcodedText"
         android:textSize="22dp"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
         android:textStyle="bold"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1" />

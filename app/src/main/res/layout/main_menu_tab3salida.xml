@@ -41,7 +41,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp">
 
         <EditText
             android:id="@+id/etDistancia"
@@ -49,13 +50,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="167dp"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
+            android:textColorHint="#9E9E9E"
+            android:textColor="#9E9E9E"
             android:inputType="numberDecimal"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etTiempo"
-            tools:ignore="LabelFor,RtlHardcoded" />
+            tools:ignore="LabelFor,RtlHardcoded"
+            app:layout_constraintTop_toTopOf="@+id/txtDistancia"
+            android:layout_marginTop="9dp" />
 
         <TextView
             android:id="@+id/txtDistancia"
@@ -66,8 +69,10 @@
             android:textColor="#9E9E9E"
             android:textSize="22sp"
             tools:ignore="RtlHardcoded"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="273dp" />
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="35dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
             android:id="@+id/textView8"
@@ -78,8 +83,10 @@
             android:textColor="#9E9E9E"
             android:textSize="22sp"
             tools:ignore="RtlHardcoded"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="168dp" />
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="33dp"
+            app:layout_constraintTop_toBottomOf="@+id/txtTiempo" />
 
         <EditText
             android:id="@+id/editText"
@@ -87,13 +94,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="55dp"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
+            android:textColorHint="#9E9E9E"
+            android:textColor="#9E9E9E"
             android:inputType="numberDecimal"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etTiempo"
-            tools:ignore="LabelFor,RtlHardcoded" />
+            tools:ignore="LabelFor,RtlHardcoded"
+            app:layout_constraintTop_toTopOf="@+id/textView8"
+            android:layout_marginTop="8dp" />
 
         <EditText
             android:id="@+id/etTiempo"
@@ -103,11 +112,13 @@
             android:layout_marginRight="5dp"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
+            android:textColorHint="#9E9E9E"
+            android:textColor="#9E9E9E"
             android:inputType="numberDecimal"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="LabelFor,RtlHardcoded"
-            android:layout_marginTop="70dp" />
+            app:layout_constraintTop_toTopOf="@+id/txtTiempo"
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/txtTiempo"
@@ -116,12 +127,14 @@
             android:backgroundTint="@color/colorAccent"
             android:text="@string/Salida_Tiempo"
             android:textAlignment="textStart"
+            android:textColorHint="#9E9E9E"
             android:textColor="#9E9E9E"
             android:textSize="22sp"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlHardcoded"
-            tools:layout_editor_absoluteX="16dp"
-            android:layout_marginTop="73dp" />
+            android:layout_marginTop="73dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.Guideline
