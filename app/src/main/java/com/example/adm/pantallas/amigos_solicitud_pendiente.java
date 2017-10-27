@@ -1,14 +1,13 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -40,7 +38,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Amigos extends AppCompatActivity {
+public class amigos_solicitud_pendiente extends AppCompatActivity {
 
     String json_string;
     AutoCompleteTextView autoCompleteTextView;
@@ -48,31 +46,13 @@ public class Amigos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amigos);
+        setContentView(R.layout.activity_amigos_solicitud_pendiente);
 
         SharedPreferences sharedPreferences =  getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
         String usuario= sharedPreferences.getString("usuario","");
 
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-
         new BackgroundTaskJSONAmigos(usuario).execute();
     }
-
-    public void aPendientes(View v){
-
-        Intent intent=new Intent(Amigos.this,amigos_solicitud_pendiente.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-    }
-    public void aSolicitudes(View v){
-
-        Intent intent=new Intent(Amigos.this,amigos_solicitud_pendiente.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-    }
-
     class BackgroundTaskJSONAmigos extends AsyncTask {
         String usuario;
 
@@ -84,8 +64,7 @@ public class Amigos extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            json_url = "https://run4it.proyectosort.edu.ar/run4it/searchfriends.php";
-
+            json_url = "https://run4it.proyectosort.edu.ar/run4it/searchpending.php";
         }
 
         @Override
@@ -156,23 +135,23 @@ public class Amigos extends AppCompatActivity {
 
 
 
-            final AdaptadorUsuarios2 adaptadorUsuarios2 = new AdaptadorUsuarios2(getApplicationContext(), R.layout.activity_amigos_listview);
+            final AdaptadorUsuarios3 adaptadorUsuarios3 = new AdaptadorUsuarios3(getApplicationContext(), R.layout.activity_amigos_listview);
 
             final ListView listView;
             listView = (ListView) findViewById(R.id.lvAmigos);
-            listView.setAdapter(adaptadorUsuarios2);
+            listView.setAdapter(adaptadorUsuarios3);
 
             try {
                 TextView txtnoseencontro= (TextView) findViewById(R.id.txtNoSeEncontro);
+
 
                 jsonObject = new JSONObject(json_string);
 
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
                 Log.d("JSON", jsonArray.length() + "");
-                final String[] nombresAutocomplete=new String[jsonArray.length()];
                 if (jsonArray.length()<1)
                 {
-                    txtnoseencontro.setText("Todavía no tienes amigos. Ve a la pantalla de Añadir Amigos.");
+                    txtnoseencontro.setText("No tienes solicitudes pendientes.");
                     txtnoseencontro.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -187,23 +166,10 @@ public class Amigos extends AppCompatActivity {
                         if (JO.getString("Mensaje").equals("null"))
                             estado = "";
 
-                        nombresAutocomplete[count]=username;// hola granch
-                        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,nombresAutocomplete);
-                        autoCompleteTextView.setAdapter(stringArrayAdapter);
-
                         UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
-                        adaptadorUsuarios2.add(usuariosBuscados);
+                        adaptadorUsuarios3.add(usuariosBuscados);
                     }
                 }
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //TextView tv = (TextView) findViewById(R.id.txtUsername);
-
-                        Toast.makeText(getApplicationContext(), nombresAutocomplete[position], Toast.LENGTH_SHORT).show();
-                    }
-                });
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -216,11 +182,11 @@ public class Amigos extends AppCompatActivity {
 
     }
 }
-class AdaptadorUsuarios2 extends ArrayAdapter {
+class AdaptadorUsuarios3 extends ArrayAdapter {
     List list = new ArrayList();
     Context ctx;
 
-    public AdaptadorUsuarios2(@NonNull Context context, @LayoutRes int resource) {
+    public AdaptadorUsuarios3(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
         ctx=context;
     }
@@ -276,6 +242,3 @@ class AdaptadorUsuarios2 extends ArrayAdapter {
         String idusuario;
     }
 }
-
-
-

@@ -33,7 +33,9 @@
         <activity android:name=".ConfiguracionPantalla" />
         <activity android:name=".VerificarMail" />
         <activity android:name=".Historias" />
-        <activity android:name=".anadir_amigos"></activity>
+        <activity android:name=".anadir_amigos" />
+        <activity android:name=".amigos_solicitud_pendiente" />
+        <activity android:name=".Amigos_solicitudRecibida"></activity>
     </application>
 
 </manifest>
