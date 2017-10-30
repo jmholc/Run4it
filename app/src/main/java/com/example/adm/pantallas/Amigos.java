@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -67,7 +66,7 @@ public class Amigos extends AppCompatActivity {
     }
     public void aSolicitudes(View v){
 
-        Intent intent=new Intent(Amigos.this,amigos_solicitud_pendiente.class);
+        Intent intent=new Intent(Amigos.this,Amigos_solicitudRecibida.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
