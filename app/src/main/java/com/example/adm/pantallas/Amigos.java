@@ -62,14 +62,12 @@ public class Amigos extends AppCompatActivity {
         Intent intent=new Intent(Amigos.this,amigos_solicitud_pendiente.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
     }
     public void aSolicitudes(View v){
 
         Intent intent=new Intent(Amigos.this,Amigos_solicitudRecibida.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
     }
 
     class BackgroundTaskJSONAmigos extends AsyncTask {

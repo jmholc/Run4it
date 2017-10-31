@@ -1,6 +1,7 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -54,12 +55,11 @@ public class Amigos_solicitudRecibida extends AppCompatActivity {
 
     class BackgroundTaskJSONAmigos extends AsyncTask {
         String usuario;
+        String json_url, JSON_STRING;
 
         public BackgroundTaskJSONAmigos(String n) {
             usuario = n;
         }
-
-        String json_url, JSON_STRING;
 
         @Override
         protected void onPreExecute() {
@@ -147,6 +147,9 @@ public class Amigos_solicitudRecibida extends AppCompatActivity {
                 jsonObject = new JSONObject(json_string);
 
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
+
+                final String[] idusers=new String[jsonArray.length()];
+
                 Log.d("JSON", jsonArray.length() + "");
                 if (jsonArray.length() < 1) {
                     txtnoseencontro.setText("No tienes solicitudes pendientes.");
@@ -161,6 +164,9 @@ public class Amigos_solicitudRecibida extends AppCompatActivity {
                         estado = "";
                         IDUsuario = JO.getString("IDUsuario");
 
+                        idusers[count]=IDUsuario;// hola granch
+
+
                         UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
                         adaptadorUsuarios4
                                 .add(usuariosBuscados);
@@ -171,12 +177,7 @@ public class Amigos_solicitudRecibida extends AppCompatActivity {
                 e.printStackTrace();
             }
             super.onPostExecute(o);
-
         }
-    }
-
-    public void listviewClickeado(View v) {
-
     }
 }
 
@@ -186,7 +187,7 @@ class AdaptadorUsuarios4 extends ArrayAdapter {
 
     public AdaptadorUsuarios4(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
-        ctx=context;
+        ctx = context;
     }
 
     public void add(UsuariosBuscados object) {
@@ -209,59 +210,64 @@ class AdaptadorUsuarios4 extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View row;
-        row=convertView;
+        row = convertView;
         final ContactHolder contactHolder;
-        if(row==null)
-        {
+        if (row == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = layoutInflater.inflate(R.layout.activity_amigos_solicitud_recibida_listview, parent, false);
             contactHolder = new ContactHolder();
-            contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
-            contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
-            contactHolder.btnAceptar= (Button) row.findViewById(R.id.btnAceptar);
-            contactHolder.btnDeclinar= (Button) row.findViewById(R.id.btnDeclinar);
+            contactHolder.txUsername = (TextView) row.findViewById(R.id.txtUsername);
+            contactHolder.txNombreApellido = (TextView) row.findViewById(R.id.txtNombreApellido);
+            contactHolder.btnAceptar = (Button) row.findViewById(R.id.btnAceptar);
+            contactHolder.btnDeclinar = (Button) row.findViewById(R.id.btnDeclinar);
 
             row.setTag(contactHolder);
-        }
-        else {
+        } else {
             contactHolder = (ContactHolder) row.getTag();
         }
 
-        final UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
+        final UsuariosBuscados usuariosBuscados = (UsuariosBuscados) this.getItem(position);
         contactHolder.txUsername.setText(usuariosBuscados.getUsername());
         contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
-        contactHolder.idusuario=usuariosBuscados.getIdusuario();
+        contactHolder.idusuario = usuariosBuscados.getIdusuario();
 
         contactHolder.btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ctx, "COSO", Toast.LENGTH_SHORT).show();
-                ejecutarBackgroundTask("aceptar",usuariosBuscados.getIdusuario());
+                Toast.makeText(ctx, contactHolder.txNombreApellido.getText(), Toast.LENGTH_SHORT).show();
+                ejecutarBackgroundTask("aceptar", usuariosBuscados.getIdusuario());
             }
         });
         contactHolder.btnDeclinar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ctx, "COSO 2", Toast.LENGTH_SHORT).show();
-                ejecutarBackgroundTask("aceptar",usuariosBuscados.getIdusuario());
+                Toast.makeText(ctx, contactHolder.txNombreApellido.getText(), Toast.LENGTH_SHORT).show();
+                ejecutarBackgroundTask("declinar", usuariosBuscados.getIdusuario());
             }
         });
 
         return row;
     }
-    public void ejecutarBackgroundTask(String tipo, String usuariosBuscados){
-        SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
-        String usuario= sharedPreferences.getString("usuario","");
 
-        BackgroundTaskRespuesta backgroundTaskRespuesta= new BackgroundTaskRespuesta(ctx);
-        backgroundTaskRespuesta.execute("enviarsolicitud",usuario,usuariosBuscados);
+    public void ejecutarBackgroundTask(String tipo, String usuariosBuscados) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+        String usuario = sharedPreferences.getString("usuario", "");
+
+        BackgroundTaskRespuesta backgroundTaskRespuesta = new BackgroundTaskRespuesta(ctx);
+        backgroundTaskRespuesta.execute(tipo, usuario, usuariosBuscados);
     }
 
-    class BackgroundTaskRespuesta extends AsyncTask{
+    static class ContactHolder {
+        TextView txUsername, txNombreApellido;
+        Button btnAceptar, btnDeclinar;
+        String idusuario;
+    }
+
+    class BackgroundTaskRespuesta extends AsyncTask {
         Context ctx;
 
-        BackgroundTaskRespuesta(Context ctx){
-            this.ctx=ctx;
+        BackgroundTaskRespuesta(Context ctx) {
+            this.ctx = ctx;
         }
 
         @Override
@@ -272,30 +278,31 @@ class AdaptadorUsuarios4 extends ArrayAdapter {
         @Override
         protected Object doInBackground(Object[] params) {
             String urldelphp = null;
-            String data="";
-            String respuesta="";
+            String data = "";
+            String respuesta = "";
 
 
-            String usuario=(String) params[1];
-            String usuarioaenviar= (String) params[2];
             String tipo = (String) params[0];
-            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
+            String usuario = (String) params[1];
+            String usuarioaenviar = (String) params[2];
+            Log.d("Lo que se esta mandando", tipo + " " + usuario+ " " +usuarioaenviar);
+            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/confirmrequest.php";
             try {
-                data=
-                        URLEncoder.encode("usuario","UTF-8")       +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
-                                URLEncoder.encode("tipo","UTF-8")       +"="+URLEncoder.encode(tipo,"UTF-8")+"&"+
-                                URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
+                data =
+                        URLEncoder.encode("usuario", "UTF-8") + "=" + URLEncoder.encode(usuario, "UTF-8") + "&" +
+                        URLEncoder.encode("tipo", "UTF-8") + "=" + URLEncoder.encode(tipo, "UTF-8") + "&" +
+                        URLEncoder.encode("usuarioaenviar", "UTF-8") + "=" + URLEncoder.encode(usuarioaenviar, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
             try {
-                URL url=new URL(urldelphp);
-                HttpsURLConnection httpsURLConnection=(HttpsURLConnection)url.openConnection();
+                URL url = new URL(urldelphp);
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestMethod("POST");
                 httpsURLConnection.setDoOutput(true);
 
-                OutputStream OS=httpsURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+                OutputStream OS = httpsURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
 
 
                 bufferedWriter.write(data);
@@ -304,11 +311,10 @@ class AdaptadorUsuarios4 extends ArrayAdapter {
                 OS.close();
 
                 InputStream inputStream = httpsURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
                 String line = "";
-                while ((line = bufferedReader.readLine())!=null)
-                {
-                    respuesta+= line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    respuesta += line;
                 }
                 bufferedReader.close();
                 inputStream.close();
@@ -324,16 +330,13 @@ class AdaptadorUsuarios4 extends ArrayAdapter {
 
         @Override
         protected void onPostExecute(Object o) {
-            Log.i("QWEQWE","Hizo esto...");
-            Toast.makeText(ctx, (String) o,Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, (String) o, Toast.LENGTH_SHORT).show();
+
+            Intent intent=new Intent(ctx,Amigos_solicitudRecibida.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            ctx.startActivity(intent);
             super.onPostExecute(o);
         }
-    }
-
-    static class ContactHolder{
-        TextView txUsername, txNombreApellido;
-        Button btnAceptar, btnDeclinar;
-        String idusuario;
     }
 }
 
