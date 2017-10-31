@@ -26,6 +26,9 @@
     <string name="RegRepetir_contrasena">Repetir Contrasena</string>
     <string name="RegCrear_usuario">Crear Usuario</string>
     <string name="NivelAtleta">¿Qué tipo de atleta te consideras?</string>
+    <string name="Genero">Genero</string>
+    <string name="Bueno">Bueno</string>
+    <string name="Malo">Malo</string>
 
     <string name="LogContrasena">Contraseña</string>
     <string name="LogUsuario">Usuario</string>
@@ -33,7 +36,7 @@
     <string name="LogIraRegistrar">¿No tienes un Usuario? Registrate</string>
 
     <string name="VerificarMail_et">Codigo:</string>
-    <string name="VerificarMail_txt">Ingrese su código que le hemos enviado a su correo electrónico</string>
+    <string name="VerificarMail_txt">Ingrese el código que le hemos enviado a su correo electrónico</string>
 
 
     <string name="IntroSiguiente">SIGUIENTE</string>
@@ -46,7 +49,13 @@
     <string name="AmigosTitulo">Amigos</string>
 
 
-    <string name="EstadisticasTitulo">Estadísticas Semanales</string>
+    <string name="EstadisticasTitulo">Tus estadísticas semanales</string>
+
+    <string name="Calorias">Calorias gastadas:</string>
+    <string name="Tiempo">Tiempo recorrido:</string>
+    <string name="Kilometros">Kilometros recorridos:</string>
+    <string name="Distancia">Mayor distancia recorrida:</string>
+    <string name="Velocidad">Mayor velocidad alcanzada:</string>
 
 
     <string name="PerfilTitulo">Perfil</string>
@@ -67,7 +76,8 @@
 
     <string name="Salida_Tiempo">¿Cuanto tiempo deseas correr?</string>
     <string name="Salida_boton">Nueva Salida a correr</string>
-    <string name="Salida_Distancia">¿Qué distancia quieres correr?</string>
+    <string name="Salida_Velocidad">¿A que velocidad deseas correr?</string>
+    <string name="Salida_Distancia">¿Qué distancia deseas correr?</string>
     <string name="Registrarse1_VolveraLogin">Volver a inicio de sesión</string>
 
 
