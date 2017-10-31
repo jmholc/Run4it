@@ -167,6 +167,7 @@ public class Amigos extends AppCompatActivity {
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
                 Log.d("JSON", jsonArray.length() + "");
                 final String[] nombresAutocomplete=new String[jsonArray.length()];
+                final String[] iduser=new String[jsonArray.length()];
                 if (jsonArray.length()<1)
                 {
                     txtnoseencontro.setText("Todavía no tienes amigos. Ve a la pantalla de Añadir Amigos.");
@@ -185,6 +186,7 @@ public class Amigos extends AppCompatActivity {
                             estado = "";
 
                         nombresAutocomplete[count]=username;// hola granch
+                        iduser[count]=IDUsuario;
                         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,nombresAutocomplete);
                         autoCompleteTextView.setAdapter(stringArrayAdapter);
 
@@ -198,7 +200,10 @@ public class Amigos extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //TextView tv = (TextView) findViewById(R.id.txtUsername);
 
-                        Toast.makeText(getApplicationContext(), nombresAutocomplete[position], Toast.LENGTH_SHORT).show();
+                        Intent i=new Intent(getApplicationContext(),PerfilAmigos.class);
+                        i.putExtra("id", iduser[position]);
+                        getApplicationContext().startActivity(i);
+                        //Toast.makeText(getApplicationContext(), nombresAutocomplete[position], Toast.LENGTH_SHORT).show();
                     }
                 });
 

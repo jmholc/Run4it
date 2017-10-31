@@ -35,7 +35,8 @@
         <activity android:name=".Historias" />
         <activity android:name=".anadir_amigos" />
         <activity android:name=".amigos_solicitud_pendiente" />
-        <activity android:name=".Amigos_solicitudRecibida"></activity>
+        <activity android:name=".Amigos_solicitudRecibida" />
+        <activity android:name=".PerfilAmigos"></activity>
     </application>
 
 </manifest>
