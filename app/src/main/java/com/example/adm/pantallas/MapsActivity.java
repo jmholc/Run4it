@@ -104,7 +104,7 @@ import com.google.android.gms.maps.model.Polyline;
         JSONObject jsonObj;
         LocationListener locationListener;
         double latitudeStart, longitudeStart, altitude, latitude, longitude;
-        boolean start=false;
+        boolean startL=false;
         private int PROXIMITY_RADIUS = 20;
         GoogleApiClient mGoogleApiClient;
         Location mLastLocation;
@@ -150,7 +150,7 @@ import com.google.android.gms.maps.model.Polyline;
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Toast.makeText(MapsActivity.this, "TE AMO POCHO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, " ", Toast.LENGTH_SHORT).show();
             }
         };
         t = (TextView) findViewById(R.id.lblLatlon);
@@ -226,9 +226,9 @@ import com.google.android.gms.maps.model.Polyline;
 
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+        /*LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
         t.setText(latitude + ", " + longitude);
         alt.setText("" + altitude);
@@ -502,7 +502,71 @@ import com.google.android.gms.maps.model.Polyline;
 
         @Override
         public void onLocationChanged(Location location) {
-            Toast.makeText(getApplicationContext(),"GRANCH", Toast.LENGTH_LONG).show();
+
+            Toast.makeText(getApplicationContext(),"hola", Toast.LENGTH_LONG).show();
+/*
+
+            mLastLocation = location;
+            if (mCurrLocationMarker != null) {
+                mCurrLocationMarker.remove();
+            }
+*/
+            latitude = location.getLatitude();
+            longitude=location.getLongitude();
+
+            //Place current location marker
+            altitude = location.getAltitude();
+            if(!startL) {
+                latitudeStart = location.getLatitude();
+                longitudeStart = location.getLongitude();
+/*
+                LatLng latLng = new LatLng(latitudeStart, longitudeStart);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title("Comienzo");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+                //move map camera
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                Toast.makeText(MapsActivity.this,"MOVISTE", Toast.LENGTH_SHORT).show();
+*/
+
+                LatLng sydney = new LatLng(latitudeStart, longitudeStart);
+                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in COMIENZO"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+                startL=true;
+            }
+
+            /*
+            //stop location updates
+            if (mGoogleApiClient != null) {
+                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+                Log.d("onLocationChanged", "Removing Location Updates");
+            }*/
+
+            vel.setText(location.getSpeed() + "KM/H");
+            t.setText(latitude + ", " + longitude);
+
+            //-------------------------------------------------------------------------------------
+            //SOLUCIONAR---------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------
+            //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
+            //-------------------------------------------------------------------------------------
+
+            Geocoder gc = new Geocoder(this, Locale.getDefault());
+            List<Address> list = null;
+            try {
+                list = gc.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address add = list.get(0);
+            dir.setText(add.getAddressLine(0));
+            alt.setText("" + location.getAltitude());
         }
 
         //Pedido de JSON
