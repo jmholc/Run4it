@@ -21,6 +21,7 @@ import android.widget.Toast;
 import android.nfc.Tag;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -75,42 +76,44 @@ import static com.example.adm.pantallas.R.raw.duracion;
 import com.google.android.gms.maps.model.Polyline;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+    public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
 
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
-    MediaPlayer reproductor;
-    MediaPlayer bgmusic;
-    int maxVolume=100;
-    int nextAudio = 10, alertType = 10;
-    int nextAudioB = 10;
-    int runTime = 100;
-    int vol=0;
-    int bTot, spareTime, a;
-    boolean alert=false;
-    String nextAudioLevel="a_";
-    int durationSeg;
-    private static final int FILE_SELECT_CODE = 0;
-    HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
-    HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
-    HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
-    private GoogleMap mMap;
-    String JSON_URL;
-    String json_string;
-    String txt_json;
-    int tocado=0;
-    JSONObject jsonObj;
-    double latitude, longitude, altitude;
-    private int PROXIMITY_RADIUS = 20;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    LocationRequest mLocationRequest;
-    TextView t, alt, dir, vel;
-    String lugares = "";
-    PlaceAutocompleteFragment autocompleteFragment;
-    double latFragment, lngFragment;
+            GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener,
+            LocationListener {
+        MediaPlayer reproductor;
+        MediaPlayer bgmusic;
+        int maxVolume=100;
+        int nextAudio = 10, alertType = 10;
+        int nextAudioB = 10;
+        int runTime = 100;
+        int vol=0;
+        int bTot, spareTime, a;
+        boolean alert=false;
+        String nextAudioLevel="a_";
+        int durationSeg;
+        private static final int FILE_SELECT_CODE = 0;
+        HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
+        HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
+        HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
+        private GoogleMap mMap;
+        String JSON_URL;
+        String json_string;
+        String txt_json;
+        int tocado=0;
+        JSONObject jsonObj;
+        LocationListener locationListener;
+        double latitudeStart, longitudeStart, altitude, latitude, longitude;
+        boolean start=false;
+        private int PROXIMITY_RADIUS = 20;
+        GoogleApiClient mGoogleApiClient;
+        Location mLastLocation;
+        Marker mCurrLocationMarker;
+        LocationRequest mLocationRequest;
+        TextView t, alt, dir, vel, dis;
+        String lugares = "";
+        PlaceAutocompleteFragment autocompleteFragment;
+        double latFragment, lngFragment;
     ArrayList routePol;
     List<List<LatLng>> route;
     LocationManager locMan;
@@ -144,10 +147,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("onCreate", "Google Play Services available.");
         }
         LocationManager locMan = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Toast.makeText(MapsActivity.this, "TE AMO POCHO", Toast.LENGTH_SHORT).show();
+            }
+        };
         t = (TextView) findViewById(R.id.lblLatlon);
         alt = (TextView) findViewById(R.id.lblAltura);
         dir = (TextView) findViewById(R.id.lblDireccion);
         vel = (TextView) findViewById(R.id.lblVelocidad);
+        dis = (TextView) findViewById(R.id.lblDistancia);
 
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -219,7 +229,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
 
         t.setText(latitude + ", " + longitude);
         alt.setText("" + altitude);
@@ -318,7 +327,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionSuspended(int i) {
 
     }
-
+/*
     @Override
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
@@ -329,8 +338,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Place current location marker
         altitude = location.getAltitude();
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+        if(!start) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -352,6 +363,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         vel.setText(location.getSpeed() + "KM/H");
         t.setText(latitude + ", " + longitude);
+
+        //-------------------------------------------------------------------------------------
+        //SOLUCIONAR---------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
+        //-------------------------------------------------------------------------------------
+
         Geocoder gc = new Geocoder(this, Locale.getDefault());
         List<Address> list = null;
         try {
@@ -364,6 +382,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alt.setText("" + location.getAltitude());
         Log.d("onLocationChanged", "Exit");
     }
+*/
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -433,8 +452,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     JSONObject JO = resultArray.getJSONObject(count);
                     nombre = JO.getString("name");
                     JSONObject geometry = JO.getJSONObject("geometry").getJSONObject("location");
-                    latitude = geometry.getDouble("lat");
-                    longitude = geometry.getDouble("lng");
+                    //latitude = geometry.getDouble("lat");
+                    //longitude = geometry.getDouble("lng");
                     lugares += nombre + ", ";
                     count++;
                 }
@@ -481,10 +500,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return decoded;
     }
 
-    //Pedido de JSON
+        @Override
+        public void onLocationChanged(Location location) {
+            Toast.makeText(getApplicationContext(),"GRANCH", Toast.LENGTH_LONG).show();
+        }
+
+        //Pedido de JSON
     private class time extends AsyncTask<Void, Void, String> {
         protected void onPreExecute() {
-            JSON_URL = getUrl_time(latFragment, lngFragment);
+            JSON_URL = getUrl_time(latitudeStart, longitudeStart, latFragment, lngFragment);
         }
 
         protected String doInBackground(Void... params) {
@@ -517,7 +541,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private class timeR extends AsyncTask<Void, Void, String> {
         protected void onPreExecute() {
-            JSON_URL = getUrl_time(r.latitude, r.longitude);
+            JSON_URL = getUrl_time(latitudeStart, longitudeStart, r.latitude, r.longitude);
         }
 
         protected String doInBackground(Void... params) {
@@ -584,18 +608,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //URL builders
-    public String getUrl_time(double latDest, double lonDest) {
+    public String getUrl_time(double latOri, double lonOri, double latDest, double lonDest) {
         StringBuilder googlePlacesUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
-        googlePlacesUrl2.append("origin=" + latitude + "," + longitude);
+        googlePlacesUrl2.append("origin=" + latOri + "," + lonOri);
         googlePlacesUrl2.append("&destination=" + latDest + "," + lonDest);
         googlePlacesUrl2.append("&mode=walking");
         googlePlacesUrl2.append("&key=" + "AIzaSyBkIzubSeyKqjKRRbZ7RhtGb_UZA84VPU4");
         return (googlePlacesUrl2.toString());
     }
 
-    private String getUrl_places(double latitude, double longitude) {
+    private String getUrl_places(double latitud, double longitud) {
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("location=" + latitud + "," + longitud);
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&key=" + "AIzaSyBkIzubSeyKqjKRRbZ7RhtGb_UZA84VPU4");
@@ -865,5 +889,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Get nearest point to the centre
         int indexOfNearestPointToCentre = randomDistances.indexOf(Collections.min(randomDistances));
         return randomPoints.get(indexOfNearestPointToCentre);
+    }
+
+    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts decimal degrees to radians             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts radians to decimal degrees             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }
