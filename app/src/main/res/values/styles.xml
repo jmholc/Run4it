@@ -19,4 +19,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="SwitchDark" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#dc5d11</item>
+    </style>
+    <style name="SwitchLight" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#dc5d11</item>
+    </style>
 </resources>

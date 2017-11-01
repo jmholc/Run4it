@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.adm.pantallas.Amigos"
     android:background="#37474F">
-
+  
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

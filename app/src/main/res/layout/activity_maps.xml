@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnComenzar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Comenzar"
+        android:text="Comenzar" />
+
+    <Button
+        android:id="@+id/btnAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Alert"
+        android:text="Alert" />
+
+    <Button
+        android:id="@+id/btnTesting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="prueba"
+        android:text="Random" />
+
+    <Button
+        android:id="@+id/btnParse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick_time"
+        android:text="¿En cuanto llego?" />
+
+    <Button
+        android:id="@+id/btnLugares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick_places"
+        android:text="Lugares..." />
+
+    <TextView
+        android:id="@+id/lblLatlon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0.0, 0.0" />
+
+    <TextView
+        android:id="@+id/lblDireccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DIRECCION" />
+
+    <TextView
+        android:id="@+id/lblAltura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ALTURA" />
+
+    <TextView
+        android:id="@+id/lblVelocidad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="XX KM/H" />
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adm.pantallas.MapsActivity" />
+
+</LinearLayout>
