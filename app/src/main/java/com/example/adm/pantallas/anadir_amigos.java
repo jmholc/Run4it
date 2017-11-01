@@ -1,7 +1,6 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -39,49 +39,38 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Amigos extends AppCompatActivity {
+public class anadir_amigos extends AppCompatActivity {
 
     String json_string;
-    AutoCompleteTextView autoCompleteTextView;
+    String usuarioabuscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amigos);
-
-        SharedPreferences sharedPreferences =  getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
-        String usuario= sharedPreferences.getString("usuario","");
-
-        autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-
-        new BackgroundTaskJSONAmigos(usuario).execute();
+        setContentView(R.layout.activity_anadir_amigos);
     }
 
-    public void aPendientes(View v){
+    public void buscarUsuario(View v) {
 
-        Intent intent=new Intent(Amigos.this,amigos_solicitud_pendiente.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-    public void aSolicitudes(View v){
+        EditText editText = (EditText) findViewById(R.id.etBuscarUsuarios);
+        usuarioabuscar = editText.getText().toString();
 
-        Intent intent=new Intent(Amigos.this,Amigos_solicitudRecibida.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if (usuarioabuscar.length() > 0)
+            new BackgroundTaskJSON(usuarioabuscar).execute();
     }
 
-    class BackgroundTaskJSONAmigos extends AsyncTask {
-        String usuario;
+    class BackgroundTaskJSON extends AsyncTask {
+        String usuarioabuscar;
 
-        public BackgroundTaskJSONAmigos(String n) {
-            usuario= n;
+        public BackgroundTaskJSON(String n) {
+            usuarioabuscar = n;
         }
 
         String json_url, JSON_STRING;
 
         @Override
         protected void onPreExecute() {
-            json_url = "https://run4it.proyectosort.edu.ar/run4it/searchfriends.php";
+            json_url = "https://run4it.proyectosort.edu.ar/run4it/searchuser.php";
 
         }
 
@@ -98,8 +87,12 @@ public class Amigos extends AppCompatActivity {
                 OutputStream outputStream = httpsURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
+                SharedPreferences sharedPreferences =  getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+                String usuario= sharedPreferences.getString("usuario","");
+
                 String data =
-                        URLEncoder.encode("usuario","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8");
+                        URLEncoder.encode("usuario","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
+                        URLEncoder.encode("usuarioabuscar", "UTF-8") + "=" + URLEncoder.encode(usuarioabuscar, "UTF-8");
 
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
@@ -152,61 +145,42 @@ public class Amigos extends AppCompatActivity {
             JSONArray jsonArray;
 
 
+            AdaptadorUsuarios adaptadorUsuarios = new AdaptadorUsuarios(getApplicationContext(), R.layout.activity_anadir_amigos_listview);
 
-            final AdaptadorUsuarios2 adaptadorUsuarios2 = new AdaptadorUsuarios2(getApplicationContext(), R.layout.activity_amigos_listview);
-
-            final ListView listView;
-            listView = (ListView) findViewById(R.id.lvAmigos);
-            listView.setAdapter(adaptadorUsuarios2);
+            ListView listView;
+            listView = (ListView) findViewById(R.id.lvUsuarios);
+            listView.setAdapter(adaptadorUsuarios);
 
             try {
                 TextView txtnoseencontro= (TextView) findViewById(R.id.txtNoSeEncontro);
+
 
                 jsonObject = new JSONObject(json_string);
 
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
                 Log.d("JSON", jsonArray.length() + "");
-                final String[] nombresAutocomplete=new String[jsonArray.length()];
-                final String[] iduser=new String[jsonArray.length()];
                 if (jsonArray.length()<1)
                 {
-                    txtnoseencontro.setText("Todavía no tienes amigos. Ve a la pantalla de Añadir Amigos.");
+                    txtnoseencontro.setText("No se encontró el usuario " + usuarioabuscar);
                     txtnoseencontro.setVisibility(View.VISIBLE);
                 }
-                else {
-                    for (int count = 0; count < jsonArray.length(); count++) {
-                        txtnoseencontro.setVisibility(View.GONE);
+                for (int count = 0; count < jsonArray.length(); count++) {
+                    txtnoseencontro.setVisibility(View.GONE);
 
-                        JSONObject JO = jsonArray.getJSONObject(count);
-                        username = JO.getString("Username");
-                        nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
-                        estado = JO.getString("Mensaje");
-                        IDUsuario = JO.getString("IDUsuario");
-                        if (JO.getString("Mensaje").equals("null"))
-                            estado = "";
+                    JSONObject JO = jsonArray.getJSONObject(count);
+                    username = JO.getString("Username");
+                    nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
+                    estado = JO.getString("Mensaje");
+                    IDUsuario = JO.getString("IDUsuario");
+                    if(JO.getString("Mensaje").equals(null))
+                    if(JO.getString("Mensaje").equals("null"))
+                        estado="";
+                    UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
+                    adaptadorUsuarios.add(usuariosBuscados);
 
-                        nombresAutocomplete[count]=username;// hola granch
-                        iduser[count]=IDUsuario;
-                        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,nombresAutocomplete);
-                        autoCompleteTextView.setAdapter(stringArrayAdapter);
 
-                        UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
-                        adaptadorUsuarios2.add(usuariosBuscados);
-                    }
+
                 }
-
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //TextView tv = (TextView) findViewById(R.id.txtUsername);
-
-                        Intent i=new Intent(getApplicationContext(),PerfilAmigos.class);
-                        i.putExtra("id", iduser[position]);
-                        getApplicationContext().startActivity(i);
-                        //Toast.makeText(getApplicationContext(), nombresAutocomplete[position], Toast.LENGTH_SHORT).show();
-                    }
-                });
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -214,15 +188,12 @@ public class Amigos extends AppCompatActivity {
 
         }
     }
-    public void listviewClickeado(View v){
-
-    }
 }
-class AdaptadorUsuarios2 extends ArrayAdapter {
+class AdaptadorUsuarios extends ArrayAdapter {
     List list = new ArrayList();
     Context ctx;
 
-    public AdaptadorUsuarios2(@NonNull Context context, @LayoutRes int resource) {
+    public AdaptadorUsuarios(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
         ctx=context;
     }
@@ -252,11 +223,12 @@ class AdaptadorUsuarios2 extends ArrayAdapter {
         if(row==null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.activity_amigos_listview, parent, false);
+            row = layoutInflater.inflate(R.layout.activity_anadir_amigos_listview, parent, false);
             contactHolder = new ContactHolder();
             contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
             contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
             contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
+            contactHolder.btnEnviarSolicitud= (Button) row.findViewById(R.id.btnEnviarSolicitud);
 
             row.setTag(contactHolder);
         }
@@ -270,14 +242,101 @@ class AdaptadorUsuarios2 extends ArrayAdapter {
         contactHolder.txEstado.setText(usuariosBuscados.getEstado());
         contactHolder.idusuario=usuariosBuscados.getIdusuario();
 
+        contactHolder.btnEnviarSolicitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ejecutarBackgroundTask(usuariosBuscados.getIdusuario());
+            }
+        });
         return row;
     }
 
+    public void ejecutarBackgroundTask(String usuariosBuscados){
+        SharedPreferences sharedPreferences =  ctx.getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+        String usuario= sharedPreferences.getString("usuario","");
+
+        BackgroundTaskSolitud backgroundTaskSolitud= new BackgroundTaskSolitud(ctx);
+        backgroundTaskSolitud.execute("enviarsolicitud",usuario,usuariosBuscados);
+    }
+
+
     static class ContactHolder{
         TextView txUsername, txNombreApellido, txEstado;
+        Button btnEnviarSolicitud;
         String idusuario;
     }
+
+    class BackgroundTaskSolitud extends AsyncTask{
+        Context ctx;
+
+        BackgroundTaskSolitud(Context ctx){
+            this.ctx=ctx;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            String urldelphp = null;
+            String data="";
+            String respuesta="";
+
+
+            String usuario=(String) params[1];
+            String usuarioaenviar= (String) params[2];
+            String tipo = (String) params[0];
+            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
+            try {
+                data=
+                        URLEncoder.encode("usuario","UTF-8")       +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
+                        URLEncoder.encode("tipo","UTF-8")       +"="+URLEncoder.encode(tipo,"UTF-8")+"&"+
+                        URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            try {
+                URL url=new URL(urldelphp);
+                HttpsURLConnection httpsURLConnection=(HttpsURLConnection)url.openConnection();
+                httpsURLConnection.setRequestMethod("POST");
+                httpsURLConnection.setDoOutput(true);
+
+                OutputStream OS=httpsURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+
+
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
+
+                InputStream inputStream = httpsURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String line = "";
+                while ((line = bufferedReader.readLine())!=null)
+                {
+                    respuesta+= line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpsURLConnection.disconnect();
+
+                return respuesta;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            Log.i("QWEQWE","Hizo esto...");
+            Toast.makeText(ctx, (String) o,Toast.LENGTH_SHORT).show();
+            super.onPostExecute(o);
+        }
+    }
 }
-
-
 

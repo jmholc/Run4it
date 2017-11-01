@@ -79,6 +79,8 @@
     <string name="Salida_Velocidad">¿A que velocidad deseas correr?</string>
     <string name="Salida_Distancia">¿Qué distancia deseas correr?</string>
     <string name="Registrarse1_VolveraLogin">Volver a inicio de sesión</string>
+    <string name="Login_ingresar">Ingresar</string>
+    <string name="AnadirAmigos_titulo">Añadir Amigos</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
 
