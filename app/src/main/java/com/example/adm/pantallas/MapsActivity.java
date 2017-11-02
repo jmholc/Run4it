@@ -65,6 +65,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -75,49 +76,59 @@ import java.util.Locale;
 import static com.example.adm.pantallas.R.raw.duracion;
 import com.google.android.gms.maps.model.Polyline;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 
-    public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
 
-            GoogleApiClient.ConnectionCallbacks,
-            GoogleApiClient.OnConnectionFailedListener,
-            LocationListener {
-        MediaPlayer reproductor;
-        MediaPlayer bgmusic;
-        int maxVolume=100;
-        int nextAudio = 10, alertType = 10;
-        int nextAudioB = 10;
-        int runTime = 100;
-        int vol=0;
-        int bTot, spareTime, a;
-        boolean alert=false;
-        String nextAudioLevel="a_";
-        int durationSeg;
-        private static final int FILE_SELECT_CODE = 0;
-        HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
-        HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
-        HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
-        private GoogleMap mMap;
-        String JSON_URL;
-        String json_string;
-        String txt_json;
-        int tocado=0;
-        JSONObject jsonObj;
-        LocationListener locationListener;
-        double latitudeStart, longitudeStart, altitude, latitude, longitude;
-        boolean startL=false;
-        private int PROXIMITY_RADIUS = 20;
-        GoogleApiClient mGoogleApiClient;
-        Location mLastLocation;
-        Marker mCurrLocationMarker;
-        LocationRequest mLocationRequest;
-        TextView t, alt, dir, vel, dis;
-        String lugares = "";
-        PlaceAutocompleteFragment autocompleteFragment;
-        double latFragment, lngFragment;
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener,
+        SensorEventListener {
+    MediaPlayer reproductor;
+    MediaPlayer bgmusic;
+    int maxVolume=100;
+    int nextAudio = 10, alertType = 10;
+    int nextAudioB = 10;
+    int runTime = 100;
+    int vol=0;
+    int bTot, spareTime, a;
+    boolean alert=false;
+    String nextAudioLevel="a_";
+    int durationSeg;
+    private static final int FILE_SELECT_CODE = 0;
+    HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
+    HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
+    HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
+    private GoogleMap mMap;
+    String JSON_URL;
+    String json_string;
+    String txt_json;
+    int tocado=0;
+    JSONObject jsonObj;
+    LocationListener locationListener;
+    double latitudeStart, longitudeStart, altitude, latitude, longitude;
+    boolean startL=false;
+    private int PROXIMITY_RADIUS = 20;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    LocationRequest mLocationRequest;
+    TextView t, alt, dir, vel, dis, velPromedio, DegreeTV;
+    String lugares = "";
+    PlaceAutocompleteFragment autocompleteFragment;
+    double latFragment, lngFragment, velPromF;
+    float DegreeStart = 0f, degree=0f;
     ArrayList routePol;
     List<List<LatLng>> route;
     LocationManager locMan;
     LatLng r;
+    ArrayList velProm;
+    SensorManager SensorManage;
+    Sensor mLight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,14 +161,22 @@ import com.google.android.gms.maps.model.Polyline;
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Toast.makeText(MapsActivity.this, " ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
             }
         };
+        velProm=new ArrayList<Double>();
+        velPromF=0.0;
         t = (TextView) findViewById(R.id.lblLatlon);
         alt = (TextView) findViewById(R.id.lblAltura);
         dir = (TextView) findViewById(R.id.lblDireccion);
         vel = (TextView) findViewById(R.id.lblVelocidad);
         dis = (TextView) findViewById(R.id.lblDistancia);
+        velPromedio=(TextView) findViewById(R.id.lblVelProm);
+        DegreeTV = (TextView) findViewById(R.id.lblGrados);
+        int a = Sensor.TYPE_ACCELEROMETER;
+        SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mLight = SensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        SensorManage.registerListener(this, mLight,SensorManager.SENSOR_DELAY_NORMAL);
 
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -500,10 +519,10 @@ import com.google.android.gms.maps.model.Polyline;
         return decoded;
     }
 
-        @Override
-        public void onLocationChanged(Location location) {
+    @Override
+    public void onLocationChanged(Location location) {
 
-            Toast.makeText(getApplicationContext(),"hola", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"hola", Toast.LENGTH_LONG).show();
 /*
 
             mLastLocation = location;
@@ -511,14 +530,14 @@ import com.google.android.gms.maps.model.Polyline;
                 mCurrLocationMarker.remove();
             }
 */
-            latitude = location.getLatitude();
-            longitude=location.getLongitude();
+        latitude = location.getLatitude();
+        longitude=location.getLongitude();
 
-            //Place current location marker
-            altitude = location.getAltitude();
-            if(!startL) {
-                latitudeStart = location.getLatitude();
-                longitudeStart = location.getLongitude();
+        //Place current location marker
+        altitude = location.getAltitude();
+        if(!startL) {
+            latitudeStart = location.getLatitude();
+            longitudeStart = location.getLongitude();
 /*
                 LatLng latLng = new LatLng(latitudeStart, longitudeStart);
                 MarkerOptions markerOptions = new MarkerOptions();
@@ -533,13 +552,22 @@ import com.google.android.gms.maps.model.Polyline;
                 Toast.makeText(MapsActivity.this,"MOVISTE", Toast.LENGTH_SHORT).show();
 */
 
-                LatLng sydney = new LatLng(latitudeStart, longitudeStart);
-                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in COMIENZO"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            LatLng sydney = new LatLng(latitudeStart, longitudeStart);
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in COMIENZO"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-                startL=true;
+            startL=true;
+        }
+        else {
+            velProm.add(location.getSpeed());
+            velPromF=0.0;
+            for (int i=0; i<velProm.size(); i++){
+                //velPromF+= (Double.toString(velProm.get(i)));
             }
+            velPromF/=velProm.size();
+            velPromedio.setText(Double.toString(velPromF));
+        }
 
             /*
             //stop location updates
@@ -548,28 +576,39 @@ import com.google.android.gms.maps.model.Polyline;
                 Log.d("onLocationChanged", "Removing Location Updates");
             }*/
 
-            vel.setText(location.getSpeed() + "KM/H");
-            t.setText(latitude + ", " + longitude);
+        vel.setText(location.getSpeed() + " KM/H");
+        t.setText(latitude + ", " + longitude);
 
-            //-------------------------------------------------------------------------------------
-            //SOLUCIONAR---------------------------------------------------------------------------
-            //-------------------------------------------------------------------------------------
-            //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
-            //-------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        //SOLUCIONAR---------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
+        //-------------------------------------------------------------------------------------
 
-            Geocoder gc = new Geocoder(this, Locale.getDefault());
-            List<Address> list = null;
-            try {
-                list = gc.getFromLocation(latitude, longitude, 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Address add = list.get(0);
-            dir.setText(add.getAddressLine(0));
-            alt.setText("" + location.getAltitude());
+        Geocoder gc = new Geocoder(this, Locale.getDefault());
+        List<Address> list = null;
+        try {
+            list = gc.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        Address add = list.get(0);
+        dir.setText(add.getAddressLine(0));
+        alt.setText("" + location.getAltitude());
+    }
 
-        //Pedido de JSON
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        degree = Math.round(event.values[0]);
+        DegreeTV.setText(Float.toString(degree) + "°");
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    //Pedido de JSON
     private class time extends AsyncTask<Void, Void, String> {
         protected void onPreExecute() {
             JSON_URL = getUrl_time(latitudeStart, longitudeStart, latFragment, lngFragment);
@@ -732,7 +771,7 @@ import com.google.android.gms.maps.model.Polyline;
         new CountDownTimer(1000,10) {
             @Override
             public void onTick(long millisUntilFinished) {
-                   if (vol>5) regVolumen(vol--);
+                if (vol>5) regVolumen(vol--);
 
             }
 

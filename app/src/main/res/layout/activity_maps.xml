@@ -76,6 +76,12 @@
         android:text="XX KM/H" />
 
     <TextView
+        android:id="@+id/lblVelProm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VEL PROM" />
+
+    <TextView
         android:id="@+id/lblDistancia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,6 +92,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CALORIAS" />
+
+    <TextView
+        android:id="@+id/lblGrados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ORIENTACION" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
