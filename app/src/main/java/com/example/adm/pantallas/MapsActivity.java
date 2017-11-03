@@ -128,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LatLng r;
     ArrayList velProm;
     SensorManager SensorManage;
-    Sensor mLight;
+    Sensor mLight, mGravity, mGeomagnetic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +173,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dis = (TextView) findViewById(R.id.lblDistancia);
         velPromedio=(TextView) findViewById(R.id.lblVelProm);
         DegreeTV = (TextView) findViewById(R.id.lblGrados);
-        int a = Sensor.TYPE_ACCELEROMETER;
         SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
         mLight = SensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SensorManage.registerListener(this, mLight,SensorManager.SENSOR_DELAY_NORMAL);
@@ -601,6 +600,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onSensorChanged(SensorEvent event) {
         degree = Math.round(event.values[0]);
         DegreeTV.setText(Float.toString(degree) + "°");
+
+        if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
+            return;
+        }
+/*
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)  mGravity = event.values.clone ();
+        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) mGeomagnetic =  event.values.clone ();
+
+        if (mGravity != null && mGeomagnetic != null) {
+
+            float[] rotationMatrixA = mRotationMatrixA;
+            if (SensorManager.getRotationMatrix(rotationMatrixA, null, mGravity, mGeomagnetic)) {
+
+                float[] rotationMatrixB = mRotationMatrixB;
+                SensorManager.remapCoordinateSystem(rotationMatrixA,
+                        SensorManager.AXIS_X, SensorManager.AXIS_Z,
+                        rotationMatrixB);
+                float[] dv = new float[3];
+                SensorManager.getOrientation(rotationMatrixB, dv);
+                // add to smoothing filter
+                fd.AddLatest((double)dv[0]);
+            }
+            mDraw.invalidate();
+        }
+*/
     }
 
     @Override
