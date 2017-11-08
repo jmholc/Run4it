@@ -33,79 +33,12 @@
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/tv1"
+    <ListView
+        android:id="@+id/lvstats"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#9E9E9E"
-        android:text="@string/Tiempo"
-        android:textSize="25dp"
-        android:layout_marginBottom="48dp"
-        android:layout_alignBottom="@+id/tv3"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Calorias"
-        android:textSize="25dp"
-        android:textColor="#9E9E9E"
-        android:layout_marginBottom="33dp"
-        android:layout_above="@+id/tv1"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#9E9E9E"
-        android:text="@string/Kilometros"
-        android:textSize="25dp"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="100dp"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/tv1" />
-
-    <TextView
-        android:id="@+id/tv4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/Distancia"
-        android:textColor="#9E9E9E"
-        android:textSize="25dp"
-        android:layout_above="@+id/tv5"
-        android:layout_alignStart="@+id/tv3" />
-
-    <TextView
-        android:id="@+id/tv5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Velocidad"
-        android:textColor="#9E9E9E"
-        android:textSize="25dp"
-        android:layout_above="@+id/floatingActionButton"
-        android:layout_alignStart="@+id/tv4"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_toStartOf="@+id/floatingActionButton" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
-        android:layout_marginEnd="35dp"
-        android:clickable="true"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true">
-
-
-
-    </android.support.design.widget.FloatingActionButton>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar2"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
