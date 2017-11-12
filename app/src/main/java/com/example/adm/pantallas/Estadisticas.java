@@ -1,10 +1,18 @@
 package com.example.adm.pantallas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +30,8 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -119,6 +129,12 @@ public class Estadisticas extends AppCompatActivity {
             JSONObject jsonObject;
             JSONArray jsonArray;
 
+            final StatsAdapter statsAdapter= new StatsAdapter(getApplicationContext(), R.layout.activity_estadisticas);
+
+            final ListView listView;
+            listView = (ListView) findViewById(R.id.lvstats);
+            listView.setAdapter(statsAdapter);
+
             try {
                 jsonObject = new JSONObject(json_string);
 
@@ -137,12 +153,73 @@ public class Estadisticas extends AppCompatActivity {
                 calorias = JO.getString("Calorias");
                 duracion = JO.getString("Duracion");
 
-                
+                StatsLoader statsLoader = new StatsLoader(cantidadpasos, velPromedio, elevacion, totaldistancia, velmax, distmax, calorias, duracion);
+                statsAdapter.add(statsLoader);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             super.onPostExecute(o);
 
         }
+    }
+}
+class StatsAdapter extends ArrayAdapter {
+    List list = new ArrayList();
+    Context ctx;
+
+    public StatsAdapter(@NonNull Context context, @LayoutRes int resource) {
+        super(context, resource);
+        ctx=context;
+    }
+
+    public void add(UsuariosBuscados object) {
+        super.add(object);
+        list.add(object);
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Nullable
+    @Override
+    public Object getItem(int position) {
+        return list.get(position);
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View row;
+        row=convertView;
+        final ContactHolder contactHolder;
+        if(row==null)
+        {
+            LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = layoutInflater.inflate(R.layout.activity_amigos_listview, parent, false);
+            contactHolder = new ContactHolder();
+            contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
+            contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
+            contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
+
+            row.setTag(contactHolder);
+        }
+        else {
+            contactHolder = (ContactHolder) row.getTag();
+        }
+
+        final UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
+        contactHolder.txUsername.setText(usuariosBuscados.getUsername());
+        contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
+        contactHolder.txEstado.setText(usuariosBuscados.getEstado());
+        contactHolder.idusuario=usuariosBuscados.getIdusuario();
+
+        return row;
+    }
+
+    static class ContactHolder{
+        TextView txUsername, txNombreApellido, txEstado;
+        String idusuario;
     }
 }
