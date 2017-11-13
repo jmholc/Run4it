@@ -124,7 +124,7 @@ public class Estadisticas extends AppCompatActivity {
             //ABAJO EMPIEZA LO DE PARSEARLO
             //-----------------------------------------------------------------
             String cantidadpasos, velPromedio, elevacion, totaldistancia, velmax, distmax, calorias, duracion;
-            json_string = (String) o;
+            String infocantidadpasos, infovelPromedio, infoelevacion, infototaldistancia, infovelmax, infodistmax, infocalorias, infoduracion;            json_string = (String) o;
 
             JSONObject jsonObject;
             JSONArray jsonArray;
@@ -197,11 +197,10 @@ class StatsAdapter extends ArrayAdapter {
         if(row==null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.activity_amigos_listview, parent, false);
+            row = layoutInflater.inflate(R.layout.activity_estadisticas_item_listview, parent, false);
             contactHolder = new ContactHolder();
-            contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
-            contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
-            contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
+            contactHolder.txtDescripcion= (TextView) row.findViewById(R.id.txt1);
+            contactHolder.txtData=(TextView) row.findViewById(R.id.txt2);
 
             row.setTag(contactHolder);
         }
@@ -209,17 +208,16 @@ class StatsAdapter extends ArrayAdapter {
             contactHolder = (ContactHolder) row.getTag();
         }
 
-        final UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
-        contactHolder.txUsername.setText(usuariosBuscados.getUsername());
-        contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
-        contactHolder.txEstado.setText(usuariosBuscados.getEstado());
-        contactHolder.idusuario=usuariosBuscados.getIdusuario();
+        final StatsAdapter statsAdapter= (StatsAdapter) this.getItem(position);
+        contactHolder.txtDescripcion.setText(StatsAdapter.getUsername());
+        contactHolder.txtData.setText(StatsAdapter.getNombreapellido());
 
         return row;
     }
 
     static class ContactHolder{
-        TextView txUsername, txNombreApellido, txEstado;
-        String idusuario;
+        TextView txtDescripcion;
+        TextView txtData;
+
     }
 }
