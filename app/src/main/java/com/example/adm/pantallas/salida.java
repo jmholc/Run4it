@@ -3,6 +3,7 @@ package com.example.adm.pantallas;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class salida extends AppCompatActivity {
     int nextAudio = 10, alertType = 10;
     int nextAudioB = 10;
     int runTime = 100;
+    int vol=0;
+    String filename, op;
     int bTot, spareTime, a;
     boolean alert=false;
     String nextAudioLevel="a_";
@@ -33,7 +36,6 @@ public class salida extends AppCompatActivity {
     HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,48 +60,89 @@ public class salida extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        regVolumen(5);
+                        fadeOut();
                         elegirAudio();
                     }
                 }, spareTime/(bTot-10+a+1-10)*1000);   //5 seconds
-                regVolumen(50);
+                fadeIn();
             }
         });
+    }
+    protected void fadeIn(){
+        new CountDownTimer(1000,10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (vol<50) regVolumen(vol++);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+    }
+    protected void fadeOut(){
+        new CountDownTimer(1000,10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (vol>5) regVolumen(vol--);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
     }
     protected void elegirAudio(){
         reproductor.stop();
         reproductor.reset();
         if (alert==false){
-        if (runTime>0) {
-            try {
+            if (runTime>0) {
+                try {
 
-                if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
-                    nextAudioLevel = "b_";
-                    String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudioB;
-                    reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
-                    reproductor.prepare();
-                    runTime -= durationB.get(nextAudioB);
-                    nextAudioB++;
-                    bTot--;
-                } else {
-                    nextAudioLevel = "a_";
-                    String filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
-                    reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
-                    reproductor.prepare();
-                    runTime -= durationA.get(nextAudio);
-                    nextAudio++;
+                    if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
+                        nextAudioLevel = "b_";
+                        if (op=="left"){
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/left/" + nextAudioLevel + nextAudioB;
+                        }else if (op == "right") {
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/right/" + nextAudioLevel + nextAudioB;
+                        }else {
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudioB;
+                        }
+                            reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
+                            reproductor.prepare();
+                            runTime -= durationB.get(nextAudioB);
+                            nextAudioB++;
+                            bTot--;
+                    } else {
+
+                        nextAudioLevel = "a_";
+                        if (op=="left") {
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/left/" + nextAudioLevel + nextAudio;
+                        }else if (op=="right") {
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/right/" + nextAudioLevel + nextAudio;
+                        }else {
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
+                        }
+                        reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
+                        reproductor.prepare();
+                        runTime -= durationA.get(nextAudio);
+                        nextAudio++;
+                    }
+                    Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio-10+1), Toast.LENGTH_LONG).show();
+                    reproductor.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "NO MORE AUDIOS SIR, "+spareTime, Toast.LENGTH_LONG).show();
+                    reproductor.stop();
+                    reproductor.release();
                 }
-                Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio-10+1), Toast.LENGTH_LONG).show();
-                reproductor.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "NO MORE AUDIOS SIR, "+spareTime, Toast.LENGTH_LONG).show();
-                reproductor.stop();
-                reproductor.release();
-            }
-             }else{
+            }else{
                 Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
-                }
+            }
         }else{
             try {
                 alert=false;
@@ -112,23 +155,6 @@ public class salida extends AppCompatActivity {
             }
 
         }
-    }
-    public void Alert(View v){
-        alert=true;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        startActivityForResult(intent.createChooser(intent, "Selecciona un audio"), FILE_SELECT_CODE);
-    }
-
-    public void SaludarOnClick(View v) {
-        /*
-        EditText Cajatexto = (EditText) findViewById(R.id.ET_Nombre);
-        String nombre = Cajatexto.getText().toString();
-        Toast.makeText(this,"Hola "+ nombre, Toast.LENGTH_LONG).show();*/
-        reproductor.start();
-        nextAudio++;
-        float duration = reproductor.getDuration();
-        float getPos = reproductor.getCurrentPosition();
     }
     protected void obtenerDuracion(){
         Context ctx = getBaseContext();
@@ -170,17 +196,44 @@ public class salida extends AppCompatActivity {
         durRest=runTime-aDurTotal;
         bTot=10;
 
-            for (int i = 10; durRest>0; i++){
-                if (durationB.containsKey(i)) {
-                    durRest -= durationB.get(i);
-                    bTot++;
-                }else{
-                    spareTime++;
-                    durRest--;
-                }
+        for (int i = 10; durRest>0; i++){
+            if (durationB.containsKey(i)) {
+                durRest -= durationB.get(i);
+                bTot++;
+            }else{
+                spareTime++;
+                durRest--;
             }
+        }
 
-       // bTot-=1;
+        // bTot-=1;
         Toast.makeText(getApplicationContext(),"Entran los "+(bTot-10)+" primeros audios de la categoria B :)", Toast.LENGTH_LONG).show();
     }
+
+    //Clicks
+    public void Comenzar(View v) {
+        /*
+        EditText Cajatexto = (EditText) findViewById(R.id.ET_Nombre);
+        String nombre = Cajatexto.getText().toString();
+        Toast.makeText(this,"Hola "+ nombre, Toast.LENGTH_LONG).show();*/
+        fadeOut();
+        reproductor.start();
+        nextAudio++;
+        float duration = reproductor.getDuration();
+        float getPos = reproductor.getCurrentPosition();
+    }
+    public void Alert(View v){
+        alert=true;
+        //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        //intent.setType("*/*");
+        //startActivityForResult(intent.createChooser(intent, "Selecciona un audio"), FILE_SELECT_CODE);
+    }
+    public void Left(View v){
+        op="left";
+    }
+    public void Right(View v){
+        op="right";
+    }
+
+
 }
