@@ -101,48 +101,43 @@ public class salida extends AppCompatActivity {
         reproductor.reset();
         if (alert==false){
             if (runTime>0) {
-                try {
+                if (op == "right") {
 
-                    if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
-                        nextAudioLevel = "b_";
-                        if (op=="left"){
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/left/" + nextAudioLevel + nextAudioB;
-                        }else if (op == "right") {
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/right/" + nextAudioLevel + nextAudioB;
-                        }else {
+                } else if (op == "left") {
+
+                } else{
+                    try {
+
+                        if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
+                            nextAudioLevel = "b_";
                             filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudioB;
-                        }
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationB.get(nextAudioB);
                             nextAudioB++;
                             bTot--;
-                    } else {
+                        } else {
 
-                        nextAudioLevel = "a_";
-                        if (op=="left") {
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/left/" + nextAudioLevel + nextAudio;
-                        }else if (op=="right") {
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/right/" + nextAudioLevel + nextAudio;
-                        }else {
+                            nextAudioLevel = "a_";
                             filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
+                            reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
+                            reproductor.prepare();
+                            runTime -= durationA.get(nextAudio);
+                            nextAudio++;
                         }
-                        reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
-                        reproductor.prepare();
-                        runTime -= durationA.get(nextAudio);
-                        nextAudio++;
+                        Toast.makeText(getApplicationContext(), "Audio numero " + (nextAudio - 10 + 1), Toast.LENGTH_LONG).show();
+                        reproductor.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "NO MORE AUDIOS SIR, " + spareTime, Toast.LENGTH_LONG).show();
+                        reproductor.stop();
+                        reproductor.release();
                     }
-                    Toast.makeText(getApplicationContext(),"Audio numero " + (nextAudio-10+1), Toast.LENGTH_LONG).show();
-                    reproductor.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "NO MORE AUDIOS SIR, "+spareTime, Toast.LENGTH_LONG).show();
-                    reproductor.stop();
-                    reproductor.release();
-                }
+            }
             }else{
                 Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
             }
+
         }else{
             try {
                 alert=false;
