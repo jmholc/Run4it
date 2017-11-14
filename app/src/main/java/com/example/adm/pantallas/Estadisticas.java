@@ -45,11 +45,12 @@ public class Estadisticas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas);
+
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
         lvstats= (ListView) findViewById(R.id.lvstats);
-
+        Log.d("ID Intent", id);
         new BackgroundTaskJSONUser(id).execute();
 
     }
@@ -123,8 +124,10 @@ public class Estadisticas extends AppCompatActivity {
             //ACA TERMINARIA LO DE PEDIR EL JSON.
             //ABAJO EMPIEZA LO DE PARSEARLO
             //-----------------------------------------------------------------
-            String cantidadpasos, velPromedio, elevacion, totaldistancia, velmax, distmax, calorias, duracion;
-            String infocantidadpasos, infovelPromedio, infoelevacion, infototaldistancia, infovelmax, infodistmax, infocalorias, infoduracion;            json_string = (String) o;
+            //String cantidadpasos, velPromedio, elevacion, totaldistancia, velmax, distmax, calorias, duracion;
+            //String infocantidadpasos, infovelPromedio, infoelevacion, infototaldistancia, infovelmax, infodistmax, infocalorias, infoduracion;            json_string = (String) o;
+
+            String descripcion = null, info = null;
 
             JSONObject jsonObject;
             JSONArray jsonArray;
@@ -141,20 +144,14 @@ public class Estadisticas extends AppCompatActivity {
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
                 Log.d("JSON", jsonArray.length() + "");
                 final String[] nombresAutocomplete=new String[jsonArray.length()];
+                for (int count = 0; count < jsonArray.length() && count +2 > jsonArray.length(); count+=2) {
 
-                JSONObject JO = jsonArray.getJSONObject(0);
+                    JSONObject JO = jsonArray.getJSONObject(count);
+                    Log.d("JSON PARSER", JO.toString());
 
-                cantidadpasos = JO.getString("CantidadPasos ");
-                velPromedio = JO.getString("VelPromedio");
-                elevacion = JO.getString("Elevacion");
-                totaldistancia = JO.getString("TotalDistancia");
-                velmax = JO.getString("VelMax");
-                distmax = JO.getString("DistMax");
-                calorias = JO.getString("Calorias");
-                duracion = JO.getString("Duracion");
-
-                StatsLoader statsLoader = new StatsLoader(cantidadpasos, velPromedio, elevacion, totaldistancia, velmax, distmax, calorias, duracion);
-                statsAdapter.add(statsLoader);
+                    StatsLoader statsLoader = new StatsLoader(descripcion,info);
+                    statsAdapter.add(statsLoader);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -208,9 +205,9 @@ class StatsAdapter extends ArrayAdapter {
             contactHolder = (ContactHolder) row.getTag();
         }
 
-        final StatsAdapter statsAdapter= (StatsAdapter) this.getItem(position);
-        contactHolder.txtDescripcion.setText(StatsAdapter.getUsername());
-        contactHolder.txtData.setText(StatsAdapter.getNombreapellido());
+        final StatsLoader statsLoader= (StatsLoader) this.getItem(position);
+        contactHolder.txtDescripcion.setText(statsLoader.getDescripcion());
+        contactHolder.txtData.setText(statsLoader.getInfo());
 
         return row;
     }
