@@ -102,15 +102,11 @@ public class salida extends AppCompatActivity {
         reproductor.reset();
         if (alert==false){
             if (runTime>0) {
-                if (op != "") {
-                            fixb = nextAudioB-10;
-                            fix = nextAudio-10;
-                         } else{
                     try {
 
                         if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
                             nextAudioLevel = "b_";
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + op + nextAudioLevel + (nextAudioB-fixb);
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + (nextAudioB-fixb)+op;
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationB.get(nextAudioB);
@@ -119,13 +115,13 @@ public class salida extends AppCompatActivity {
                         } else {
 
                             nextAudioLevel = "a_";
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + op + nextAudioLevel + (nextAudio-fix);
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + (nextAudio-fix)+op;
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationA.get(nextAudio);
                             nextAudio++;
                         }
-                        Toast.makeText(getApplicationContext(), "Audio numero " + (nextAudio - 10 + 1), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Audio numero " + (nextAudio - 10), Toast.LENGTH_LONG).show();
                         reproductor.start();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -133,7 +129,7 @@ public class salida extends AppCompatActivity {
                         reproductor.stop();
                         reproductor.release();
                     }
-            }
+
             }else{
                 Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
             }
@@ -223,10 +219,14 @@ public class salida extends AppCompatActivity {
         //startActivityForResult(intent.createChooser(intent, "Selecciona un audio"), FILE_SELECT_CODE);
     }
     public void Left(View v){
-        op="left/";
+        op="_l";
+        fixb = nextAudioB-10;
+        fix = nextAudio-10;
     }
     public void Right(View v){
-        op="right/";
+        op="_r";
+        fixb = nextAudioB-10;
+        fix = nextAudio-10;
     }
 
 
