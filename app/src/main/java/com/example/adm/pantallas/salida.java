@@ -27,7 +27,8 @@ public class salida extends AppCompatActivity {
     int nextAudioB = 10;
     int runTime = 100;
     int vol=0;
-    String filename, op;
+    int fix = 0, fixb = 0;
+    String filename, op = "";
     int bTot, spareTime, a;
     boolean alert=false;
     String nextAudioLevel="a_";
@@ -101,16 +102,15 @@ public class salida extends AppCompatActivity {
         reproductor.reset();
         if (alert==false){
             if (runTime>0) {
-                if (op == "right") {
-
-                } else if (op == "left") {
-
-                } else{
+                if (op != "") {
+                            fixb = nextAudioB-10;
+                            fix = nextAudio-10;
+                         } else{
                     try {
 
                         if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
                             nextAudioLevel = "b_";
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudioB;
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + op + nextAudioLevel + (nextAudioB-fixb);
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationB.get(nextAudioB);
@@ -119,7 +119,7 @@ public class salida extends AppCompatActivity {
                         } else {
 
                             nextAudioLevel = "a_";
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + op + nextAudioLevel + (nextAudio-fix);
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationA.get(nextAudio);
@@ -187,7 +187,6 @@ public class salida extends AppCompatActivity {
         }
         sc.close();
         //Toast.makeText(getApplicationContext(),String.valueOf(aDurTotal), Toast.LENGTH_LONG).show();
-
         durRest=runTime-aDurTotal;
         bTot=10;
 
@@ -224,10 +223,10 @@ public class salida extends AppCompatActivity {
         //startActivityForResult(intent.createChooser(intent, "Selecciona un audio"), FILE_SELECT_CODE);
     }
     public void Left(View v){
-        op="left";
+        op="left/";
     }
     public void Right(View v){
-        op="right";
+        op="right/";
     }
 
 
