@@ -1,6 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#37474F" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,38 +20,13 @@
 
     <Button
         android:id="@+id/btnComenzar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
         android:onClick="Comenzar"
-        android:text="Comenzar" />
-
-    <Button
-        android:id="@+id/btnAlert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="Alert"
-        android:text="Alert" />
-
-    <Button
-        android:id="@+id/btnTesting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="prueba"
-        android:text="Random" />
-
-    <Button
-        android:id="@+id/btnParse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick_time"
-        android:text="¿En cuanto llego?" />
-
-    <Button
-        android:id="@+id/btnLugares"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick_places"
-        android:text="Lugares..." />
+        android:text="Comenzar"
+        android:textColor="#212121" />
 
     <TextView
         android:id="@+id/lblLatlon"
@@ -75,7 +52,19 @@
         android:layout_height="wrap_content"
         android:text="XX KM/H" />
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="148dp"
+        android:layout_height="154dp"
+        app:srcCompat="@drawable/botonpausa" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="148dp"
+        android:layout_height="138dp"
+        app:srcCompat="@drawable/botonstop" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
