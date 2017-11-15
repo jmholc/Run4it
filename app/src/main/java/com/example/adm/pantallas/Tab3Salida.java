@@ -2,6 +2,8 @@ package com.example.adm.pantallas;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,10 +35,36 @@ public class Tab3Salida extends Fragment {
         etDistancia= (EditText) rootView.findViewById(R.id.etDistancia);
         etTiempo= (EditText) rootView.findViewById(R.id.etTiempo);
         etVelocidad= (EditText) rootView.findViewById(R.id.etVelocidad);
+        etTiempo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (!etDistancia.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                    etVelocidad.setText(""+(Float.valueOf(etDistancia.getText().toString())/Float.valueOf(etTiempo.getText().toString()))*60);
+                }
+                //if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                //    etDistancia.setText(""+(Integer.parseInt(etDistancia.getText().toString())/Integer.parseInt(etTiempo.getText().toString())));
+              //  }
+            }
+        });
+
         return rootView;
 
     }
-    
+
+
+
 
     AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener(){
 
