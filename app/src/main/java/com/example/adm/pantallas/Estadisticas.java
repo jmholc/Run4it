@@ -1,13 +1,12 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,21 +137,21 @@ public class Estadisticas extends AppCompatActivity {
 
 
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
-                Log.d("JSON", jsonArray.length() + "");
+                Log.d("JSON", jsonArray.getJSONObject(0).length() + "");
                 final String[] nombresAutocomplete=new String[jsonArray.length()];
-                for (int count = 0; count < jsonArray.length() /*&& count +2 > jsonArray.length()*/; count++) {
+                for (int count = 0; count < (jsonArray.getJSONObject(0).length())/2; count++) {
 
-                    JSONObject JO = jsonArray.getJSONObject(count);
+                    JSONObject JO = jsonArray.getJSONObject(0);
 
-                    Log.d("JSONPARSER", jsonArray.getJSONObject(count).toString());
+                    //Log.d("DATAPARSER", jsonArray.getJSONObject(0).toString());
 
                     //prueba=JO.getString("info" + 1);
 
                     descripcion = JO.get("info"+count).toString();
                     info= JO.get("desc"+count).toString();
 
-                    Log.d("DATAdescripcion", " DESCRIPCION + " + descripcion);
-                    Log.d("DATAinfo","INFO " + info);
+                    Log.d("DATAdescripcion", descripcion);
+                    Log.d("DATAinfo", info);
 
                     StatsLoader statsLoader = new StatsLoader(descripcion,info);
                     statsAdapter.add(statsLoader);
@@ -174,7 +173,7 @@ class StatsAdapter extends ArrayAdapter {
         ctx=context;
     }
 
-    public void add(UsuariosBuscados object) {
+    public void add(StatsLoader object) {
         super.add(object);
         list.add(object);
     }
