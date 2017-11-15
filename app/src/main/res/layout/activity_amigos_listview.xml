@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#37474F">
 
     <ImageView
         android:id="@+id/imageView7"
@@ -39,7 +40,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
         android:text="Nombre Apellido"
-        android:textSize="16sp"
+        android:textSize="20dp"
         app:layout_constraintLeft_toRightOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
@@ -54,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:scrollHorizontally="false"
         android:textAlignment="center"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintLeft_toRightOf="@+id/txtUsername"
         app:layout_constraintTop_toTopOf="@+id/txtUsername"

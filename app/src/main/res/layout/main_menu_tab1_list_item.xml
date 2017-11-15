@@ -24,9 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:textColor="#dc5d11"
         android:layout_toEndOf="@id/imageView"
         android:text="Title"
+        android:textSize="22dp"
+        android:textColor="#9E9E9E"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
@@ -39,5 +40,6 @@
         android:layout_marginTop="10dp"
         android:text="Description"
         android:textColor="#9E9E9E"
+        android:textSize="17dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 </RelativeLayout>

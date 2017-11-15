@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.adm.pantallas.PerfilAmigos">
+    tools:context="com.example.adm.pantallas.PerfilAmigos"
+    android:background="#37474F">
 
 
     <TextView
@@ -15,7 +16,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="34dp"
         android:layout_marginTop="31dp"
-        android:text="Username" />
+        android:text="Username"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"/>
 
     <TextView
         android:id="@+id/txtNombre"
@@ -24,7 +28,10 @@
         android:layout_alignStart="@+id/txtUsername"
         android:layout_below="@+id/txtUsername"
         android:layout_marginTop="33dp"
-        android:text="Nombre" />
+        android:text="Nombre"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"/>
 
     <TextView
         android:id="@+id/txtApellido"
@@ -33,14 +40,20 @@
         android:layout_alignStart="@+id/txtNombre"
         android:layout_below="@+id/txtNombre"
         android:layout_marginTop="51dp"
-        android:text="Apellido" />
+        android:text="Apellido"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"/>
 
     <TextView
         android:id="@+id/txtMensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/txtApellido"
         android:layout_below="@+id/txtApellido"
         android:layout_marginTop="57dp"
-        android:text="Mensaje" />
+        android:text="Mensaje"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"
+        android:layout_alignStart="@+id/txtApellido" />
 </RelativeLayout>
