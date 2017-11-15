@@ -25,7 +25,7 @@ public class salida extends AppCompatActivity {
     int maxVolume=100;
     int nextAudio = 10, alertType = 10;
     int nextAudioB = 10;
-    int runTime = 100;
+    int runTime = 200;
     int vol=0;
     int fix = 0, fixb = 0;
     String filename, op = "";
