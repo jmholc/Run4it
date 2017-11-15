@@ -109,5 +109,35 @@
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/txAmigos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Amigos"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@color/dot_light_Intro1"
+        android:textStyle="italic"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/imUsuario"
+        app:layout_constraintTop_toTopOf="@+id/imUsuario" />
+
+    <TextView
+        android:id="@+id/txHistorias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Historias"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@color/dot_light_Intro1"
+        android:textStyle="italic"
+        app:layout_constraintLeft_toRightOf="@+id/imUsuario"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imUsuario" />
 
 </android.support.constraint.ConstraintLayout>
