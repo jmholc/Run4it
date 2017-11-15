@@ -46,11 +46,12 @@ public class Estadisticas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas);
 
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        //Intent intent = getIntent();
+        //String id = intent.getStringExtra("id");
 
         lvstats= (ListView) findViewById(R.id.lvstats);
-        Log.d("ID Intent", id);
+        String id="25";
+        Log.d("intent", id);
         new BackgroundTaskJSONUser(id).execute();
 
     }
@@ -80,8 +81,7 @@ public class Estadisticas extends AppCompatActivity {
                 OutputStream outputStream = httpsURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                String data =
-                        URLEncoder.encode("usuarioabuscar","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8");
+                String data = URLEncoder.encode("usuarioabuscar","UTF-8") + "=" + URLEncoder.encode(usuario,"UTF-8");
 
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
@@ -95,11 +95,12 @@ public class Estadisticas extends AppCompatActivity {
                 while ((JSON_STRING = bufferedReader.readLine()) != null) {
                     stringBuilder.append(JSON_STRING + "\n");
                 }
+                //
                 bufferedReader.close();
                 inputStream.close();
                 httpsURLConnection.disconnect();
 
-                Log.d("Coso", "doInBackground: ");
+                Log.d("Coso", stringBuilder.toString());
 
                 return stringBuilder.toString().trim();
 
@@ -113,24 +114,16 @@ public class Estadisticas extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object o) {
-
-
-
-
-            /*TextView textView=(TextView)findViewById(R.id.textView6);
-            textView.setText((String)o);*/
-
-            //-----------------------------------------------------------------
-            //ACA TERMINARIA LO DE PEDIR EL JSON.
-            //ABAJO EMPIEZA LO DE PARSEARLO
-            //-----------------------------------------------------------------
             //String cantidadpasos, velPromedio, elevacion, totaldistancia, velmax, distmax, calorias, duracion;
             //String infocantidadpasos, infovelPromedio, infoelevacion, infototaldistancia, infovelmax, infodistmax, infocalorias, infoduracion;            json_string = (String) o;
+
+            json_string = (String) o;
 
             String descripcion = null, info = null;
 
             JSONObject jsonObject;
             JSONArray jsonArray;
+
 
             final StatsAdapter statsAdapter= new StatsAdapter(getApplicationContext(), R.layout.activity_estadisticas);
 
@@ -147,7 +140,11 @@ public class Estadisticas extends AppCompatActivity {
                 for (int count = 0; count < jsonArray.length() && count +2 > jsonArray.length(); count+=2) {
 
                     JSONObject JO = jsonArray.getJSONObject(count);
-                    Log.d("JSON PARSER", JO.toString());
+                    Log.d("JSONPARSER", jsonArray.getJSONObject(count).toString());
+                    descripcion = jsonArray.get(count).toString();
+                    info= (String) jsonArray.get(count+1).toString();
+                    Log.d("DATAdescripcion", " DESCRIPCION + " + descripcion);
+                    Log.d("DATAinfo", info);
 
                     StatsLoader statsLoader = new StatsLoader(descripcion,info);
                     statsAdapter.add(statsLoader);

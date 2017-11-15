@@ -34,7 +34,9 @@
         </activity>
         <activity android:name=".Configuracion" />
         <activity android:name=".Amigos" />
-        <activity android:name=".Estadisticas" />
+        <activity android:name=".Estadisticas" >
+
+        </activity>
         <activity android:name=".Perfil" />
         <activity android:name=".ConfiguracionPantalla" />
         <activity android:name=".VerificarMail" />
