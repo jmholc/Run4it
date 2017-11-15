@@ -134,17 +134,25 @@ public class Estadisticas extends AppCompatActivity {
             try {
                 jsonObject = new JSONObject(json_string);
 
+                String prueba;
+
+
                 jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
                 Log.d("JSON", jsonArray.length() + "");
                 final String[] nombresAutocomplete=new String[jsonArray.length()];
-                for (int count = 0; count < jsonArray.length() && count +2 > jsonArray.length(); count+=2) {
+                for (int count = 0; count < jsonArray.length() /*&& count +2 > jsonArray.length()*/; count++) {
 
                     JSONObject JO = jsonArray.getJSONObject(count);
+
                     Log.d("JSONPARSER", jsonArray.getJSONObject(count).toString());
-                    descripcion = jsonArray.get(count).toString();
-                    info= (String) jsonArray.get(count+1).toString();
+
+                    //prueba=JO.getString("info" + 1);
+
+                    descripcion = JO.get("info"+count).toString();
+                    info= JO.get("desc"+count).toString();
+
                     Log.d("DATAdescripcion", " DESCRIPCION + " + descripcion);
-                    Log.d("DATAinfo", info);
+                    Log.d("DATAinfo","INFO " + info);
 
                     StatsLoader statsLoader = new StatsLoader(descripcion,info);
                     statsAdapter.add(statsLoader);
