@@ -26,12 +26,11 @@
             android:name=".Principal"
             android:label="@string/title_activity_main_menu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Introduccion" >
+        <activity android:name=".Introduccion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
         <activity android:name=".Configuracion" />
         <activity android:name=".Amigos" />
         <activity android:name=".Estadisticas" >
@@ -40,7 +39,12 @@
         <activity android:name=".Perfil" />
         <activity android:name=".ConfiguracionPantalla" />
         <activity android:name=".VerificarMail" />
-        <activity android:name=".salida" />
+        <activity android:name=".salida">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Historias" />
         <activity android:name=".anadir_amigos" />
         <activity android:name=".amigos_solicitud_pendiente" />
@@ -62,8 +66,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
-
-
         </activity>
 
     </application>

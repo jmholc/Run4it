@@ -1,87 +1,147 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#37474F"
+    android:weightSum="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <fragment
+    <!--        <fragment
             android:id="@+id/place_autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />-->
 
-    </LinearLayout>
 
-    <Button
+    <!--<Button
         android:id="@+id/btnComenzar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
         android:onClick="Comenzar"
-        android:text="Comenzar" />
-
-    <Button
-        android:id="@+id/btnAlert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="Alert"
-        android:text="Alert" />
-
-    <Button
-        android:id="@+id/btnTesting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="prueba"
-        android:text="Random" />
-
-    <Button
-        android:id="@+id/btnParse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick_time"
-        android:text="¿En cuanto llego?" />
-
-    <Button
-        android:id="@+id/btnLugares"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick_places"
-        android:text="Lugares..." />
-
+        android:text="Comenzar"
+        android:textColor="#212121" />
+-->
     <TextView
         android:id="@+id/lblLatlon"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="0.0, 0.0" />
+        android:text="0.0, 0.0"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="532dp" />
 
     <TextView
         android:id="@+id/lblDireccion"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="DIRECCION" />
+        android:text="DIRECCION"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/lblLatlon"
+        app:layout_constraintTop_toBottomOf="@+id/lblLatlon"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/lblLatlon"
+
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/lblAltura"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="ALTURA" />
+        android:text="ALTURA"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/lblDireccion"
+        app:layout_constraintTop_toBottomOf="@+id/lblDireccion"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/lblDireccion"
+
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/lblVelocidad"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="XX KM/H" />
+        android:text="XX KM/H"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/lblAltura"
+        app:layout_constraintTop_toBottomOf="@+id/lblAltura"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/lblAltura"
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.adm.pantallas.MapsActivity" />
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.009" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginRight="118dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toTopOf="@+id/btnComenzar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/botonpausa"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <ImageView
+        android:id="@+id/btnComenzar"
+        android:layout_width="89dp"
+        android:layout_height="101dp"
+        android:onClick="Comenzar"
+        app:srcCompat="@drawable/botonplay"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="89dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="89dp" />
+
+     <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:context="com.example.adm.pantallas.MapsActivity"
+         tools:layout_editor_absoluteY="16dp"
+         tools:layout_editor_absoluteX="64dp" />-->
+
+</android.support.constraint.ConstraintLayout>

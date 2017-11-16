@@ -67,10 +67,10 @@
     <string name="Reg2_boton">Aceptar</string>
     <string name="Reg2_altura">Altura cm</string>
     <string name="Reg2_nacimiento">Fecha de nacimiento</string>
-    <string name="Reg2_femenino">Femenino</string>
+    <string name="Reg2_femenino">     Femenino</string>
     <string name="Reg2_informacion_adicional">Informacion Adicional</string>
-    <string name="Reg2_masculino">Masculino</string>
-    <string name="Reg2_otro">Otro</string>
+    <string name="Reg2_masculino">     Masculino</string>
+    <string name="Reg2_otro">     Otro</string>
     <string name="Reg2_peso">Peso KG</string>
     <string name="Principal_imagen_del_dia">La Imagen del dia</string>
 
