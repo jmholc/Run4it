@@ -146,11 +146,13 @@ public class Tab3Salida extends Fragment {
 
     public void chau (View view){
 
-        float dis = Float.valueOf(etDistancia.getText().toString());
-        float vel = Float.valueOf(etVelocidad.getText().toString());
-        float temp = Float.valueOf(etTiempo.getText().toString());
-        Intent k = new Intent(getContext(), salida.class);
-        startActivity(k);
+        if(!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")) {
+            float dis = Float.valueOf(etDistancia.getText().toString());
+            float vel = Float.valueOf(etVelocidad.getText().toString());
+            float temp = Float.valueOf(etTiempo.getText().toString());
+            Intent k = new Intent(getContext(), salida.class);
+            startActivity(k);
+        }
     }
 
     AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener(){
