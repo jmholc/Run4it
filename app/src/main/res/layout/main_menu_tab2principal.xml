@@ -36,23 +36,25 @@
 
             <ImageView
                 android:id="@+id/imLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="425dp"
+                android:layout_height="261dp"
                 android:contentDescription=""
                 android:src="@drawable/perfil2"
                 app:layout_constraintBottom_toTopOf="@+id/txtNombre"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription"
-                app:layout_constraintVertical_bias="0.0"
                 android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                app:layout_constraintHorizontal_bias="0.43"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/imUsuario"
-                android:layout_width="0dp"
-                android:layout_height="105dp"
+                android:layout_width="357dp"
+                android:layout_height="95dp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -72,13 +74,13 @@
                 android:textColorHint="#9E9E9E"
                 android:textSize="22dp"
                 android:textStyle="bold"
-                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imUsuario"
                 tools:ignore="HardcodedText"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintRight_creator="1" />
+                tools:layout_constraintRight_creator="1"
+                android:layout_marginTop="0dp" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -101,6 +103,7 @@
                 android:layout_width="300dp"
                 android:layout_height="250dp"
                 android:layout_marginTop="27dp"
+                android:alpha="0.9"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@+id/txtNombre"

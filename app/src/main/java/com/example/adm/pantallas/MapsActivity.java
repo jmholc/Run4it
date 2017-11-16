@@ -132,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         reproducirAudio();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map); // le cree algo aca, nose que
         mapFragment.getMapAsync(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -149,9 +149,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alt = (TextView) findViewById(R.id.lblAltura);
         dir = (TextView) findViewById(R.id.lblDireccion);
         vel = (TextView) findViewById(R.id.lblVelocidad);
-
+/*
         autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);*/
 
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
