@@ -1,9 +1,13 @@
 package com.example.adm.pantallas;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Created by adm on 09/06/2017.
@@ -24,6 +32,7 @@ public class Tab3Salida extends Fragment {
     Button btnSalida;
     Boolean Clickeado;
     EditText etDistancia, etTiempo, etVelocidad;
+    NumberFormat formatter = new DecimalFormat("#0.0");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,13 +58,84 @@ public class Tab3Salida extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 if (!etDistancia.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
-                    etVelocidad.setText(""+(Float.valueOf(etDistancia.getText().toString())/Float.valueOf(etTiempo.getText().toString()))*60);
+                    etVelocidad.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString())/Double.valueOf(etTiempo.getText().toString()))*60));
+                }else if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                    etDistancia.setText(""+formatter.format((Double.valueOf(etVelocidad.getText().toString())*Double.valueOf(etTiempo.getText().toString()))/60));
+                }else if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")){
+                    etVelocidad.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString())/Double.valueOf(etTiempo.getText().toString()))*60));
                 }
                 //if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
                 //    etDistancia.setText(""+(Integer.parseInt(etDistancia.getText().toString())/Integer.parseInt(etTiempo.getText().toString())));
               //  }
+            }
+        });
+        etTiempo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                //if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                //    etDistancia.setText(""+(Integer.parseInt(etDistancia.getText().toString())/Integer.parseInt(etTiempo.getText().toString())));
+                //  }
+            }
+        });
+        etTiempo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+
+                } else {
+                    if (!etDistancia.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                        etVelocidad.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString())/Double.valueOf(etTiempo.getText().toString()))*60));
+                    }else if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                        etDistancia.setText(""+formatter.format((Double.valueOf(etVelocidad.getText().toString())*Double.valueOf(etTiempo.getText().toString()))/60));
+                    }else if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")){
+                        etVelocidad.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString())/Double.valueOf(etTiempo.getText().toString()))*60));
+                    }
+                }
+            }
+        });
+        etDistancia.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+
+                } else {
+                    if (!etDistancia.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                        etVelocidad.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString())/Double.valueOf(etTiempo.getText().toString()))*60));
+                    }else if (!etVelocidad.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")) {
+                        etTiempo.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString()))*60/(Double.valueOf(etVelocidad.getText().toString()))));
+                    }else if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")){
+                        etVelocidad.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString())/Double.valueOf(etTiempo.getText().toString()))*60));
+                    }
+                }
+            }
+        });
+        etVelocidad.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+
+                } else {
+                    if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")) {
+                        etDistancia.setText(""+formatter.format((Double.valueOf(etVelocidad.getText().toString())*Double.valueOf(etTiempo.getText().toString()))/60));
+                    }else if (!etVelocidad.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")) {
+                        etTiempo.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString()))*60/(Double.valueOf(etVelocidad.getText().toString()))));
+                    }else if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")){
+                        etTiempo.setText(""+formatter.format((Double.valueOf(etDistancia.getText().toString()))*60/(Double.valueOf(etVelocidad.getText().toString()))));
+                    }
+                }
             }
         });
 
@@ -64,17 +144,19 @@ public class Tab3Salida extends Fragment {
     }
 
 
+    public void chau (View view){
 
+        float dis = Float.valueOf(etDistancia.getText().toString());
+        float vel = Float.valueOf(etVelocidad.getText().toString());
+        float temp = Float.valueOf(etTiempo.getText().toString());
+        Intent k = new Intent(getContext(), salida.class);
+        startActivity(k);
+    }
 
     AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener(){
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-            int dis = Integer.parseInt(etDistancia.toString());
-            int vel = Integer.parseInt(etVelocidad.toString());
-            int temp = Integer.parseInt(etTiempo.toString());
 
 
             /*if(Clickeado) {
@@ -90,5 +172,6 @@ public class Tab3Salida extends Fragment {
 
         }
     };
+
 
 }
