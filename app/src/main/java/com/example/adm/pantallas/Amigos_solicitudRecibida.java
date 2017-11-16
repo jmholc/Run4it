@@ -168,8 +168,7 @@ public class Amigos_solicitudRecibida extends AppCompatActivity {
 
 
                         UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
-                        adaptadorUsuarios4
-                                .add(usuariosBuscados);
+                        adaptadorUsuarios4.add(usuariosBuscados);
                     }
                 }
 

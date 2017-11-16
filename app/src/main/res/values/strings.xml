@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">RUN4IT</string>
-    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="title_activity_main_menu"></string>
     <string name="action_settings">Settings</string>
 
     <string name="intro1a">Bienvenido</string>
@@ -49,7 +49,7 @@
     <string name="AmigosTitulo">Amigos</string>
 
 
-    <string name="EstadisticasTitulo">Tus estadísticas semanales</string>
+    <string name="EstadisticasTitulo">Estadísticas</string>
 
     <string name="Calorias">Calorias gastadas:</string>
     <string name="Tiempo">Tiempo recorrido:</string>

@@ -185,6 +185,9 @@ public class BackgroundTask extends AsyncTask{
             Bundle mBundle = new Bundle();
             mBundle.putString("usuario", info[1]);
             mBundle.putString("contrasena", info[2]);
+            mBundle.putString("id", info[3]);
+
+            Log.i("ASDASD", info[3]);
             intent.putExtras(mBundle);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -207,6 +210,9 @@ public class BackgroundTask extends AsyncTask{
             Bundle mBundle = new Bundle();
             mBundle.putString("usuario", info[1]);
             mBundle.putString("contrasena", info[2]);
+            mBundle.putString("id", info[3]);
+            Log.i("ASDASD", info[3]);
+
             intent.putExtras(mBundle);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -228,6 +234,8 @@ public class BackgroundTask extends AsyncTask{
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("usuario",info[1]);
             editor.putString("contrasena",info[2]);
+            editor.putString("id",info[3]);
+            Log.i("ASDASD", info[3]);
             //editor.putString("nombre",info[3]);
             //editor.putString("apellido",info[4]);
 

@@ -48,104 +48,12 @@
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="#9E9E9E"
-        android:text="@string/Tiempo"
-        android:textSize="25dp"
-        android:layout_alignBottom="@+id/tv3"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="74dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="8dp" />
-
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/Calorias"
-        android:textSize="25dp"
-        android:textColor="#9E9E9E"
-        android:layout_above="@+id/tv1"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv1"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintBottom_toTopOf="@+id/tv2"
-        app:layout_constraintVertical_bias="0.033"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="8dp" />
-
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="#9E9E9E"
-        android:text="@string/Kilometros"
-        android:textSize="25dp"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/tv1"
-        android:layout_marginTop="28dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv2"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="8dp" />
-
-    <TextView
-        android:id="@+id/tv4"
-        android:layout_width="225dp"
-        android:layout_height="76dp"
-        android:text="@string/Distancia"
-        android:textColor="#9E9E9E"
-        android:textSize="25dp"
-        android:layout_above="@+id/tv5"
-        android:layout_alignStart="@+id/tv3"
-        android:layout_marginTop="27dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv3"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="8dp" />
-
-    <TextView
-        android:id="@+id/tv5"
-        android:layout_width="237dp"
-        android:layout_height="74dp"
-        android:text="@string/Velocidad"
-        android:textColor="#9E9E9E"
-        android:textSize="25dp"
-        android:layout_above="@+id/floatingActionButton"
-        android:layout_alignStart="@+id/tv4"
-        android:layout_toStartOf="@+id/floatingActionButton"
-        android:layout_marginTop="7dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv4"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
+    <ListView
+        android:id="@+id/lvstats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar2"
+        android:layout_centerHorizontal="true" />
 
 
 </android.support.constraint.ConstraintLayout>
