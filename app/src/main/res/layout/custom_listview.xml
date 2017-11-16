@@ -8,7 +8,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/idPic"
-        android:src="@drawable/ic_historia"/>
+        android:src="@drawable/ic_story"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:layout_width="match_parent"
