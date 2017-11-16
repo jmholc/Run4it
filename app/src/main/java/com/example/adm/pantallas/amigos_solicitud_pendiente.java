@@ -116,22 +116,16 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
 
-
             String IDUsuario, username, nombreapellido, estado;
-
-
             /*TextView textView=(TextView)findViewById(R.id.textView6);
             textView.setText((String)o);*/
             json_string = (String) o;
-
             //-----------------------------------------------------------------
             //ACA TERMINARIA LO DE PEDIR EL JSON.
             //ABAJO EMPIEZA LO DE PARSEARLO
             //-----------------------------------------------------------------
             JSONObject jsonObject;
             JSONArray jsonArray;
-
-
 
             final AdaptadorUsuarios3 adaptadorUsuarios3 = new AdaptadorUsuarios3(getApplicationContext(), R.layout.activity_amigos_solicitud_pendiente);
 
