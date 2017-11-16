@@ -1,6 +1,7 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -45,12 +46,12 @@ public class Estadisticas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas);
 
-        //Intent intent = getIntent();
-        //String id = intent.getStringExtra("id");
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
 
         lvstats= (ListView) findViewById(R.id.lvstats);
-        String id="25";
-        Log.d("intent", id);
+        //String id="25";
+        //Log.d("intent", id);
         new BackgroundTaskJSONUser(id).execute();
 
     }

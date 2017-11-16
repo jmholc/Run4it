@@ -151,8 +151,6 @@ public class Tab1Configuracion extends Fragment {
             int i=0;
             if(productList.get(position).getTitle().equals("Configuracion"))
                 i=1;
-            if(productList.get(position).getTitle().equals("Estadisticas"))
-                i=2;
             if(productList.get(position).getTitle().contains("Amigos"))
                 i=3;
             if(productList.get(position).getTitle().equals("Perfil"))
@@ -167,9 +165,23 @@ public class Tab1Configuracion extends Fragment {
                 i=7;
             }
 
-            Intent intent = new Intent(getContext(), classes[i]);
-            startActivity(intent);
+            if(productList.get(position).getTitle().equals("Estadisticas"))
+            {
+                i=2;
 
+                SharedPreferences sharedPreferences =  getContext().getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+                String id1= sharedPreferences.getString("id","");
+
+                //Log.d("intent", id1);
+
+                Intent intent = new Intent(getContext(), Estadisticas.class);
+                intent.putExtra("id", id1);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(getContext(), classes[i]);
+                startActivity(intent);
+            }
 
 
 
