@@ -25,7 +25,7 @@ import java.text.NumberFormat;
  * Created by adm on 09/06/2017.
  */
 
-public class Tab3Salida extends Fragment {
+public class Tab3Salida extends Fragment{
 
 
     ConstraintLayout constraintLayout;
@@ -33,12 +33,35 @@ public class Tab3Salida extends Fragment {
     Boolean Clickeado;
     EditText etDistancia, etTiempo, etVelocidad;
     NumberFormat formatter = new DecimalFormat("#0.0");
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_menu_tab3salida, container, false);
+        Button button = (Button) rootView.findViewById(R.id.btnSalida);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")) {
+                    if((Double.valueOf(etVelocidad.getText().toString())*Double.valueOf(etTiempo.getText().toString()))/60==Double.valueOf(etDistancia.getText().toString()))
+                    {
+                        float dis = Float.valueOf(etDistancia.getText().toString());
+                        float vel = Float.valueOf(etVelocidad.getText().toString());
+                        float temp = Float.valueOf(etTiempo.getText().toString());
+                        Global Dis = new Global();
+                        Global Vel = new Global();
+                        Global Temp = new Global();
+                        Dis.setDis(dis);
+                        Vel.setDis(vel);
+                        Temp.setDis(temp);
+                        Intent k = new Intent(getContext(), salida.class);
+                        startActivity(k);
+                    }
+                }
 
+            }
+        });
         constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.LayoutOpciones);
         btnSalida = (Button) rootView.findViewById(R.id.btnSalida);
         etDistancia= (EditText) rootView.findViewById(R.id.etDistancia);
@@ -143,16 +166,9 @@ public class Tab3Salida extends Fragment {
 
     }
 
-
     public void chau (View view){
 
-        if(!etVelocidad.getText().toString().equals("")&&!etTiempo.getText().toString().equals("")&&!etDistancia.getText().toString().equals("")) {
-            float dis = Float.valueOf(etDistancia.getText().toString());
-            float vel = Float.valueOf(etVelocidad.getText().toString());
-            float temp = Float.valueOf(etTiempo.getText().toString());
-            Intent k = new Intent(getContext(), salida.class);
-            startActivity(k);
-        }
+
     }
 
     AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener(){
