@@ -171,10 +171,10 @@ public class PerfilAmigos extends AppCompatActivity {
                 Log.d("Coso", nombre);
                 Log.d("Coso", apellido);
 
-                txtUsername.setText(username);
-                txtNombre.setText(nombre);
-                txtApellido.setText(apellido);
-                txtMessage.setText(estado);
+                txtUsername.setText(txtUsername.getText()+" "+username);
+                txtNombre.setText(txtNombre.getText()+" "+nombre);
+                txtApellido.setText(txtApellido.getText()+" "+apellido);
+                txtMessage.setText(/*txtMessage.getText()+" "+*/estado);
 
 
             } catch (JSONException e) {
