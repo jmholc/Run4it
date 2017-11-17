@@ -150,7 +150,7 @@ public class Tab1Configuracion extends Fragment {
             //Do any thing when user click to item
             Log.d("PRINCIPAL" , productList.get(position).getTitle() + " - " + productList.get(position).getDescription());
             Toast.makeText(getContext(), "HOLA"/*productList.get(position).getTitle() + " - " + productList.get(position).getDescription()*/,Toast.LENGTH_SHORT);
-            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, anadir_amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class,DesafioPendiente.class, Login.class };
+            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, anadir_amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class,DesafioPendiente.class, Login.class, DesafioRecibido.class };
             int i=0;
             if(productList.get(position).getTitle().equals("Configuracion"))
                 i=1;
@@ -168,6 +168,8 @@ public class Tab1Configuracion extends Fragment {
                 getContext().getSharedPreferences("infoUsuario", Context.MODE_PRIVATE).edit().clear().commit();
                 i=8;
             }
+            if(productList.get(position).getTitle().equals("Desafios Recibidos"))
+                i=9;
 
             if(productList.get(position).getTitle().equals("Estadisticas"))
             {

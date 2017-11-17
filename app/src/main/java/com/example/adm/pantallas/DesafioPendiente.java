@@ -217,8 +217,8 @@ public class DesafioPendiente extends AppCompatActivity {
                 LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 row = layoutInflater.inflate(R.layout.desafio_pendiente_listview_item, parent, false);
                 contactHolder = new ContactHolder();
-                contactHolder.txUsername= (TextView) row.findViewById(R.id.txUsername);
-                contactHolder.txTipo=(TextView) row.findViewById(R.id.txTipo);
+                contactHolder.txUsername= (TextView) row.findViewById(R.id.txUsernameRec);
+                contactHolder.txTipo=(TextView) row.findViewById(R.id.txTipoRec);
                 contactHolder.txCantidad=(TextView) row.findViewById(R.id.txCantidad);
 
                 row.setTag(contactHolder);

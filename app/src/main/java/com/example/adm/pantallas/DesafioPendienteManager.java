@@ -9,6 +9,15 @@ public class DesafioPendienteManager {
     String username;
     String objetivodesafio;
 
+    String iddesafio;
+
+    public DesafioPendienteManager(String idU, String user, String objetivo, String cant, String idDes) {
+        idUsuario = idU;
+        username = user;
+        objetivodesafio = objetivo;
+        iddesafio = idDes;
+    }
+
     public String getIdUsuario() {
         return idUsuario;
     }
@@ -23,6 +32,14 @@ public class DesafioPendienteManager {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getIddesafio() {
+        return iddesafio;
+    }
+
+    public void setIddesafio(String iddesafio) {
+        this.iddesafio = iddesafio;
     }
 
     public String getObjetivodesafio() {
