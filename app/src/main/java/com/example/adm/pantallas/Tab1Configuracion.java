@@ -197,7 +197,7 @@ public class Tab1Configuracion extends Fragment {
 
 
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_menu_1:
@@ -212,5 +212,5 @@ public class Tab1Configuracion extends Fragment {
                 break;
         }
         return true;
-    }
+    }*/
 }
