@@ -55,7 +55,7 @@ public class Tab3Salida extends Fragment{
                         Dis.setDis(dis);
                         Vel.setDis(vel);
                         Temp.setDis(temp);
-                        Intent k = new Intent(getContext(), salida.class);
+                        Intent k = new Intent(getContext(), MapsActivity.class);
                         startActivity(k);
                     }
                 }

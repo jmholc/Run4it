@@ -56,6 +56,9 @@ public class salida extends AppCompatActivity {
         bgmusic.setLooping(true);
         obtenerDuracion();
         reproducirAudio();
+        tts();
+    }
+    public void tts(){
         final Global vel = new Global();
         final Global dis = new Global();
         final Global temp = new Global();

@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
@@ -131,6 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Double> velProm;
     SensorManager SensorManage, sen2;
     Sensor mLight, mGravity, mGeomagnetic;
+    TextToSpeech computer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +185,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGeomagnetic = sen2.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         sen2.registerListener(this, sen2.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),SensorManager.SENSOR_DELAY_GAME);
         int pepe;
+
+        /*
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
@@ -205,7 +209,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onError(Status status) {
                 Toast.makeText(MapsActivity.this, "Resultados: ERROR", Toast.LENGTH_SHORT).show();
             }
+        });*/
+        tts();
+    }
+    public void tts(){
+        final Global vel = new Global();
+        final Global dis = new Global();
+        final Global temp = new Global();
+
+        computer=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+
+            @Override
+            public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if(status == TextToSpeech.SUCCESS){
+                    int result=computer.setLanguage(Locale.US);
+                    if(result==TextToSpeech.LANG_MISSING_DATA ||
+                            result==TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("error", "This Language is not supported");
+                    }
+                    else{
+                        computer.speak("You will run at "+vel.getVel()+" kilometers per hour, for "+temp.getTemp()+" minutes, a total of "+dis.getDis()+" kilometers. Good luck and let's hope Ruben gives us a ten", TextToSpeech.QUEUE_FLUSH, null, "Prueba");
+                    }
+                }
+                else
+                    Log.e("error", "Initilization Failed!");
+            }
         });
+
     }
 
     /**
@@ -557,20 +588,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
                 Toast.makeText(MapsActivity.this,"MOVISTE", Toast.LENGTH_SHORT).show();
 */
-
+/*
             LatLng sydney = new LatLng(latitudeStart, longitudeStart);
-            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in COMIENZO"));
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Comienzo"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+*/
+            LatLng emp = new LatLng(location.getLatitude(), location.getLongitude());
+            MarkerOptions markOpt = new MarkerOptions();
+            markOpt.position(emp);
+            markOpt.title("Comienzo");
+            markOpt.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+            mCurrLocationMarker = mMap.addMarker(markOpt);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(emp));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
             startL=true;
         }
         else {
-            velProm.add(Double.valueOf(location.getSpeed()));
-            velPromF=0.0;
-            for (int i=0; i<velProm.size(); i++)velPromF+= velProm.get(i);
-            velPromF/=velProm.size();
-            velPromedio.setText(Double.toString(velPromF));
+            if(mapReady) {
+                velProm.add(Double.valueOf(location.getSpeed()));
+                velPromF = 0.0;
+                for (int i = 0; i < velProm.size(); i++) velPromF += velProm.get(i);
+                velPromF /= velProm.size();
+                velPromedio.setText(Double.toString(velPromF));
+            }
         }
 
             /*
@@ -1007,6 +1049,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         }
+    }
+    public void ComenzarSalida(){
+
     }
 
     public LatLng getRandomLocation(LatLng point, int radius) {

@@ -8,12 +8,12 @@
     android:weightSum="1">
 
 
-            <fragment
+            <!--<fragment
             android:id="@+id/place_autocomplete_fragment"
                 tools:layout_editor_absoluteY="0dp"
                 tools:layout_editor_absoluteX="8dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     <!--<Button
         android:id="@+id/btnComenzar"
         android:layout_width="200dp"
@@ -123,7 +123,6 @@
         app:layout_constraintLeft_toLeftOf="@+id/lblAltura"
         android:textColor="#9E9E9E"
         android:textSize="30dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
@@ -131,12 +130,14 @@
 
     <TextView
         android:id="@+id/lblCalorias"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="CALORIAS" />
+        android:text="CALORIAS"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp" />
 
 
-   <!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+   <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
@@ -146,25 +147,6 @@
     tools:context="com.example.adm.pantallas.MapsActivity" />-->
 
     <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginEnd="118dp"
-        android:layout_marginRight="118dp"
-        android:layout_marginTop="8dp"
-        android:textColor="#9E9E9E"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        app:layout_constraintTop_toTopOf="@+id/btnComenzar"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/botonpausa"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <ImageView
         android:id="@+id/btnComenzar"
         android:layout_width="89dp"
         android:layout_height="101dp"
@@ -172,19 +154,33 @@
         app:srcCompat="@drawable/botonplay"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="89dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="3dp"
-        android:layout_marginStart="89dp" />
-     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginStart="89dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="0.318"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="276dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintLeft_toLeftOf="parent"
+        map:layout_constraintRight_toRightOf="parent"
+        map:layout_constraintTop_toTopOf="parent"
+        map:layout_constraintVertical_bias="0.65"
         tools:context="com.example.adm.pantallas.MapsActivity"
-         tools:layout_editor_absoluteY="16dp"
-         tools:layout_editor_absoluteX="64dp" />
+        map:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>
