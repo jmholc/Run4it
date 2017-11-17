@@ -46,10 +46,12 @@
                 tools:ignore="ContentDescription"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
-                app:layout_constraintHorizontal_bias="0.43"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="8dp"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <ImageView
                 android:id="@+id/imUsuario"
@@ -79,68 +81,131 @@
                 app:layout_constraintTop_toBottomOf="@+id/imUsuario"
                 tools:ignore="HardcodedText"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintRight_creator="1"
-                android:layout_marginTop="0dp" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:outlineProvider="bounds"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView9"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_constraintBottom_creator="1"
-                tools:layout_constraintTop_creator="1">
-
-            </android.support.constraint.ConstraintLayout>
+                tools:layout_constraintRight_creator="1" />
 
             <ImageView
                 android:id="@+id/imageView9"
-                android:layout_width="300dp"
-                android:layout_height="250dp"
-                android:layout_marginTop="27dp"
-                android:alpha="0.9"
+                android:layout_width="264dp"
+                android:layout_height="262dp"
+                android:layout_marginTop="48dp"
+                android:alpha="0.8"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@+id/txtNombre"
-                app:srcCompat="@drawable/button2" />
+                app:srcCompat="@drawable/button2"
+                android:layout_marginLeft="52dp" />
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="42dp"
+                android:layout_height="53dp"
+                app:srcCompat="@drawable/movement"
+                tools:layout_editor_absoluteY="538dp"
+                app:layout_constraintRight_toLeftOf="@+id/textView17"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tv1"
+                android:layout_alignParentStart="true"
+                android:text="@string/Calorias"
+                android:textColor="#37474F"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="108dp"
+                android:layout_marginTop="29dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtLogros" />
+
+            <TextView
+                android:id="@+id/txtLogros"
+                android:layout_width="196dp"
+                android:layout_height="64dp"
+                android:layout_above="@+id/tv1"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Tus logros de la semana"
+                android:textColor="#37474F"
+                android:textSize="22dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="87dp"
+                app:layout_constraintTop_toBottomOf="@+id/imUsuario" />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tv1"
+                android:layout_alignParentStart="true"
+                android:text="@string/Tiempo"
+                android:textColor="#37474F"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="108dp"
+                android:layout_marginTop="110dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtLogros" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="40dp"
+                android:layout_height="36dp"
+                app:srcCompat="@drawable/calories"
+                tools:layout_editor_absoluteY="463dp"
+                app:layout_constraintRight_toLeftOf="@+id/textView17"
+                android:layout_marginRight="8dp" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="108dp"
+                android:layout_height="71dp"
+                app:srcCompat="@drawable/button"
+                android:layout_marginTop="25dp"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                android:layout_marginRight="67dp"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="108dp"
+                android:layout_height="71dp"
+                app:srcCompat="@drawable/button"
+                android:layout_marginTop="25dp"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintRight_toLeftOf="@+id/imageView12"
+                android:layout_marginRight="8dp"
+                app:layout_constraintHorizontal_bias="0.726" />
+
+            <TextView
+                android:id="@+id/txHistorias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="71dp"
+                android:layout_marginLeft="93dp"
+                android:text="Historias"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColor="@color/dot_light_Intro1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/txAmigos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="217dp"
+                android:text="Amigos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColor="@color/dot_light_Intro1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_editor_absoluteY="635dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/txAmigos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Amigos"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColor="@color/dot_light_Intro1"
-        android:textStyle="italic"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/imUsuario"
-        app:layout_constraintTop_toTopOf="@+id/imUsuario" />
-
-    <TextView
-        android:id="@+id/txHistorias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Historias"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColor="@color/dot_light_Intro1"
-        android:textStyle="italic"
-        app:layout_constraintLeft_toRightOf="@+id/imUsuario"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imUsuario" />
 
 </android.support.constraint.ConstraintLayout>
