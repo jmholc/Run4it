@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
 import android.nfc.Tag;
+
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 
 import static com.example.adm.pantallas.R.raw.duracion;
@@ -25,9 +29,10 @@ public class salida extends AppCompatActivity {
     int maxVolume=100;
     int nextAudio = 10, alertType = 10;
     int nextAudioB = 10;
-    int runTime = 100;
+    int runTime = 200;
     int vol=0;
-    String filename, op;
+    int fix = 0, fixb = 0;
+    String filename, op = "";
     int bTot, spareTime, a;
     boolean alert=false;
     String nextAudioLevel="a_";
@@ -36,12 +41,14 @@ public class salida extends AppCompatActivity {
     HashMap<Integer,Integer> durationA = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationB = new HashMap<Integer, Integer>();
     HashMap<Integer,Integer> durationC = new HashMap<Integer, Integer>();
+    TextToSpeech computer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salida);
         Context ctx = getBaseContext();
+        //Log.d(computer.getAvailableLanguages().toString(), "Esto");
         reproductor = MediaPlayer.create(this, R.raw.a_10);
         bgmusic = MediaPlayer.create(this, R.raw.bgmusic);
         regVolumen(5);
@@ -49,7 +56,33 @@ public class salida extends AppCompatActivity {
         bgmusic.setLooping(true);
         obtenerDuracion();
         reproducirAudio();
+        final Global vel = new Global();
+        final Global dis = new Global();
+        final Global temp = new Global();
+
+        computer=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+
+            @Override
+            public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if(status == TextToSpeech.SUCCESS){
+                    int result=computer.setLanguage(Locale.US);
+                    if(result==TextToSpeech.LANG_MISSING_DATA ||
+                            result==TextToSpeech.LANG_NOT_SUPPORTED){
+                        Log.e("error", "This Language is not supported");
+                    }
+                    else{
+                        computer.speak("You will run at "+vel.getVel()+" kilometers per hour, for "+temp.getTemp()+" minutes, a total of "+dis.getDis()+" kilometers. Good luck and let's hope Ruben gives us a ten", TextToSpeech.QUEUE_FLUSH, null, "Prueba");
+                    }
+                }
+                else
+                    Log.e("error", "Initilization Failed!");
+            }
+        });
+
     }
+
+
     protected void regVolumen(int vol){
         float log1 = (float) (Math.log(maxVolume - vol) / Math.log(maxVolume));
         bgmusic.setVolume(1 - log1, 1 - log1);
@@ -101,16 +134,11 @@ public class salida extends AppCompatActivity {
         reproductor.reset();
         if (alert==false){
             if (runTime>0) {
-                if (op == "right") {
-
-                } else if (op == "left") {
-
-                } else{
                     try {
 
                         if ((bTot - 10) > 0 && nextAudioLevel == "a_") {
                             nextAudioLevel = "b_";
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudioB;
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + (nextAudioB-fixb)+op;
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationB.get(nextAudioB);
@@ -119,13 +147,13 @@ public class salida extends AppCompatActivity {
                         } else {
 
                             nextAudioLevel = "a_";
-                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + nextAudio;
+                            filename = "android.resource://" + getBaseContext().getPackageName() + "/raw/" + nextAudioLevel + (nextAudio-fix)+op;
                             reproductor.setDataSource(getBaseContext(), Uri.parse(filename));
                             reproductor.prepare();
                             runTime -= durationA.get(nextAudio);
                             nextAudio++;
                         }
-                        Toast.makeText(getApplicationContext(), "Audio numero " + (nextAudio - 10 + 1), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Audio numero " + (nextAudio - 10), Toast.LENGTH_LONG).show();
                         reproductor.start();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -133,7 +161,7 @@ public class salida extends AppCompatActivity {
                         reproductor.stop();
                         reproductor.release();
                     }
-            }
+
             }else{
                 Toast.makeText(getApplicationContext(),"YOU FINISHED", Toast.LENGTH_LONG).show();
             }
@@ -187,7 +215,6 @@ public class salida extends AppCompatActivity {
         }
         sc.close();
         //Toast.makeText(getApplicationContext(),String.valueOf(aDurTotal), Toast.LENGTH_LONG).show();
-
         durRest=runTime-aDurTotal;
         bTot=10;
 
@@ -223,11 +250,16 @@ public class salida extends AppCompatActivity {
         //intent.setType("*/*");
         //startActivityForResult(intent.createChooser(intent, "Selecciona un audio"), FILE_SELECT_CODE);
     }
+
     public void Left(View v){
-        op="left";
+        op="_l";
+        fixb = nextAudioB-10;
+        fix = nextAudio-10;
     }
     public void Right(View v){
-        op="right";
+        op="_r";
+        fixb = nextAudioB-10;
+        fix = nextAudio-10;
     }
 
 

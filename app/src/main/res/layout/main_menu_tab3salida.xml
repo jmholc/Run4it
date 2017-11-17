@@ -18,15 +18,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="399dp"
         android:background="@drawable/button"
-        android:onClick="checkCodigo"
         android:text="@string/Salida_boton"
         android:textColor="#212121"
         android:textColorHint="#9E9E9E"
         android:textSize="20dp"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.505" />/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <android.support.constraint.ConstraintLayout
@@ -45,20 +44,20 @@
         android:layout_marginTop="8dp">
 
         <EditText
-            android:id="@+id/etDistancia"
+            android:id="@+id/etVelocidad"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="9dp"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
-            android:textColorHint="#9E9E9E"
-            android:textColor="#9E9E9E"
             android:inputType="numberDecimal"
+            android:textColor="#9E9E9E"
+            android:textColorHint="#9E9E9E"
             app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="LabelFor,RtlHardcoded"
             app:layout_constraintTop_toTopOf="@+id/txtDistancia"
-            android:layout_marginTop="9dp" />
+            tools:ignore="LabelFor,RtlHardcoded" />
 
         <TextView
             android:id="@+id/txtDistancia"
@@ -89,20 +88,20 @@
             app:layout_constraintTop_toBottomOf="@+id/txtTiempo" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/etDistancia"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
-            android:textColorHint="#9E9E9E"
-            android:textColor="#9E9E9E"
             android:inputType="numberDecimal"
+            android:textColor="#9E9E9E"
+            android:textColorHint="#9E9E9E"
             app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="LabelFor,RtlHardcoded"
             app:layout_constraintTop_toTopOf="@+id/textView8"
-            android:layout_marginTop="8dp" />
+            tools:ignore="LabelFor,RtlHardcoded" />
 
         <EditText
             android:id="@+id/etTiempo"
@@ -110,15 +109,15 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/colorAccent"
             android:ems="10"
-            android:textColorHint="#9E9E9E"
-            android:textColor="#9E9E9E"
             android:inputType="numberDecimal"
+            android:textColor="#9E9E9E"
+            android:textColorHint="#9E9E9E"
             app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="LabelFor,RtlHardcoded"
             app:layout_constraintTop_toTopOf="@+id/txtTiempo"
-            android:layout_marginTop="8dp" />
+            tools:ignore="LabelFor,RtlHardcoded" />
 
         <TextView
             android:id="@+id/txtTiempo"

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
+import android.text.style.LocaleSpan;
 import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -75,12 +77,18 @@ import java.util.Locale;
 import static com.example.adm.pantallas.R.raw.duracion;
 import com.google.android.gms.maps.model.Polyline;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.GeomagneticField;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
 
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        SensorEventListener {
     MediaPlayer reproductor;
     MediaPlayer bgmusic;
     int maxVolume=100;
@@ -102,20 +110,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String txt_json;
     int tocado=0;
     JSONObject jsonObj;
-    double latitude, longitude, altitude;
+    LocationListener locationListener;
+    double latitudeStart, longitudeStart, altitude, latitude, longitude;
+    boolean startL=false, mapReady=false;
     private int PROXIMITY_RADIUS = 20;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    TextView t, alt, dir, vel;
+    TextView t, alt, dir, vel, dis, velPromedio, DegreeTV;
+    int reloadDistance=0;
     String lugares = "";
     PlaceAutocompleteFragment autocompleteFragment;
-    double latFragment, lngFragment;
+    double latFragment, lngFragment, velPromF;
+    float DegreeStart = 0f, degree=0f;
     ArrayList routePol;
     List<List<LatLng>> route;
     LocationManager locMan;
     LatLng r;
+    ArrayList<Double> velProm;
+    SensorManager SensorManage, sen2;
+    Sensor mLight, mGravity, mGeomagnetic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,11 +160,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("onCreate", "Google Play Services available.");
         }
         LocationManager locMan = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Toast.makeText(MapsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        };
+        velPromF=0.0;
+        velProm=new ArrayList<Double>();
         t = (TextView) findViewById(R.id.lblLatlon);
         alt = (TextView) findViewById(R.id.lblAltura);
         dir = (TextView) findViewById(R.id.lblDireccion);
         vel = (TextView) findViewById(R.id.lblVelocidad);
+        dis = (TextView) findViewById(R.id.lblDistancia);
+        velPromedio=(TextView) findViewById(R.id.lblVelProm);
+        DegreeTV = (TextView) findViewById(R.id.lblGrados);
+        SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mGravity = SensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        SensorManage.registerListener(this, mGravity,SensorManager.SENSOR_DELAY_GAME);
 
+        sen2 = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mGeomagnetic = sen2.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sen2.registerListener(this, sen2.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),SensorManager.SENSOR_DELAY_GAME);
+        int pepe;
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
@@ -217,13 +250,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+        /*LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
         t.setText(latitude + ", " + longitude);
         alt.setText("" + altitude);
+        mapReady=true;
     }
 
     private void buildGoogleApiClient() {
@@ -319,7 +352,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionSuspended(int i) {
 
     }
-
+/*
     @Override
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
@@ -330,8 +363,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Place current location marker
         altitude = location.getAltitude();
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+        if(!start) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -353,6 +388,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         vel.setText(location.getSpeed() + "KM/H");
         t.setText(latitude + ", " + longitude);
+
+        //-------------------------------------------------------------------------------------
+        //SOLUCIONAR---------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
+        //-------------------------------------------------------------------------------------
+
         Geocoder gc = new Geocoder(this, Locale.getDefault());
         List<Address> list = null;
         try {
@@ -365,6 +407,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alt.setText("" + location.getAltitude());
         Log.d("onLocationChanged", "Exit");
     }
+*/
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -434,8 +477,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     JSONObject JO = resultArray.getJSONObject(count);
                     nombre = JO.getString("name");
                     JSONObject geometry = JO.getJSONObject("geometry").getJSONObject("location");
-                    latitude = geometry.getDouble("lat");
-                    longitude = geometry.getDouble("lng");
+                    //latitude = geometry.getDouble("lat");
+                    //longitude = geometry.getDouble("lng");
                     lugares += nombre + ", ";
                     count++;
                 }
@@ -482,10 +525,150 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return decoded;
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+        //Toast.makeText(getApplicationContext(),"hola", Toast.LENGTH_LONG).show();
+/*
+
+            mLastLocation = location;
+            if (mCurrLocationMarker != null) {
+                mCurrLocationMarker.remove();
+            }
+*/
+        latitude = location.getLatitude();
+        longitude=location.getLongitude();
+
+        //Place current location marker
+        altitude = location.getAltitude();
+        if(!startL) {
+            latitudeStart = location.getLatitude();
+            longitudeStart = location.getLongitude();
+/*
+                LatLng latLng = new LatLng(latitudeStart, longitudeStart);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title("Comienzo");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+                //move map camera
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                Toast.makeText(MapsActivity.this,"MOVISTE", Toast.LENGTH_SHORT).show();
+*/
+
+            LatLng sydney = new LatLng(latitudeStart, longitudeStart);
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in COMIENZO"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+            startL=true;
+        }
+        else {
+            velProm.add(Double.valueOf(location.getSpeed()));
+            velPromF=0.0;
+            for (int i=0; i<velProm.size(); i++)velPromF+= velProm.get(i);
+            velPromF/=velProm.size();
+            velPromedio.setText(Double.toString(velPromF));
+        }
+
+            /*
+            //stop location updates
+            if (mGoogleApiClient != null) {
+                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+                Log.d("onLocationChanged", "Removing Location Updates");
+            }*/
+
+        vel.setText(location.getSpeed() + " KM/H");
+        t.setText(latitude + ", " + longitude);
+
+        //-------------------------------------------------------------------------------------
+        //SOLUCIONAR---------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
+        //-------------------------------------------------------------------------------------
+
+        reloadDistance++;
+        if(reloadDistance==10){
+            new time().execute();
+            dis.setText(parseJSON_Dist());
+            reloadDistance=0;
+        }
+
+        if (mapReady) {
+            Geocoder gc = new Geocoder(this, Locale.getDefault());
+            List<Address> list = null;
+            try {
+                list = gc.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address add = new Address(Locale.ENGLISH);
+            add = list.get(0);
+            dir.setText(add.getAddressLine(0));
+            alt.setText("" + location.getAltitude());
+        }
+    }
+
+    float[] gravedad;
+    float[] iman;
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            iman = sensorEvent.values;
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            gravedad = sensorEvent.values;
+        if (gravedad != null && iman != null) {
+            float R[] = new float[9];
+            float I[] = new float[9];
+            boolean success = SensorManager.getRotationMatrix(R, I, gravedad, iman);
+            if (success) {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+                float azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+                DegreeTV.setText((int) azimut);
+            }
+        }
+    }
+
+        /*degree = Math.round(event.values[0]);
+        DegreeTV.setText(Float.toString(degree) + "°");
+        SensorManage.getOrientation();
+        if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
+            return;
+        }*/
+/*
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)  mGravity = event.values.clone ();
+        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) mGeomagnetic =  event.values.clone ();
+
+        if (mGravity != null && mGeomagnetic != null) {
+
+            float[] rotationMatrixA = mRotationMatrixA;
+            if (SensorManager.getRotationMatrix(rotationMatrixA, null, mGravity, mGeomagnetic)) {
+
+                float[] rotationMatrixB = mRotationMatrixB;
+                SensorManager.remapCoordinateSystem(rotationMatrixA,
+                        SensorManager.AXIS_X, SensorManager.AXIS_Z,
+                        rotationMatrixB);
+                float[] dv = new float[3];
+                SensorManager.getOrientation(rotationMatrixB, dv);
+                // add to smoothing filter
+                fd.AddLatest((double)dv[0]);
+            }
+            mDraw.invalidate();
+        }
+*/
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
     //Pedido de JSON
     private class time extends AsyncTask<Void, Void, String> {
         protected void onPreExecute() {
-            JSON_URL = getUrl_time(latFragment, lngFragment);
+            JSON_URL = getUrl_time(latitudeStart, longitudeStart, latFragment, lngFragment);
         }
 
         protected String doInBackground(Void... params) {
@@ -518,7 +701,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private class timeR extends AsyncTask<Void, Void, String> {
         protected void onPreExecute() {
-            JSON_URL = getUrl_time(r.latitude, r.longitude);
+            JSON_URL = getUrl_time(latitudeStart, longitudeStart, r.latitude, r.longitude);
         }
 
         protected String doInBackground(Void... params) {
@@ -585,18 +768,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //URL builders
-    public String getUrl_time(double latDest, double lonDest) {
+    public String getUrl_time(double latOri, double lonOri, double latDest, double lonDest) {
         StringBuilder googlePlacesUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
-        googlePlacesUrl2.append("origin=" + latitude + "," + longitude);
+        googlePlacesUrl2.append("origin=" + latOri + "," + lonOri);
         googlePlacesUrl2.append("&destination=" + latDest + "," + lonDest);
         googlePlacesUrl2.append("&mode=walking");
         googlePlacesUrl2.append("&key=" + "AIzaSyBkIzubSeyKqjKRRbZ7RhtGb_UZA84VPU4");
         return (googlePlacesUrl2.toString());
     }
 
-    private String getUrl_places(double latitude, double longitude) {
+    private String getUrl_places(double latitud, double longitud) {
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("location=" + latitud + "," + longitud);
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&key=" + "AIzaSyBkIzubSeyKqjKRRbZ7RhtGb_UZA84VPU4");
@@ -645,7 +828,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new CountDownTimer(1000,10) {
             @Override
             public void onTick(long millisUntilFinished) {
-                   if (vol>5) regVolumen(vol--);
+                if (vol>5) regVolumen(vol--);
 
             }
 
@@ -866,5 +1049,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Get nearest point to the centre
         int indexOfNearestPointToCentre = randomDistances.indexOf(Collections.min(randomDistances));
         return randomPoints.get(indexOfNearestPointToCentre);
+    }
+
+    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts decimal degrees to radians             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts radians to decimal degrees             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }
