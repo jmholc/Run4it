@@ -1,6 +1,7 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.LayoutRes;
@@ -235,7 +236,21 @@ class AdaptadorDesafiosRec extends ArrayAdapter {
         contactHolder.aceptardesafio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ctx, contactHolder.idusuario, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ctx, contactHolder.idusuario, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("usuariodesafiado", d.getUsername());
+                mBundle.putString("objetivodesafio", d.getIddesafio());
+                mBundle.putString("cantidad", d.getCantidad());
+                //mBundle.putString("id", info[3]);
+
+                //Log.i("ASDASD", info[3]);
+                intent.putExtras(mBundle);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getContext().startActivity(intent);
+
                 //ejecutarBackgroundTask("aceptar", usuariosBuscados.getIdusuario());
             }
         });
