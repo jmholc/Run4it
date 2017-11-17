@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.adm.pantallas.amigos_solicitud_pendiente"
-    android:background="#37474F"
+    tools:context="com.example.adm.pantallas.DesafioRecibido"    android:background="#37474F"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -29,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/toolbar4"
             android:layout_alignParentStart="true"
-            android:text="Solicitud pendiente"
+            android:text="Desafio Recibido"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
             android:textColor="@android:color/white"
@@ -38,7 +37,7 @@
     </android.support.v7.widget.Toolbar>
 
     <ListView
-        android:id="@+id/lvAmigos"
+        android:id="@+id/lvDesafioRecibido"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"

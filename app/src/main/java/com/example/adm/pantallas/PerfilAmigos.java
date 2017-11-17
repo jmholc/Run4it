@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,8 @@ public class PerfilAmigos extends AppCompatActivity {
 
     String json_string;
     TextView txtUsername, txtNombre, txtApellido, txtMessage;
+    String IDUsuario, username, nombre, apellido, estado;
+    Button btnDesafiar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,183 +57,134 @@ public class PerfilAmigos extends AppCompatActivity {
         txtNombre = (TextView) findViewById(R.id.txtNombre);
         txtApellido = (TextView) findViewById(R.id.txtApellido);
         txtMessage = (TextView) findViewById(R.id.txtMensaje);
+        btnDesafiar= (Button) findViewById(R.id.btnComenzar);
 
         new BackgroundTaskJSONUser(id).execute();
 
     }
-        class BackgroundTaskJSONUser extends AsyncTask {
-            String usuario;
+    public void aDesafio(View v){
+        Intent intent=new Intent(PerfilAmigos.this,Desafio.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Bundle mBundle = new Bundle();
+        mBundle.putString("usuario", username);
+        Log.i("ASDASD", username);
+        intent.putExtras(mBundle);
+        startActivity(intent);
+    }
+    class BackgroundTaskJSONUser extends AsyncTask {
+        String usuario;
 
-            public BackgroundTaskJSONUser(String n) {
-                usuario= n;
-            }
+        public BackgroundTaskJSONUser(String n) {
+            usuario= n;
+        }
 
-            String json_url, JSON_STRING;
+        String json_url, JSON_STRING;
 
-            @Override
-            protected void onPreExecute() {
-                json_url = "https://run4it.proyectosort.edu.ar/run4it/fetchuser.php";
-            }
+        @Override
+        protected void onPreExecute() {
+            json_url = "https://run4it.proyectosort.edu.ar/run4it/fetchuser.php";
+        }
 
-            @Override
-            protected Object doInBackground(Object[] params) {
-                try {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
 
-                    URL url = new URL(json_url);
-                    HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setRequestMethod("POST");
-                    httpsURLConnection.setDoInput(true);
-                    httpsURLConnection.setDoOutput(true);
+                URL url = new URL(json_url);
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                httpsURLConnection.setRequestMethod("POST");
+                httpsURLConnection.setDoInput(true);
+                httpsURLConnection.setDoOutput(true);
 
-                    OutputStream outputStream = httpsURLConnection.getOutputStream();
-                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                OutputStream outputStream = httpsURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-                    String data =
-                            URLEncoder.encode("usuarioabuscar","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8");
+                String data =
+                        URLEncoder.encode("usuarioabuscar","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8");
 
-                    bufferedWriter.write(data);
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
-                    outputStream.close();
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
 
-                    InputStream inputStream = httpsURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                InputStream inputStream = httpsURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
 
                 /*URL url = new URL(json_url);
                 HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 InputStream inputStream = httpsURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));*/
 
-                    StringBuilder stringBuilder = new StringBuilder();
-                    while ((JSON_STRING = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(JSON_STRING + "\n");
-                    }
-                    bufferedReader.close();
-                    inputStream.close();
-                    httpsURLConnection.disconnect();
-
-                    Log.d("Coso", "doInBackground: ");
-
-                    return stringBuilder.toString().trim();
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((JSON_STRING = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(JSON_STRING + "\n");
                 }
-                return null;
+                bufferedReader.close();
+                inputStream.close();
+                httpsURLConnection.disconnect();
+
+                Log.d("Coso", "doInBackground: ");
+
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            return null;
+        }
 
-            @Override
-            protected void onPostExecute(Object o) {
+        @Override
+        protected void onPostExecute(Object o) {
 
 
-                String IDUsuario, username, nombre, apellido, estado;
+
 
 
             /*TextView textView=(TextView)findViewById(R.id.textView6);
             textView.setText((String)o);*/
-                json_string = (String) o;
+            json_string = (String) o;
 
-                //-----------------------------------------------------------------
-                //ACA TERMINARIA LO DE PEDIR EL JSON.
-                //ABAJO EMPIEZA LO DE PARSEARLO
-                //-----------------------------------------------------------------
-                JSONObject jsonObject;
-                JSONArray jsonArray;
+            //-----------------------------------------------------------------
+            //ACA TERMINARIA LO DE PEDIR EL JSON.
+            //ABAJO EMPIEZA LO DE PARSEARLO
+            //-----------------------------------------------------------------
+            JSONObject jsonObject;
+            JSONArray jsonArray;
 
-                try {
-                    jsonObject = new JSONObject(json_string);
+            try {
+                jsonObject = new JSONObject(json_string);
 
-                    jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
-                    Log.d("JSON", jsonArray.length() + "");
-                    final String[] nombresAutocomplete=new String[jsonArray.length()];
+                jsonArray = jsonObject.getJSONArray("server_response");//El nombre con el que tenemos guardado el JSON en el PHP
+                Log.d("JSON", jsonArray.length() + "");
+                final String[] nombresAutocomplete=new String[jsonArray.length()];
 
-                    JSONObject JO = jsonArray.getJSONObject(0);
-                    username = JO.getString("Username");
-                    nombre = JO.getString("Nombre");
-                    apellido = JO.getString("Apellido");
-                    estado = JO.getString("Mensaje");
-                    if (JO.getString("Mensaje").equals("null"))
-                        estado = "";
+                JSONObject JO = jsonArray.getJSONObject(0);
+                username = JO.getString("Username");
+                nombre = JO.getString("Nombre");
+                apellido = JO.getString("Apellido");
+                estado = JO.getString("Mensaje");
+                if (JO.getString("Mensaje").equals("null"))
+                    estado = "";
 
-                    Log.d("Coso", username);
-                    Log.d("Coso", estado);
-                    Log.d("Coso", nombre);
-                    Log.d("Coso", apellido);
-
-                    txtUsername.setText(username);
-                    txtNombre.setText(nombre);
-                    txtApellido.setText(apellido);
-                    txtMessage.setText(estado);
+                Log.d("Coso", username);
+                Log.d("Coso", estado);
+                Log.d("Coso", nombre);
+                Log.d("Coso", apellido);
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                super.onPostExecute(o);
 
+                txtUsername.setText(txtUsername.getText()+" "+username);
+                txtNombre.setText(txtNombre.getText()+" "+nombre);
+                txtApellido.setText(txtApellido.getText()+" "+apellido);
+                txtMessage.setText(/*txtMessage.getText()+" "+*/estado);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            super.onPostExecute(o);
+
         }
     }
-
-/* class AdaptadorUsuarios5 extends ArrayAdapter {
-    List list = new ArrayList();
-    Context ctx;
-
-    public AdaptadorUsuarios5(@NonNull Context context, @LayoutRes int resource) {
-        super(context, resource);
-        ctx=context;
-    }
-
-    public void add(UsuariosBuscados object) {
-        super.add(object);
-        list.add(object);
-    }
-
-    @Override
-    public int getCount() {
-        return list.size();
-    }
-
-    @Nullable
-    @Override
-    public Object getItem(int position) {
-        return list.get(position);
-    }
-
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View row;
-        row=convertView;
-        final ContactHolder contactHolder;
-        if(row==null)
-        {
-            LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.activity_amigos_listview, parent, false);
-            contactHolder = new ContactHolder();
-            contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
-            contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
-            contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
-
-            row.setTag(contactHolder);
-        }
-        else {
-            contactHolder = (ContactHolder) row.getTag();
-        }
-
-        final UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
-        contactHolder.txUsername.setText(usuariosBuscados.getUsername());
-        contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
-        contactHolder.txEstado.setText(usuariosBuscados.getEstado());
-        contactHolder.idusuario=usuariosBuscados.getIdusuario();
-
-        return row;
-    }
-
-    static class ContactHolder{
-        TextView txUsername, txNombreApellido, txEstado;
-        String idusuario;
-    }
-} */
+}

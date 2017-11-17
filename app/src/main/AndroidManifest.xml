@@ -8,7 +8,7 @@
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
+         location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -29,21 +29,23 @@
 
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Introduccion">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".Configuracion" />
         <activity android:name=".Amigos" />
-        <activity android:name=".Estadisticas" >
-
-        </activity>
+        <activity android:name=".Estadisticas" />
         <activity android:name=".Perfil" />
         <activity android:name=".ConfiguracionPantalla" />
         <activity android:name=".VerificarMail" />
         <activity android:name=".salida">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -51,7 +53,7 @@
         <activity android:name=".anadir_amigos" />
         <activity android:name=".amigos_solicitud_pendiente" />
         <activity android:name=".Amigos_solicitudRecibida" />
-        <activity android:name=".PerfilAmigos"></activity>
+        <activity android:name=".PerfilAmigos" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -59,7 +61,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -67,9 +69,10 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
-
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".Desafio" />
+        <activity android:name=".DesafioPendiente" />
+        <activity android:name=".DesafioRecibido"></activity>
     </application>
 
 </manifest>

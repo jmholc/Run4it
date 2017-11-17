@@ -1,21 +1,23 @@
 package com.example.adm.pantallas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,24 +38,24 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class amigos_solicitud_pendiente extends AppCompatActivity {
+public class DesafioRecibido extends AppCompatActivity {
 
     String json_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amigos_solicitud_pendiente);
-
+        setContentView(R.layout.activity_desafio_recibido);
         SharedPreferences sharedPreferences =  getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
-        String usuario= sharedPreferences.getString("usuario","");
+        String id= sharedPreferences.getString("id","");
 
-        new BackgroundTaskJSONAmigos(usuario).execute();
+        new BackgroundTaskJSONDesafioPendiente(id).execute();
     }
-    class BackgroundTaskJSONAmigos extends AsyncTask {
+
+    class BackgroundTaskJSONDesafioPendiente extends AsyncTask {
         String usuario;
 
-        public BackgroundTaskJSONAmigos(String n) {
+        public BackgroundTaskJSONDesafioPendiente(String n) {
             usuario= n;
         }
 
@@ -61,7 +63,7 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            json_url = "https://run4it.proyectosort.edu.ar/run4it/searchpending.php";
+            json_url = "https://run4it.proyectosort.edu.ar/run4it/challengereceived.php";
         }
 
         @Override
@@ -88,11 +90,6 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
                 InputStream inputStream = httpsURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
 
-                /*URL url = new URL(json_url);
-                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                InputStream inputStream = httpsURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));*/
-
                 StringBuilder stringBuilder = new StringBuilder();
                 while ((JSON_STRING = bufferedReader.readLine()) != null) {
                     stringBuilder.append(JSON_STRING + "\n");
@@ -115,7 +112,7 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
 
-            String IDUsuario, username, nombreapellido, estado;
+            String IDUsuario, username, objetivodesafio, cantidad, IDDesafio;
             /*TextView textView=(TextView)findViewById(R.id.textView6);
             textView.setText((String)o);*/
             json_string = (String) o;
@@ -126,11 +123,11 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
             JSONObject jsonObject;
             JSONArray jsonArray;
 
-            final AdaptadorUsuarios3 adaptadorUsuarios3 = new AdaptadorUsuarios3(getApplicationContext(), R.layout.activity_amigos_solicitud_pendiente);
+            final AdaptadorDesafiosRec adaptadorDesafios = new AdaptadorDesafiosRec(getApplicationContext(), R.layout.activity_desafio_recibido);
 
             final ListView listView;
-            listView = (ListView) findViewById(R.id.lvAmigos);
-            listView.setAdapter(adaptadorUsuarios3);
+            listView = (ListView) findViewById(R.id.lvDesafioRecibido);
+            listView.setAdapter(adaptadorDesafios);
 
             try {
                 TextView txtnoseencontro= (TextView) findViewById(R.id.txtNoSeEncontro);
@@ -150,15 +147,28 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
                         txtnoseencontro.setVisibility(View.GONE);
 
                         JSONObject JO = jsonArray.getJSONObject(count);
-                        username = JO.getString("Username");
-                        nombreapellido = JO.getString("Nombre") + " " + JO.getString("Apellido");
-                        estado = JO.getString("Mensaje");
                         IDUsuario = JO.getString("IDUsuario");
-                        if (JO.getString("Mensaje").equals("null"))
-                            estado = "";
+                        username = JO.getString("Username");
+                        objetivodesafio = JO.getString("ObjetivoDesafio");
+                        cantidad = JO.getString("Cantidad");
+                        IDDesafio=JO.getString("IDDesafio");
+                        if(objetivodesafio.equals("1"))
+                        {
+                            cantidad+= " Minutos";
+                            objetivodesafio="Por Tiempo";
+                        }
+                        else {
+                            cantidad += " KM";
+                            objetivodesafio = "Por Distancia";
+                        }
 
-                        UsuariosBuscados usuariosBuscados = new UsuariosBuscados(username, nombreapellido, estado, IDUsuario);
-                        adaptadorUsuarios3.add(usuariosBuscados);
+                        Log.d("JSON", IDUsuario);
+                        Log.d("JSON", username);
+                        Log.d("JSON", objetivodesafio);
+                        Log.d("JSON", cantidad);
+
+                        DesafioPendienteManager desafioPendienteManager= new DesafioPendienteManager(IDUsuario, username, objetivodesafio, cantidad, IDDesafio);
+                        adaptadorDesafios.add(desafioPendienteManager);
                     }
                 }
 
@@ -170,16 +180,16 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
         }
     }
 }
-class AdaptadorUsuarios3 extends ArrayAdapter {
+class AdaptadorDesafiosRec extends ArrayAdapter {
     List list = new ArrayList();
     Context ctx;
 
-    public AdaptadorUsuarios3(@NonNull Context context, @LayoutRes int resource) {
+    public AdaptadorDesafiosRec(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
         ctx=context;
     }
 
-    public void add(UsuariosBuscados object) {
+    public void add(DesafioPendienteManager object) {
         super.add(object);
         list.add(object);
     }
@@ -204,11 +214,12 @@ class AdaptadorUsuarios3 extends ArrayAdapter {
         if(row==null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.activity_amigos_listview, parent, false);
+            row = layoutInflater.inflate(R.layout.desafio_recibido_listview_item, parent, false);
             contactHolder = new ContactHolder();
-            contactHolder.txUsername= (TextView) row.findViewById(R.id.txtUsername);
-            contactHolder.txNombreApellido=(TextView) row.findViewById(R.id.txtNombreApellido);
-            contactHolder.txEstado=(TextView) row.findViewById(R.id.txtEstado);
+            contactHolder.txUsername= (TextView) row.findViewById(R.id.txUsernameRec);
+            contactHolder.txTipo=(TextView) row.findViewById(R.id.txTipoRec);
+            contactHolder.txCantidad=(TextView) row.findViewById(R.id.txCantidadRec);
+            contactHolder.aceptardesafio= (Button) row.findViewById(R.id.btnAceptarDesafio);
 
             row.setTag(contactHolder);
         }
@@ -216,17 +227,41 @@ class AdaptadorUsuarios3 extends ArrayAdapter {
             contactHolder = (ContactHolder) row.getTag();
         }
 
-        final UsuariosBuscados usuariosBuscados= (UsuariosBuscados) this.getItem(position);
-        contactHolder.txUsername.setText(usuariosBuscados.getUsername());
-        contactHolder.txNombreApellido.setText(usuariosBuscados.getNombreapellido());
-        contactHolder.txEstado.setText(usuariosBuscados.getEstado());
-        contactHolder.idusuario=usuariosBuscados.getIdusuario();
+        final DesafioPendienteManager d= (DesafioPendienteManager) this.getItem(position);
+        contactHolder.txUsername.setText(d.getUsername());
+        contactHolder.txTipo.setText(d.getObjetivodesafio());
+        contactHolder.txCantidad.setText(d.getCantidad());
+        contactHolder.idusuario=d.getIdUsuario();
+        contactHolder.iddesafio=d.getIddesafio();
+        contactHolder.aceptardesafio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(ctx, contactHolder.idusuario, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("usuariodesafiado", d.getUsername());
+                mBundle.putString("objetivodesafio", d.getIddesafio());
+                mBundle.putString("cantidad", d.getCantidad());
+                //mBundle.putString("id", info[3]);
+
+                //Log.i("ASDASD", info[3]);
+                intent.putExtras(mBundle);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getContext().startActivity(intent);
+
+                //ejecutarBackgroundTask("aceptar", usuariosBuscados.getIdusuario());
+            }
+        });
+        //contactHolder.aceptardesafio;
 
         return row;
     }
 
     static class ContactHolder{
-        TextView txUsername, txNombreApellido, txEstado;
-        String idusuario;
+        TextView txUsername, txTipo, txCantidad;
+        String idusuario, iddesafio;
+        Button aceptardesafio;
     }
 }

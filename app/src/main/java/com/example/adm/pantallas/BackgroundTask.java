@@ -185,9 +185,9 @@ public class BackgroundTask extends AsyncTask{
             Bundle mBundle = new Bundle();
             mBundle.putString("usuario", info[1]);
             mBundle.putString("contrasena", info[2]);
-            mBundle.putString("id", info[3]);
+            //mBundle.putString("id", info[3]);
 
-            Log.i("ASDASD", info[3]);
+//            Log.i("ASDASD", info[3]);
             intent.putExtras(mBundle);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
