@@ -77,7 +77,6 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.689"
         tools:layout_editor_absoluteX="270dp" />
-
     <TextView
         android:id="@+id/lblDireccion"
         android:layout_width="120dp"
@@ -125,8 +124,12 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="409dp" />
+        tools:layout_editor_absoluteY="409dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/textView18"
+        app:layout_constraintHorizontal_bias="0.559" />
 
     <TextView
         android:id="@+id/textView15"
@@ -139,8 +142,12 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="409dp" />
+        tools:layout_editor_absoluteY="409dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/textView18"
+        app:layout_constraintHorizontal_bias="0.086" />
 
     <TextView
         android:id="@+id/lblTiempo"
@@ -240,7 +247,11 @@
         android:layout_marginBottom="8dp"
         map:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="0dp"
-        map:layout_constraintVertical_bias="0.0" />
+        map:layout_constraintVertical_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/button2"
