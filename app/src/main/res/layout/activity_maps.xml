@@ -7,13 +7,15 @@
     android:background="#37474F"
     android:weightSum="1">
 
-
-            <!--<fragment
+<!--
+      <fragment
             android:id="@+id/place_autocomplete_fragment"
-                tools:layout_editor_absoluteY="0dp"
-                tools:layout_editor_absoluteX="8dp"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />-->
+            android:layout_height="wrap_content"
+          tools:layout_editor_absoluteY="0dp"
+          tools:layout_editor_absoluteX="16dp" />-->
+
     <!--<Button
         android:id="@+id/btnComenzar"
         android:layout_width="200dp"
@@ -60,127 +62,229 @@
         tools:layout_editor_absoluteX="8dp" />-->
     <TextView
         android:id="@+id/lblLatlon"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0.0, 0.0"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp"
+        android:text="0.0, 0.0"
         android:textColor="#9E9E9E"
         android:textSize="30dp"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="532dp" />
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.689"
+        tools:layout_editor_absoluteX="270dp" />
 
     <TextView
         android:id="@+id/lblDireccion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="DIRECCION"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:text= "Tiempo"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/lblLatlon"
-        app:layout_constraintTop_toBottomOf="@+id/lblLatlon"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/lblLatlon"
-        android:textColor="#9E9E9E"
-        android:textSize="30dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textColor="#dc5d11"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintVertical_bias="0.583" />
 
     <TextView
-        android:id="@+id/lblAltura"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="ALTURA"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/lblDireccion"
-        app:layout_constraintTop_toBottomOf="@+id/lblDireccion"
+        android:id="@+id/textView18"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:text="LATITUD??"
+        android:textColor="#dc5d11"
+        android:textSize="20dp"
+        android:textStyle="bold"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/lblDireccion"
-        android:textColor="#9E9E9E"
-        android:textSize="30dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="409dp" />
 
     <TextView
         android:id="@+id/lblVelocidad"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:text="Velocidad"
+        android:textColor="#dc5d11"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="409dp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:text="Direccion"
+        android:textColor="#dc5d11"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="409dp" />
+
+    <TextView
+        android:id="@+id/lblTiempo"
+        android:layout_width="204dp"
+        android:layout_height="59dp"
+        android:text="00.00.00"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:textColor="#9E9E9E"
+        android:textSize="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Norte"
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginRight="260dp"
+        app:layout_constraintRight_toRightOf="@+id/lblLatlon"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.689" />
+
+    <TextView
+        android:id="@+id/textView13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="XX KM/H"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/lblAltura"
-        app:layout_constraintTop_toBottomOf="@+id/lblAltura"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/lblAltura"
         android:textColor="#9E9E9E"
         android:textSize="30dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        tools:layout_constraintLeft_creator="1"
+
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginRight="130dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="363dp" />
+
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginRight="118dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#9E9E9E"
+        android:textSize="30dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.009" />
-
-    <TextView
-        android:id="@+id/lblCalorias"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="CALORIAS"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp" />
-
-
-   <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.adm.pantallas.MapsActivity" />-->
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnComenzar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/botonpausa"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <ImageView
         android:id="@+id/btnComenzar"
         android:layout_width="89dp"
         android:layout_height="101dp"
-        android:onClick="Comenzar"
-        app:srcCompat="@drawable/botonplay"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="3dp"
-        android:layout_marginStart="89dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:onClick="Comenzar"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/botonplay"
+        tools:layout_editor_absoluteX="89dp" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="0dp"
-        android:layout_height="276dp"
+        android:layout_width="730dp"
+        android:layout_height="240dp"
+        tools:context="com.example.adm.pantallas.MapsActivity"
+        tools:layout_editor_absoluteX="-19dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        map:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp"
+        map:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="143dp"
+        android:layout_height="69dp"
+        android:background="@drawable/button"
+        android:text="Terminar"
+        android:textColor="#212121"
+        android:textSize="21dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintLeft_toLeftOf="parent"
-        map:layout_constraintRight_toRightOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="0.65"
-        tools:context="com.example.adm.pantallas.MapsActivity"
-        map:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.832"
+        app:layout_constraintVertical_bias="0.983"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        tools:layout_editor_absoluteY="482dp" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="142dp"
+        android:layout_height="69dp"
+        android:background="@drawable/button"
+        android:text="Empezar"
+        android:textColor="#212121"
+        android:textSize="21dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.983"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.158"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        tools:layout_editor_absoluteY="482dp" />
 </android.support.constraint.ConstraintLayout>
