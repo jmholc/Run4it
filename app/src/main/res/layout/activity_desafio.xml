@@ -38,11 +38,12 @@
         android:id="@+id/spModo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="93dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginRight="104dp"
+        android:layout_marginTop="108dp"
         android:textColor="@android:color/white"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3"
+        android:layout_marginEnd="104dp" />
 
     <TextView
         android:id="@+id/txtModo"
@@ -50,22 +51,22 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         android:text="Correr por..."
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/spModo"
-        app:layout_constraintTop_toTopOf="@+id/spModo" />
+        app:layout_constraintTop_toTopOf="@+id/spModo"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/txtDistTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="65dp"
         android:text="Tiempo"
         android:textColor="@android:color/white"
         android:textSize="30sp"
@@ -75,31 +76,50 @@
         app:layout_constraintTop_toBottomOf="@+id/txtModo" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etCantidad"
+        style="@android:style/Widget.DeviceDefault.EditText"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
+        android:digits="0123456789"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="phone"
+        android:maxLength="6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/spModo"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txtDistTime"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/spModo"
-        app:layout_constraintHorizontal_bias="0.0" />
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/txtUnidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="7dp"
-        android:text="TextView"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="5dp"
+        android:text="."
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@+id/editText2"
-        app:layout_constraintTop_toTopOf="@+id/editText2" />
+        app:layout_constraintLeft_toRightOf="@+id/etCantidad"
+        app:layout_constraintTop_toTopOf="@+id/etCantidad"
+        android:layout_marginStart="11dp" />
+
+    <Button
+        android:id="@+id/btnComenzar"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="131dp"
+        android:text="Comenzar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:onClick="onClickComenzar"
+        app:layout_constraintTop_toBottomOf="@+id/txtDistTime"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 
 </android.support.constraint.ConstraintLayout>

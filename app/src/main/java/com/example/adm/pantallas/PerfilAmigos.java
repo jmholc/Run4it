@@ -56,7 +56,7 @@ public class PerfilAmigos extends AppCompatActivity {
         txtNombre = (TextView) findViewById(R.id.txtNombre);
         txtApellido = (TextView) findViewById(R.id.txtApellido);
         txtMessage = (TextView) findViewById(R.id.txtMensaje);
-        btnDesafiar= (Button) findViewById(R.id.btnDesafiar);
+        btnDesafiar= (Button) findViewById(R.id.btnComenzar);
 
         new BackgroundTaskJSONUser(id).execute();
 
