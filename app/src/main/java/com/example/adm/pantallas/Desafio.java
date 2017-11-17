@@ -85,7 +85,7 @@ public class Desafio extends AppCompatActivity {
                         PorQue = "distancia";
                         break;
                 }
-                Toast.makeText(getApplicationContext(), PorQue, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), PorQue, Toast.LENGTH_SHORT).show();
             }
 
             @Override

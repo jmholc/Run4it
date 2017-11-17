@@ -42,6 +42,7 @@ public class PerfilAmigos extends AppCompatActivity {
 
     String json_string;
     TextView txtUsername, txtNombre, txtApellido, txtMessage;
+    String IDUsuario, username, nombre, apellido, estado;
     Button btnDesafiar;
 
     @Override
@@ -65,8 +66,8 @@ public class PerfilAmigos extends AppCompatActivity {
         Intent intent=new Intent(PerfilAmigos.this,Desafio.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Bundle mBundle = new Bundle();
-        mBundle.putString("usuario", txtUsername.getText().toString());
-        Log.i("ASDASD", txtUsername.getText().toString());
+        mBundle.putString("usuario", username);
+        Log.i("ASDASD", username);
         intent.putExtras(mBundle);
         startActivity(intent);
     }
@@ -137,7 +138,7 @@ public class PerfilAmigos extends AppCompatActivity {
         protected void onPostExecute(Object o) {
 
 
-            String IDUsuario, username, nombre, apellido, estado;
+
 
 
             /*TextView textView=(TextView)findViewById(R.id.textView6);
@@ -170,6 +171,8 @@ public class PerfilAmigos extends AppCompatActivity {
                 Log.d("Coso", estado);
                 Log.d("Coso", nombre);
                 Log.d("Coso", apellido);
+
+
 
                 txtUsername.setText(txtUsername.getText()+" "+username);
                 txtNombre.setText(txtNombre.getText()+" "+nombre);
