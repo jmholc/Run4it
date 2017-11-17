@@ -1,6 +1,8 @@
 package com.example.adm.pantallas;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -90,7 +92,7 @@ public class Tab1Configuracion extends Fragment {
     }
 
 
-    
+
     private void switchView() {
 
         if(VIEW_MODE_LISTVIEW == currentViewMode) {
@@ -121,11 +123,15 @@ public class Tab1Configuracion extends Fragment {
         //pseudo code to get product, replace your code to get real product here
         productList = new ArrayList<>();
 
+        productList.add(new Tab1Product(R.drawable.ic_story, "Historias", "Descarga nuevas historias"));
         productList.add(new Tab1Product(R.drawable.ic_configuration, "Configuracion", "Configura la aplicacion para satisfacer tus gustos"));
         productList.add(new Tab1Product(R.drawable.ic_headphones, "Estadisticas", "Conoce toda tu información de tus salidas a correr"));
-        productList.add(new Tab1Product(R.drawable.ic_friends, "Amigos", "Añade amigos y mira los existentes"));
+        productList.add(new Tab1Product(R.drawable.ic_friends, "Añadir Amigos", "Añade amigos nuevos para ver sus estadísticas y correr carreras"));
         productList.add(new Tab1Product(R.drawable.ic_user, "Perfil", "Actualiza tus datos del perfil"));
         productList.add(new Tab1Product(R.drawable.ic_configuration_screen, "Pantalla", "This is description 5"));
+        productList.add(new Tab1Product(R.drawable.ic_run, "Cerrar Sesion", "Cerrar tu sesión actual."));
+
+
 /*        productList.add(new Tab1Product(R.drawable.ic_view_grid, "Title 6", "This is description 6"));
         productList.add(new Tab1Product(R.drawable.ic_view_list, "Title 7", "This is description 7"));
         productList.add(new Tab1Product(R.drawable.ic_tree, "Title 8", "This is description 8"));
@@ -139,24 +145,46 @@ public class Tab1Configuracion extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //Do any thing when user click to item
-            Log.d(Principal.AUDIO_SERVICE,productList.get(position).getTitle() + " - " + productList.get(position).getDescription());
+            Log.d("PRINCIPAL" , productList.get(position).getTitle() + " - " + productList.get(position).getDescription());
             Toast.makeText(getContext(), "HOLA"/*productList.get(position).getTitle() + " - " + productList.get(position).getDescription()*/,Toast.LENGTH_SHORT);
-            //principal.makeToast(productList.get(position).getTitle() + " - " + productList.get(position).getDescription());
-            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, Amigos.class,Perfil.class, ConfiguracionPantalla.class };
+            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, anadir_amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class,Login.class };
             int i=0;
             if(productList.get(position).getTitle().equals("Configuracion"))
                 i=1;
-            if(productList.get(position).getTitle().equals("Estadisticas"))
-                i=2;
-            if(productList.get(position).getTitle().equals("Amigos"))
+            if(productList.get(position).getTitle().contains("Amigos"))
                 i=3;
             if(productList.get(position).getTitle().equals("Perfil"))
                 i=4;
             if(productList.get(position).getTitle().equals("Pantalla"))
                 i=5;
+            if(productList.get(position).getTitle().equals("Historias"))
+                i=6;
 
-            Intent intent = new Intent(getContext(),classes[i]);
-            startActivity(intent);
+            if(productList.get(position).getTitle().equals("Cerrar Sesion")){
+                getContext().getSharedPreferences("infoUsuario", Context.MODE_PRIVATE).edit().clear().commit();
+                i=7;
+            }
+
+            if(productList.get(position).getTitle().equals("Estadisticas"))
+            {
+                i=2;
+
+                SharedPreferences sharedPreferences =  getContext().getSharedPreferences("infoUsuario", Context.MODE_PRIVATE);
+                String id1= sharedPreferences.getString("id","");
+
+                //Log.d("intent", id1);
+
+                Intent intent = new Intent(getContext(), Estadisticas.class);
+                intent.putExtra("id", id1);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(getContext(), classes[i]);
+                startActivity(intent);
+            }
+
+
+
 
         }
     };
