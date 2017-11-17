@@ -4,27 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.adm.pantallas.PerfilAmigos">
+    tools:context="com.example.adm.pantallas.PerfilAmigos"
+    android:background="#37474F">
 
+    <Button
+        android:id="@+id/btnDesafiar"
+        android:layout_width="182dp"
+        android:layout_height="81dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="22dp"
+        android:textColor="#212121"
+        android:text="Desafiar"
+        android:background="@drawable/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.566"
+        app:layout_constraintVertical_bias="0.884"
+        tools:layout_editor_absoluteY="425dp"
+        tools:layout_editor_absoluteX="103dp"
+        android:layout_below="@+id/txtMensaje"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp" />
 
     <TextView
         android:id="@+id/txtUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="91dp"
+        android:text="Usuario"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="31dp"
-        android:text="Username" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txtUsername"
+        android:layout_marginTop="48dp"
+        android:text="Nombre"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"
         android:layout_below="@+id/txtUsername"
-        android:layout_marginTop="33dp"
-        android:text="Nombre" />
+        android:layout_alignStart="@+id/txtUsername" />
 
     <TextView
         android:id="@+id/txtApellido"
@@ -33,24 +61,20 @@
         android:layout_alignStart="@+id/txtNombre"
         android:layout_below="@+id/txtNombre"
         android:layout_marginTop="51dp"
-        android:text="Apellido" />
+        android:text="Apellido"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"/>
 
     <TextView
         android:id="@+id/txtMensaje"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/txtApellido"
         android:layout_below="@+id/txtApellido"
         android:layout_marginTop="57dp"
-        android:text="Mensaje" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/txtUsername"
-        android:layout_marginEnd="51dp"
-        android:onClick="aDesafio"
-        android:text="Button" />
+        android:text="Mensaje"
+        android:textColorHint="#9E9E9E"
+        android:textColor="#9E9E9E"
+        android:textSize="26dp"
+        android:layout_alignStart="@+id/txtApellido" />
 </RelativeLayout>
