@@ -39,13 +39,13 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteY="203dp"
-        app:layout_constraintHorizontal_bias="0.314" />
+        tools:layout_editor_absoluteY="276dp"
+        app:layout_constraintHorizontal_bias="0.884" />
 
     <TextView
         android:id="@+id/lblDireccion"
-        android:layout_width="164dp"
-        android:layout_height="89dp"
+        android:layout_width="160dp"
+        android:layout_height="37dp"
         android:text="DIRECCION"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -53,8 +53,8 @@
 
         android:textColor="#9E9E9E"
         android:textSize="30dp"
-        tools:layout_editor_absoluteY="266dp"
-        tools:layout_editor_absoluteX="77dp" />
+        tools:layout_editor_absoluteY="276dp"
+        tools:layout_editor_absoluteX="54dp" />
 
     <TextView
         android:id="@+id/lblAltura"
@@ -63,13 +63,12 @@
         android:text="ALTURA"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/lblDireccion"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/lblDireccion"
 
         android:textColor="#9E9E9E"
         android:textSize="30dp"
-        android:layout_marginTop="59dp" />
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="343dp" />
 
     <TextView
         android:id="@+id/lblVelocidad"
@@ -82,8 +81,8 @@
 
         android:textColor="#9E9E9E"
         android:textSize="30dp"
-        tools:layout_editor_absoluteY="347dp"
-        tools:layout_editor_absoluteX="64dp" />
+        tools:layout_editor_absoluteY="343dp"
+        tools:layout_editor_absoluteX="214dp" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -121,11 +120,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="720dp"
-        android:layout_height="100dp"
+        android:layout_width="730dp"
+        android:layout_height="240dp"
         tools:context="com.example.adm.pantallas.MapsActivity"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:layout_editor_absoluteY="49dp" />
+        tools:layout_editor_absoluteX="-11dp"
+        tools:layout_editor_absoluteY="-7dp" />
 
     <Button
         android:id="@+id/button2"

@@ -25,6 +25,7 @@
             android:layout_alignBottom="@+id/toolbar4"
             android:layout_alignParentStart="true"
             android:text="@string/PerfilTitulo"
+            android:layout_marginRight="38dp"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
             android:textColor="#263238"
