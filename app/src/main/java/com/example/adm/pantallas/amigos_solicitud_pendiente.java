@@ -39,7 +39,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class amigos_solicitud_pendiente extends AppCompatActivity {
 
     String json_string;
-    AutoCompleteTextView autoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,9 +168,6 @@ public class amigos_solicitud_pendiente extends AppCompatActivity {
             super.onPostExecute(o);
 
         }
-    }
-    public void listviewClickeado(View v){
-
     }
 }
 class AdaptadorUsuarios3 extends ArrayAdapter {

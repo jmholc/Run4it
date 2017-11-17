@@ -129,7 +129,10 @@ public class Tab1Configuracion extends Fragment {
         productList.add(new Tab1Product(R.drawable.ic_friends, "Añadir Amigos", "Añade amigos nuevos para ver sus estadísticas y correr carreras"));
         productList.add(new Tab1Product(R.drawable.ic_user, "Perfil", "Actualiza tus datos del perfil"));
         productList.add(new Tab1Product(R.drawable.ic_configuration_screen, "Pantalla", "This is description 5"));
+        productList.add(new Tab1Product(R.drawable.ic_run, "Desafios pendientes", "Mira que solicitudes no te han aceptado aún"));
+        productList.add(new Tab1Product(R.drawable.run4, "Desafios Recibidos", "Mira que solicitudes has recibido"));
         productList.add(new Tab1Product(R.drawable.ic_run, "Cerrar Sesion", "Cerrar tu sesión actual."));
+
 
 
 /*        productList.add(new Tab1Product(R.drawable.ic_view_grid, "Title 6", "This is description 6"));
@@ -147,7 +150,7 @@ public class Tab1Configuracion extends Fragment {
             //Do any thing when user click to item
             Log.d("PRINCIPAL" , productList.get(position).getTitle() + " - " + productList.get(position).getDescription());
             Toast.makeText(getContext(), "HOLA"/*productList.get(position).getTitle() + " - " + productList.get(position).getDescription()*/,Toast.LENGTH_SHORT);
-            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, anadir_amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class,Login.class };
+            Class[] classes = {Principal.class, Configuracion.class, Estadisticas.class, anadir_amigos.class,Perfil.class, ConfiguracionPantalla.class, Historias.class,DesafioPendiente.class, Login.class };
             int i=0;
             if(productList.get(position).getTitle().equals("Configuracion"))
                 i=1;
@@ -159,10 +162,11 @@ public class Tab1Configuracion extends Fragment {
                 i=5;
             if(productList.get(position).getTitle().equals("Historias"))
                 i=6;
-
+            if(productList.get(position).getTitle().equals("Desafios pendientes"))
+                i=7;
             if(productList.get(position).getTitle().equals("Cerrar Sesion")){
                 getContext().getSharedPreferences("infoUsuario", Context.MODE_PRIVATE).edit().clear().commit();
-                i=7;
+                i=8;
             }
 
             if(productList.get(position).getTitle().equals("Estadisticas"))
