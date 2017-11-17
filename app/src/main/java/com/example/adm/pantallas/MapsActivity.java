@@ -146,7 +146,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         LocationManager locMan = (LocationManager) getSystemService(LOCATION_SERVICE);
         t = (TextView) findViewById(R.id.lblLatlon);
-        alt = (TextView) findViewById(R.id.lblAltura);
         dir = (TextView) findViewById(R.id.lblDireccion);
         vel = (TextView) findViewById(R.id.lblVelocidad);
 /*

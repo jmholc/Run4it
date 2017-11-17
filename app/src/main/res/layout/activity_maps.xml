@@ -37,7 +37,11 @@
         android:textSize="30dp"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteY="363dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.689"
         tools:layout_editor_absoluteX="270dp" />
 
     <TextView
@@ -51,8 +55,16 @@
         android:textColor="#dc5d11"
         android:textSize="20dp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteY="322dp"
-        tools:layout_editor_absoluteX="146dp" />
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintVertical_bias="0.583" />
 
     <TextView
         android:id="@+id/textView18"
@@ -69,7 +81,7 @@
         tools:layout_editor_absoluteY="409dp" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/lblVelocidad"
         android:layout_width="120dp"
         android:layout_height="30dp"
         android:text="Velocidad"
@@ -106,8 +118,16 @@
         tools:layout_constraintLeft_creator="1"
         android:textColor="#9E9E9E"
         android:textSize="50dp"
-        tools:layout_editor_absoluteY="257dp"
-        tools:layout_editor_absoluteX="121dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintVertical_bias="0.498" />
 
     <TextView
         android:id="@+id/textView14"
@@ -120,8 +140,13 @@
 
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="363dp" />
+        android:layout_marginRight="260dp"
+        app:layout_constraintRight_toRightOf="@+id/lblLatlon"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.689" />
 
     <TextView
         android:id="@+id/textView13"
@@ -134,8 +159,10 @@
 
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="363dp" />
+        android:layout_marginRight="130dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="363dp" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -176,8 +203,12 @@
         android:layout_width="730dp"
         android:layout_height="240dp"
         tools:context="com.example.adm.pantallas.MapsActivity"
-        tools:layout_editor_absoluteX="-11dp"
-        tools:layout_editor_absoluteY="-7dp" />
+        tools:layout_editor_absoluteX="-19dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        map:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp"
+        map:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button2"

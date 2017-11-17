@@ -24,14 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="16dp"
         android:text="Nombre de usuario"
         android:textColor="@color/dot_dark_Intro6"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/txtNombreApellido"
