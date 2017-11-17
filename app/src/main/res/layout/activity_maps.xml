@@ -85,7 +85,6 @@
         app:layout_constraintTop_toBottomOf="@+id/lblLatlon"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/lblLatlon"
-
         android:textColor="#9E9E9E"
         android:textSize="30dp"
         app:layout_constraintHorizontal_bias="0.0"
@@ -104,7 +103,6 @@
         app:layout_constraintTop_toBottomOf="@+id/lblDireccion"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/lblDireccion"
-
         android:textColor="#9E9E9E"
         android:textSize="30dp"
         app:layout_constraintHorizontal_bias="0.0"
@@ -123,13 +121,30 @@
         app:layout_constraintTop_toBottomOf="@+id/lblAltura"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/lblAltura"
-
         android:textColor="#9E9E9E"
         android:textSize="30dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.009" />
+
+    <TextView
+        android:id="@+id/lblCalorias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CALORIAS" />
+
+
+   <!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.adm.pantallas.MapsActivity" />-->
+
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="88dp"
