@@ -21,7 +21,8 @@
             android:layout_height="150dp"
             android:layout_weight="2.40"
             android:src="@drawable/ic_corredor"
-            tools:ignore="ContentDescription,InefficientWeight" />
+            tools:ignore="ContentDescription,InefficientWeight"
+            android:layout_marginBottom="50dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,7 +31,8 @@
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
