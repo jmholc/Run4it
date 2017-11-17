@@ -6,6 +6,18 @@ package com.example.adm.pantallas;
 
 public class Global {
     float dis, vel, temp;
+    public float getDis() {
+        return dis;
+    }
+
+    public float getVel() {
+        return vel;
+    }
+
+    public float getTemp() {
+        return temp;
+    }
+
     public void setDis(float dis) {
         this.dis = dis;
     }
