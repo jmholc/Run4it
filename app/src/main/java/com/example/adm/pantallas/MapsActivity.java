@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.media.MediaPlayer;
+import android.text.style.LocaleSpan;
 import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
@@ -80,7 +81,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-
+import android.hardware.GeomagneticField;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
 
@@ -111,13 +112,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     JSONObject jsonObj;
     LocationListener locationListener;
     double latitudeStart, longitudeStart, altitude, latitude, longitude;
-    boolean startL=false;
+    boolean startL=false, mapReady=false;
     private int PROXIMITY_RADIUS = 20;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     TextView t, alt, dir, vel, dis, velPromedio, DegreeTV;
+    int reloadDistance=0;
     String lugares = "";
     PlaceAutocompleteFragment autocompleteFragment;
     double latFragment, lngFragment, velPromF;
@@ -126,8 +128,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     List<List<LatLng>> route;
     LocationManager locMan;
     LatLng r;
-    ArrayList velProm;
-    SensorManager SensorManage;
+    ArrayList<Double> velProm;
+    SensorManager SensorManage, sen2;
     Sensor mLight, mGravity, mGeomagnetic;
 
     @Override
@@ -164,8 +166,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
             }
         };
-        velProm=new ArrayList<Double>();
         velPromF=0.0;
+        velProm=new ArrayList<Double>();
         t = (TextView) findViewById(R.id.lblLatlon);
         alt = (TextView) findViewById(R.id.lblAltura);
         dir = (TextView) findViewById(R.id.lblDireccion);
@@ -174,9 +176,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         velPromedio=(TextView) findViewById(R.id.lblVelProm);
         DegreeTV = (TextView) findViewById(R.id.lblGrados);
         SensorManage = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mLight = SensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        SensorManage.registerListener(this, mLight,SensorManager.SENSOR_DELAY_NORMAL);
+        mGravity = SensorManage.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        SensorManage.registerListener(this, mGravity,SensorManager.SENSOR_DELAY_GAME);
 
+        sen2 = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mGeomagnetic = sen2.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sen2.registerListener(this, sen2.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),SensorManager.SENSOR_DELAY_GAME);
+        int pepe;
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
@@ -250,6 +256,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         t.setText(latitude + ", " + longitude);
         alt.setText("" + altitude);
+        mapReady=true;
     }
 
     private void buildGoogleApiClient() {
@@ -559,11 +566,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startL=true;
         }
         else {
-            velProm.add(location.getSpeed());
+            velProm.add(Double.valueOf(location.getSpeed()));
             velPromF=0.0;
-            for (int i=0; i<velProm.size(); i++){
-                //velPromF+= (Double.toString(velProm.get(i)));
-            }
+            for (int i=0; i<velProm.size(); i++)velPromF+= velProm.get(i);
             velPromF/=velProm.size();
             velPromedio.setText(Double.toString(velPromF));
         }
@@ -584,26 +589,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //dis.setText((int) distance(latitudeStart, longitudeStart, latitude, longitude, 'K'));
         //-------------------------------------------------------------------------------------
 
-        Geocoder gc = new Geocoder(this, Locale.getDefault());
-        List<Address> list = null;
-        try {
-            list = gc.getFromLocation(latitude, longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
+        reloadDistance++;
+        if(reloadDistance==10){
+            new time().execute();
+            dis.setText(parseJSON_Dist());
+            reloadDistance=0;
         }
-        Address add = list.get(0);
-        dir.setText(add.getAddressLine(0));
-        alt.setText("" + location.getAltitude());
+
+        if (mapReady) {
+            Geocoder gc = new Geocoder(this, Locale.getDefault());
+            List<Address> list = null;
+            try {
+                list = gc.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address add = new Address(Locale.ENGLISH);
+            add = list.get(0);
+            dir.setText(add.getAddressLine(0));
+            alt.setText("" + location.getAltitude());
+        }
     }
 
+    float[] gravedad;
+    float[] iman;
     @Override
-    public void onSensorChanged(SensorEvent event) {
-        degree = Math.round(event.values[0]);
-        DegreeTV.setText(Float.toString(degree) + "°");
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            iman = sensorEvent.values;
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            gravedad = sensorEvent.values;
+        if (gravedad != null && iman != null) {
+            float R[] = new float[9];
+            float I[] = new float[9];
+            boolean success = SensorManager.getRotationMatrix(R, I, gravedad, iman);
+            if (success) {
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+                float azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+                DegreeTV.setText((int) azimut);
+            }
+        }
+    }
 
+        /*degree = Math.round(event.values[0]);
+        DegreeTV.setText(Float.toString(degree) + "°");
+        SensorManage.getOrientation();
         if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
             return;
-        }
+        }*/
 /*
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)  mGravity = event.values.clone ();
         if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) mGeomagnetic =  event.values.clone ();
@@ -625,7 +659,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mDraw.invalidate();
         }
 */
-    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

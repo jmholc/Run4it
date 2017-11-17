@@ -88,12 +88,6 @@
         android:text="DISTANCIA" />
 
     <TextView
-        android:id="@+id/lblCalorias"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CALORIAS" />
-
-    <TextView
         android:id="@+id/lblGrados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
