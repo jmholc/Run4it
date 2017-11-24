@@ -10,12 +10,15 @@
         <fragment
             android:id="@+id/place_autocomplete_fragment"
 <<<<<<< HEAD
+<<<<<<< HEAD
                 tools:layout_editor_absoluteY="0dp"
                 tools:layout_editor_absoluteX="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     <!--<Button
 =======
+=======
+>>>>>>> parent of da46a6d... Merge branch 'master' into Salida_pocho
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
@@ -24,7 +27,10 @@
     </LinearLayout>
 
     <Button
+<<<<<<< HEAD
 >>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
+=======
+>>>>>>> parent of da46a6d... Merge branch 'master' into Salida_pocho
         android:id="@+id/btnComenzar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +66,7 @@
         android:text="Lugares..." />
 
     <TextView
+<<<<<<< HEAD
         android:id="@+id/lblVelProm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -120,11 +127,24 @@
 =======
         android:text="DIRECCION" />
 >>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
+=======
+        android:id="@+id/lblLatlon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0.0, 0.0" />
+
+    <TextView
+        android:id="@+id/lblDireccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DIRECCION" />
+>>>>>>> parent of da46a6d... Merge branch 'master' into Salida_pocho
 
     <TextView
         android:id="@+id/lblAltura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
 <<<<<<< HEAD
         android:text="ALTURA"
         tools:layout_constraintTop_creator="1"
@@ -142,11 +162,15 @@
 =======
         android:text="ALTURA" />
 >>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
+=======
+        android:text="ALTURA" />
+>>>>>>> parent of da46a6d... Merge branch 'master' into Salida_pocho
 
     <TextView
         android:id="@+id/lblVelocidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
 <<<<<<< HEAD
         android:text="XX KM/H"
         tools:layout_constraintTop_creator="1"
@@ -162,6 +186,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.009" />
+=======
+        android:text="XX KM/H" />
+>>>>>>> parent of da46a6d... Merge branch 'master' into Salida_pocho
 
     <TextView
         android:id="@+id/lblCalorias"
@@ -203,6 +230,7 @@
 <<<<<<< HEAD
     tools:context="com.example.adm.pantallas.MapsActivity" />-->
 
+<<<<<<< HEAD
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="88dp"
@@ -251,3 +279,6 @@
 
 </LinearLayout>
 >>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
+=======
+</LinearLayout>
+>>>>>>> parent of da46a6d... Merge branch 'master' into Salida_pocho
