@@ -5,10 +5,49 @@
     android:layout_height="match_parent"
     tools:context="com.example.adm.pantallas.Principal"
     tools:layout_editor_absoluteY="25dp"
-    tools:layout_editor_absoluteX="0dp"
-    android:background="#37474F">
+    tools:layout_editor_absoluteX="0dp">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/imLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="190dp"
+        android:src="@drawable/logo_run4it"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription=""
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imUsuario"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:srcCompat="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imLogo"
+        android:layout_marginTop="150dp"
+        tools:ignore="ContentDescription"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/txtNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Pablo Pérez"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imUsuario"
+        app:layout_constraintHorizontal_bias="0.503"
+        tools:ignore="HardcodedText"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -17,127 +56,44 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:outlineProvider="bounds"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombre"
+        app:layout_constraintVertical_bias="1.0"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0"
-        android:id="@+id/scrollView2">
+        tools:layout_constraintTop_creator="1">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtImagenDelDia"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/Principal_imagen_del_dia"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            tools:ignore="RtlHardcoded" />
 
-            <ImageView
-                android:id="@+id/imLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription=""
-                android:src="@drawable/perfil2"
-                app:layout_constraintBottom_toTopOf="@+id/txtNombre"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription"
-                app:layout_constraintVertical_bias="0.0"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp" />
-
-            <ImageView
-                android:id="@+id/imUsuario"
-                android:layout_width="0dp"
-                android:layout_height="105dp"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@mipmap/ic_launcher_round"
-                tools:ignore="ContentDescription"
-                tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintRight_creator="1"
-                app:layout_constraintTop_toTopOf="@+id/imLogo"
-                android:layout_marginTop="190dp" />
-
-            <TextView
-                android:id="@+id/txtNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pablo Pérez"
-                android:textColor="#9E9E9E"
-                android:textColorHint="#9E9E9E"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imUsuario"
-                tools:ignore="HardcodedText"
-                tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintRight_creator="1" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:outlineProvider="bounds"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView9"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_constraintBottom_creator="1"
-                tools:layout_constraintTop_creator="1">
-
-            </android.support.constraint.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="300dp"
-                android:layout_height="250dp"
-                android:layout_marginTop="27dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/txtNombre"
-                app:srcCompat="@drawable/button2" />
-
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/txAmigos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Amigos"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColor="@color/dot_light_Intro1"
-        android:textStyle="italic"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/imUsuario"
-        app:layout_constraintTop_toTopOf="@+id/imUsuario" />
-
-    <TextView
-        android:id="@+id/txHistorias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Historias"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textColor="@color/dot_light_Intro1"
-        android:textStyle="italic"
-        app:layout_constraintLeft_toRightOf="@+id/imUsuario"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imUsuario" />
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/motivacion"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            tools:ignore="RtlHardcoded" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

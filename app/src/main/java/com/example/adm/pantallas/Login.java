@@ -21,7 +21,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        et_contrasena = (EditText) findViewById(R.id.etContrasenia);
+        et_contrasena = (EditText) findViewById(R.id.etContrasena);
         et_usuario = (EditText) findViewById(R.id.etUsuario);
         iniciarSesionSharedPref();
     }
@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
 
         String method="login";
         BackgroundTask backgroundTask=new BackgroundTask(this);
-        backgroundTask.execute(method,usuario,getHash(contrasena));
+        backgroundTask.execute(method,usuario,getHash(contrasena  ));
     }
 
     public void iniciarSesionSharedPref()

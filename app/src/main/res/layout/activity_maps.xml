@@ -1,29 +1,64 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#37474F"
-    android:weightSum="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <fragment
+        <fragment
             android:id="@+id/place_autocomplete_fragment"
+<<<<<<< HEAD
                 tools:layout_editor_absoluteY="0dp"
                 tools:layout_editor_absoluteX="8dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     <!--<Button
+=======
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            />
+
+    </LinearLayout>
+
+    <Button
+>>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
         android:id="@+id/btnComenzar"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="Comenzar"
-        android:text="Comenzar"
-        android:textColor="#212121" />
--->
+        android:text="Comenzar" />
+
+    <Button
+        android:id="@+id/btnAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Alert"
+        android:text="Alert" />
+
+    <Button
+        android:id="@+id/btnTesting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="prueba"
+        android:text="Random" />
+
+    <Button
+        android:id="@+id/btnParse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick_time"
+        android:text="¿En cuanto llego?" />
+
+    <Button
+        android:id="@+id/btnLugares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick_places"
+        android:text="Lugares..." />
+
     <TextView
         android:id="@+id/lblVelProm"
         android:layout_width="0dp"
@@ -60,24 +95,15 @@
         tools:layout_editor_absoluteX="8dp" />-->
     <TextView
         android:id="@+id/lblLatlon"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0.0, 0.0"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textColor="#9E9E9E"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="532dp" />
+        android:text="0.0, 0.0" />
 
     <TextView
         android:id="@+id/lblDireccion"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="DIRECCION"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -91,11 +117,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.0" />
+=======
+        android:text="DIRECCION" />
+>>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
 
     <TextView
         android:id="@+id/lblAltura"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="ALTURA"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -109,11 +139,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.0" />
+=======
+        android:text="ALTURA" />
+>>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
 
     <TextView
         android:id="@+id/lblVelocidad"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="XX KM/H"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -137,12 +171,36 @@
 
 
    <!-- <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+        android:text="XX KM/H" />
+
+    <TextView
+        android:id="@+id/lblVelProm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VEL PROM" />
+
+    <TextView
+        android:id="@+id/lblDistancia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DISTANCIA" />
+
+    <TextView
+        android:id="@+id/lblGrados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ORIENTACION" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context="com.example.adm.pantallas.MapsActivity" />-->
 
     <ImageView
@@ -188,3 +246,8 @@
          tools:layout_editor_absoluteX="64dp" />
 
 </android.support.constraint.ConstraintLayout>
+=======
+    tools:context="com.example.adm.pantallas.MapsActivity" />
+
+</LinearLayout>
+>>>>>>> parent of 31c5a91... Merge branch 'master' into Salida_pocho

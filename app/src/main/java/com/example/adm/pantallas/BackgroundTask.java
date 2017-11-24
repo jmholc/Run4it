@@ -107,21 +107,8 @@ public class BackgroundTask extends AsyncTask{
                 e.printStackTrace();
             }
         }
-        else if (method.equals("enviarsolicitud")){
-            String usuario=(String) params[1];
-            String usuarioaenviar= (String) params[2];
-            String tipo=(String) params[3];
-            urldelphp = "https://run4it.proyectosort.edu.ar/run4it/friendrequest.php";
-            try {
-                data=
-                        URLEncoder.encode("usuario","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
-                                URLEncoder.encode("tipo","UTF-8")   +"="+URLEncoder.encode(usuario,"UTF-8")+"&"+
-                                URLEncoder.encode("usuarioaenviar","UTF-8")    +"="+URLEncoder.encode(usuarioaenviar,"UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (method.equals("register2")){
+        else if (method.equals("register2"))
+        {
 
         }
         try {
@@ -185,9 +172,6 @@ public class BackgroundTask extends AsyncTask{
             Bundle mBundle = new Bundle();
             mBundle.putString("usuario", info[1]);
             mBundle.putString("contrasena", info[2]);
-            mBundle.putString("id", info[3]);
-
-            Log.i("ASDASD", info[3]);
             intent.putExtras(mBundle);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -210,9 +194,6 @@ public class BackgroundTask extends AsyncTask{
             Bundle mBundle = new Bundle();
             mBundle.putString("usuario", info[1]);
             mBundle.putString("contrasena", info[2]);
-            mBundle.putString("id", info[3]);
-            Log.i("ASDASD", info[3]);
-
             intent.putExtras(mBundle);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -234,11 +215,6 @@ public class BackgroundTask extends AsyncTask{
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("usuario",info[1]);
             editor.putString("contrasena",info[2]);
-            editor.putString("id",info[3]);
-            Log.i("ASDASD", info[3]);
-            //editor.putString("nombre",info[3]);
-            //editor.putString("apellido",info[4]);
-
             editor.apply();
 
             Intent intent=new Intent(ctx,Principal.class);

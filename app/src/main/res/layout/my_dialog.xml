@@ -14,14 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Inserte su código aquí..."
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:hint="Inserte su códdigo aquí..." />
 
     <Button
         android:id="@+id/btn_Enviar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Verificar" />
-
 
 </LinearLayout>
